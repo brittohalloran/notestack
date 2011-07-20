@@ -20,7 +20,9 @@ $allowed = array(
 	'conorohalloran@gmail.com',
 	'tanner.jon@gmail.com'
 	);
-
+	
+echo $_SERVER['HTTP_HOST'];
+	
 if(!in_array($email,$allowed)){
 	echo 'notinlist';
 }
