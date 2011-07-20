@@ -3,5 +3,4 @@ britt.j.ohalloran@gmail.com
 
 Website code for Notestack.me
 
-The DEV branch is changed!
-
+this is in the master branch
