@@ -21,9 +21,7 @@ $allowed = array(
 	'tanner.jon@gmail.com'
 	);
 	
-echo $_SERVER['HTTP_HOST'];
-	
-if(!in_array($email,$allowed)){
+if(($_SERVER['HTTP_HOST']=='dev.notestack.me') && !in_array($email,$allowed)){
 	echo 'notinlist';
 }
 elseif($action=='login'){
