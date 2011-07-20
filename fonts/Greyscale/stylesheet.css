@@ -1,0 +1,12 @@
+/* GREYSCALE */
+@font-face {
+    font-family: 'GreyscaleBasicRegular';
+    src: url('Greyscale_Basic_Regular-webfont.eot');
+    src: url('Greyscale_Basic_Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('Greyscale_Basic_Regular-webfont.woff') format('woff'),
+         url('Greyscale_Basic_Regular-webfont.ttf') format('truetype'),
+         url('Greyscale_Basic_Regular-webfont.svg#GreyscaleBasicRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

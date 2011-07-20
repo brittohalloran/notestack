@@ -1,0 +1,234 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+/* STRUCTURE */
+.fullwindow {
+	position:absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+}
+
+.left {
+	padding-top: 60px;
+}
+
+.subtitle {
+	margin-top: -23px;
+}
+
+.login {
+	margin-top: 80px;
+}
+
+	.login_inner {
+		padding: 10px 0px 20px 0px;
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+
+	.login form {
+		padding-top: 10px;
+	}
+	
+		.login .email {
+			width: 100%;
+		}
+		
+		.login .password {
+			margin-top: 5px;
+			width: 100%;
+		}
+	
+	.login_submit {
+		display: none;
+		visibility: hidden;
+	}
+	
+	.login_message {
+		display: none;
+		text-align: center;
+		font-size: 0.9em;
+		padding-top: 10px;
+	}
+	
+	.under_login {
+		position: relative;
+	}
+	
+	.under_login .inner {
+		position: absolute;
+		top: 5px;
+		left: 10px;
+		right: 10px;
+		text-align: right;
+	}
+	
+		span.under_message {
+			font-size: 0.8em;
+			text-align: right;
+			width: 100%;
+		}
+		
+			.under_message a{
+				text-decoration: none;
+				color: #628EB5;
+			}
+
+.image {
+	width: 100%;
+	height: 125px;
+	margin-bottom: 10px;
+}
+
+.html5 .image {
+	background: url(../images/html5.png) no-repeat center;
+}
+
+.keyboard .image {
+	background: url(../images/jk.png) no-repeat center;
+}
+
+.simplenote .image {
+	background: url(../images/simplenote.png) no-repeat center;
+}
+
+.feature {
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	height: 300px;
+	position: relative;
+}
+
+	.feature .inner {
+		position: absolute;
+		left: 10px;
+		right: 10px;
+		top: 10px;
+		bottom: 10px;
+	}
+	
+		.feature .inner .content {
+			position: absolute;
+			left: 10px;
+			right: 10px;
+			top: 10px;
+			bottom: 10px;
+		}
+
+	.feature h2 {
+		width: 100%;
+		text-align: center;
+	}
+			
+.footer_inner {
+	padding-top: 10px;
+	width: 100%;
+	font-size: 0.8em;
+}
+
+	.footer_left {
+		float: left;
+	}
+	
+	.footer_right {
+		float: right;
+		white-space: nowrap;
+	}
+	
+	
+
+.comingsoon {
+	margin-top: 60px;
+	width: 100%;
+	text-align: center;
+}
+
+/* STYLE */
+
+.fullwindow {
+	background: linear-gradient(bottom, #FCFCFC, #DBDBDB);
+	background: -webkit-gradient(linear, left bottom, left top, from(#FCFCFC), to(#DBDBDB));
+	background: -moz-linear-gradient(bottom, #FCFCFC, #DBDBDB);
+}
+
+h1 {
+	font-family: 'Hammersmith One', arial, serif;
+	font-size: 80px;
+	font-weight: normal;
+	color: rgba(0,0,0,0.8);
+}
+
+h2, h3, h4, p, div {
+	font-family: 'Droid Sans', arial, sans-serif;
+	font-weight: normal;
+}
+
+h2 {
+	font-family: 'Hammersmith One', sans-serif;
+	font-size: 1.2em;
+	margin-bottom: 5px;
+	text-transform: uppercase;
+}
+
+a {
+	color: #628EB5;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #B56262;
+}
+
+/* SPECIFIC STYLE */
+
+.feature {
+	background: rgba(0,0,0,0.6);
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-box-shadow: 1px 1px 3px rgba(51,51,51,0.6);
+	-webkit-box-shadow: 1px 1px 3px rgba(51,51,51,0.6);
+	box-shadow: 1px 1px 5px rgba(51,51,51,0.6);
+}
+
+	.feature .inner {
+		background: url("../images/moleskine.jpg");
+		-moz-box-shadow: inset 1px 1px 3px rgba(51,51,51,0.3);
+		-webkit-box-shadow: inset 1px 1px 3px rgba(51,51,51,0.3);
+		box-shadow: inset 2px 2px 3px rgba(51,51,51,0.3);
+	}
+
+.login {
+	border: 1px solid rgba(0,0,0,0.1);
+	background: #8AC8FF;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.login a {
+	color: #3971A3;
+}
+
+.login_message {
+	color: black;
+	text-size: 0.5em;
+}
+
+a.testdrive {
+	text-decoration: none;
+}
+
+.comingsoon {
+	font-family: 'Vollkorn', arial, serif;
+	font-size: 1.2em;
+	color: white;
+}
+
+.footer {
+	border-top: 1px solid rgba(0,0,0,0.3);
+}

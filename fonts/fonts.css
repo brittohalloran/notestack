@@ -1,0 +1,140 @@
+/* ARVO */
+@font-face {
+    font-family: 'ArvoRegular';
+    src: url('Arvo/Arvo-Regular-webfont.eot');
+    src: url('Arvo/Arvo-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('Arvo/Arvo-Regular-webfont.woff') format('woff'),
+         url('Arvo/Arvo-Regular-webfont.ttf') format('truetype'),
+         url('Arvo/Arvo-Regular-webfont.svg#ArvoRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* COLABORATE */
+@font-face {
+    font-family: 'ColaborateLightRegular';
+    src: url('Colaborate/ColabLig-webfont.eot');
+    src: url('Colaborate/ColabLig-webfont.eot?#iefix') format('embedded-opentype'),
+         url('Colaborate/ColabLig-webfont.woff') format('woff'),
+         url('Colaborate/ColabLig-webfont.ttf') format('truetype'),
+         url('Colaborate/ColabLig-webfont.svg#ColaborateLightRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* DROID SANS REGULAR */
+@font-face {
+    font-family: 'DroidSansRegular';
+    src: url('DroidSans/DroidSans-webfont.eot');
+    src: url('DroidSans/DroidSans-webfont.eot?#iefix') format('embedded-opentype'),
+         url('DroidSans/DroidSans-webfont.woff') format('woff'),
+         url('DroidSans/DroidSans-webfont.ttf') format('truetype'),
+         url('DroidSans/DroidSans-webfont.svg#DroidSansRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* DROID SANS BOLD */
+@font-face {
+    font-family: 'DroidSansBold';
+    src: url('DroidSans/DroidSans-Bold-webfont.eot');
+    src: url('DroidSans/DroidSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('DroidSans/DroidSans-Bold-webfont.woff') format('woff'),
+         url('DroidSans/DroidSans-Bold-webfont.ttf') format('truetype'),
+         url('DroidSans/DroidSans-Bold-webfont.svg#DroidSansBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* DROID SANS MONO */
+@font-face {
+    font-family: 'DroidSansMonoRegular';
+    src: url('DroidSans/DroidSansMono-webfont.eot');
+    src: url('DroidSans/DroidSansMono-webfont.eot?#iefix') format('embedded-opentype'),
+         url('DroidSans/DroidSansMono-webfont.woff') format('woff'),
+         url('DroidSans/DroidSansMono-webfont.ttf') format('truetype'),
+         url('DroidSans/DroidSansMono-webfont.svg#DroidSansMonoRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* FLUX ARCHITECT */
+@font-face {
+    font-family: 'FluxRegular';
+    src: url('FluxArchitect/Flux_Architect_Regular-webfont.eot');
+    src: url('FluxArchitect/Flux_Architect_Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('FluxArchitect/Flux_Architect_Regular-webfont.woff') format('woff'),
+         url('FluxArchitect/Flux_Architect_Regular-webfont.ttf') format('truetype'),
+         url('FluxArchitect/Flux_Architect_Regular-webfont.svg#FluxRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* GREYSCALE */
+@font-face {
+    font-family: 'GreyscaleBasicRegular';
+    src: url('Greyscale/Greyscale_Basic_Regular-webfont.eot');
+    src: url('Greyscale/Greyscale_Basic_Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('Greyscale/Greyscale_Basic_Regular-webfont.woff') format('woff'),
+         url('Greyscale/Greyscale_Basic_Regular-webfont.ttf') format('truetype'),
+         url('Greyscale/Greyscale_Basic_Regular-webfont.svg#GreyscaleBasicRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* LATIN MODERN MONO */
+@font-face {
+    font-family: 'LatinModernMono10Regular';
+    src: url('LMMono/lmmono10-regular-webfont.eot');
+    src: url('LMMono/lmmono10-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('LMMono/lmmono10-regular-webfont.woff') format('woff'),
+         url('LMMono/lmmono10-regular-webfont.ttf') format('truetype'),
+         url('LMMono/lmmono10-regular-webfont.svg#LatinModernMono10Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* LATIN MODERN SANS */
+@font-face {
+    font-family: 'LatinModernSans10Regular';
+    src: url('LMSans/lmsans10-regular-webfont.eot');
+    src: url('LMSans/lmsans10-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('LMSans/lmsans10-regular-webfont.woff') format('woff'),
+         url('LMSans/lmsans10-regular-webfont.ttf') format('truetype'),
+         url('LMSans/lmsans10-regular-webfont.svg#LatinModernSans10Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* MUSEO SANS */
+@font-face {
+	font-family: 'MuseoSans-500';
+	src: url('MuseoSans/MuseoSans500.eot');
+	src: url('MuseoSans/MuseoSans500.eot?#iefix') format('embedded-opentype'),
+		url('MuseoSans/MuseoSans500.woff') format('woff'),
+		url('MuseoSans/MuseoSans500.ttf') format('truetype'),
+		url('MuseoSans/MuseoSans500.svg#MuseoSans-500') format('svg');
+}
+
+
+/* BITSTREAM VERA SANS */
+@font-face {
+    font-family: 'BitstreamVeraSansMonoRoman';
+    src: url('VeraSans/VeraMono-webfont.eot');
+    src: url('VeraSans/VeraMono-webfont.eot?#iefix') format('embedded-opentype'),
+         url('VeraSans/VeraMono-webfont.woff') format('woff'),
+         url('VeraSans/VeraMono-webfont.ttf') format('truetype'),
+         url('VeraSans/VeraMono-webfont.svg#BitstreamVeraSansMonoRoman') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
