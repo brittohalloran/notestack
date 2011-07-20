@@ -523,258 +523,258 @@ $(function(){
 		if(sessionStorage.storage){
 			storage = sessionStorage.storage;
 		};
-	}
-	else{
-		window.location = '/';
-	};
-	// //console.log(getItem('email'));
-	if(localStorage.email){
-		$('.username').text(localStorage.email);
-		if(localStorage.index){
-			allLocalToDOM();
-			if($('.listnote').length>0){
-				sortNotes();
-				refreshCards();
-			};
-		};
-		manualSync();
-	}
-	else{
-		window.location = '/';
-	};
-});
-
-///////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////
-// INTERACTIONS ///////////////////////////////////////////
-///////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////
-
-// NEXT / PREVIOUS NOTE
-function nextNote() { 
-	//console.log('nextNote ' + $('.selected').nextAll('.listnote:not(.hide):first').length);
-	nextOne = $('.selected').nextAll('.listnote:not(.hide):first');
-	if(nextOne.length > 0 ) {
-		$('.selected').removeClass('selected');
-		nextOne.addClass('selected');
-		$('.current').removeClass('current').next('.note').addClass('current');
-		reflowCards();
-		scrollto();
-	};
-};
-function prevNote() {
-	//console.log('prevNote');
-	prevOne = $('.selected').prevAll('.listnote:not(.hide):first')
-	if(prevOne.length>0) {
-		$('.selected').removeClass('selected');
-		prevOne.addClass('selected');
-		$('.current').removeClass('current').prev('.note').addClass('current');
-		reflowCards();
-		scrollto();
-	};
-};
-
-// ON NOTE FOCUS
-$('.note .textarea textarea').live('focus',function(){
-	$('.current .note-directions').addClass('show');
-	$('div.current').addClass('highlight');
-	$('.window').unmousewheel();
-});
-
-// ON NOTE BLUR
-$('.note .textarea textarea').live('blur',function(){
-	blurkey = $(this).parent().parent().attr('id');
-	if ($(this).val() != $('#list-' + blurkey).data().content){
-		blurnote = $.parseJSON(localStorage.getItem(blurkey));
-		blurnote.content = $(this).val();
-		blurnote.modifydate = (new Date()).getTime()/1000;
-		blurnote.syncnum = blurnote.syncnum + 1;
-		localStorage.setItem(blurkey,JSON.stringify(blurnote));
-		localToDOM(blurnote.key);
-		manualSync();
-	};
-	$('.current .note-directions').removeClass('show');
-	$('.current').removeClass('highlight');
-	mapMousewheel();
-});
-
-// TOGGLE PIN
-function togglePin(listitem){
-	if(listitem.data().systemtags.indexOf('pinned')>-1){
-		// remove pin
-		listitem.data().systemtags.splice(listitem.data().systemtags.indexOf('pinned'),1);
-	}
-	else{
-		// add pin
-		listitem.data().systemtags.push('pinned');
-	};
-	listitem.data().syncnum = listitem.data().syncnum + 1;
-	localStorage.setItem( listitem.data().key, JSON.stringify( listitem.data() ) );
-	localToDOM( listitem.data().key );
-	sortNotes();
-	refreshCards();
-};
-
-// CREATE NEW NOTE
-function createNote() {
-	createdate = (new Date()).getTime();
-	newid = 'notestack' + createdate;
-	newdata = {key: newid, createdate: createdate/1000, modifydate: createdate/1000, systemtags: [], content: "new note"};
-	localStorage.setItem(newid, JSON.stringify(newdata));
-	index = $.parseJSON(localStorage.index);
-	index.data.push(newdata);
-	//console.log(index.data);
-	localStorage.index = JSON.stringify(index);
-	localToDOM( newid );
-	sortNotes();
-	$('.selected').removeClass('selected');
-	$('#list-' + newid).addClass('selected');
-	refreshCards();
-	$('.current .textarea textarea').select();
-};
-
-// SCROLL TO SELECTED
-function scrollto(){
-	if($('.selected').position().top < 0){
-		$('.list').scrollTop($('.list').scrollTop() + $('.selected').position().top);
-	};
-	if($('.selected').position().top + $('.listnote').height() > $('.list').height()){
-		$('.list').scrollTop($('.list').scrollTop() + $('.selected').position().top - $('.list').height() + $('.listnote').height());
-	};
-};
-
-// CLICK NOTE IN LIST
-$(function() {
-	$('.listnote').live('click',function(){
-		$('.selected').removeClass('selected');
-		$(this).addClass('selected');
-		$('.current').removeClass('current');
-		$('#' + $(this).attr('id').split('list-').pop()).addClass('current');
-		reflowCards();
-	});
-});
-
-// CLICK NON-CURRENT NOTE
-$(function() {
-	$('.note').live('click',function(){
-		$('.current').removeClass('current');
-		$(this).addClass('current');
-		$('.selected').removeClass('selected');
-		$('#list-' + $(this).attr('id')).addClass('selected');
-		reflowCards();
-	});
-});
-
-// CLICK SETTINGS
-$(function() {
-	$('.settings_icon').click(function() {
-		$('.settings').toggleClass('show');
-	});
-	$('.username').click(function(){
-		$('.settings').toggleClass('show');
-		$('.settings_pane').removeClass('show');
-		$('.settings_pane.data').addClass('show');
-	});
-});
-
-// CLICK SETTINGS TAB
-$(function(){
-	$('.settings .tabs a').click(function(){
-		$('.settings_pane').removeClass('show');
-		$('.settings_pane.' + $(this).text().replace(" ","_")).addClass('show');
-		e.preventDefault();
-		return false;
-	});
-});
-
-$(function(){
-	// CLICK VERSIONS BUTTON
-	$('.versions-button').live('mousedown',function(){
-		notekey = $(this).parent().attr('id');
-		toggleVersions(notekey);
-	});
-	// CLICK INDIVIDUAL VERSION
-	$('.version-item').live('mousedown',function(){
-		if($('.diff-view').hasClass('depressed')){
-			$('.versions-right .right-inner').html($(this).data().diff);
-		}
-		else{
-			$('.versions-right .right-inner').html('<textarea disabled="disabled">' + $(this).data().content + '</textarea>');
-		}
-		$('.version-select').removeClass('version-select');
-		$(this).addClass('version-select');
-	});
-	// CLICK VERSION VIEW BUTTON
-	$('.versions-toolbar .diff-view,.versions-toolbar .text-view').live('mousedown',function(){
-		$('.versions-toolbar .depressed').removeClass('depressed');
-		$(this).addClass('depressed');
-		if($('.version-select').length < 1){
-			$('.version-item:first').addClass('.version-select');
-		};
-		if($(this).hasClass('diff-view')){
-			$('.versions-right .right-inner').html($('.version-select').data().diff);
-		}
-		else if ($(this).hasClass('text-view')){
-			$('.versions-right .right-inner').html('<textarea disabled="disabled">' + $('.version-select').data().content + '</textarea>');
-		};
-	});
-	// CLICK REVERT
-	$('.versions-toolbar .revert-version').live('mousedown',function(){
-		if( $('.version-select').length==1 ){
-			notekey = $('.version-select').attr('id').split('version').shift();
-			$('.selected').removeClass('selected');
-			$('#list-' + notekey).addClass('selected');
-			$('.current').removeClass('current');
-			$('#' + notekey).addClass('current');
-			reflowCards();
-			clearOverlays();
-			$('.current textarea').select(); 
-		};
-	});
-});
-function toggleVersions(notekey){
-	if($('.versions').hasClass('show')){
-		clearOverlays();
-	}
-	else{
-		fullscreenMode('off');
-		$('.versions').addClass('show');
-		$('.overlay').addClass('show');
-		$('.versions-right .right-inner').html("");
-		populateVersions(notekey);
-	};
-};
-
-$(function(){
-// APPEARANCE SETTINGS
-	// LOAD THEME
-	if(localStorage.theme){
-		themename = localStorage.theme;
-		changeTheme(themename);
-	}
-	else{
-		changeTheme('theme-gmail');
-	};
-	// CLICK THEME
-	$('.appearance .item.theme').click(function(){
-		themename = $(this).attr('id');
-		$(this).removeClass('dim');
-		changeTheme(themename);
-	});
-	function changeTheme(themename){
-		var classes = $('.fullwindow').attr('class').split(" ");
-		for (i=0, len=classes.length ; i<len; i++){
-			if (classes[i].substr(0,6)=="theme-"){
-				classes[i] = "";
-			};
-		};
-		$('.appearance .item.theme').siblings('.theme').addClass('dim');
-		$('#' + themename).removeClass('dim');
-		$('.fullwindow').attr('class',classes.join(" "));
-		$('.fullwindow').addClass(themename);
-		localStorage['theme'] = themename;
+	}
+	else{
+		window.location = '/';
+	};
+	// //console.log(getItem('email'));
+	if(localStorage.email){
+		$('.username').text(localStorage.email);
+		if(localStorage.index){
+			allLocalToDOM();
+			if($('.listnote').length>0){
+				sortNotes();
+				refreshCards();
+			};
+		};
+		manualSync();
+	}
+	else{
+		window.location = '/';
+	};
+});
+
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+// INTERACTIONS ///////////////////////////////////////////
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+// NEXT / PREVIOUS NOTE
+function nextNote() { 
+	//console.log('nextNote ' + $('.selected').nextAll('.listnote:not(.hide):first').length);
+	nextOne = $('.selected').nextAll('.listnote:not(.hide):first');
+	if(nextOne.length > 0 ) {
+		$('.selected').removeClass('selected');
+		nextOne.addClass('selected');
+		$('.current').removeClass('current').next('.note').addClass('current');
+		reflowCards();
+		scrollto();
+	};
+};
+function prevNote() {
+	//console.log('prevNote');
+	prevOne = $('.selected').prevAll('.listnote:not(.hide):first')
+	if(prevOne.length>0) {
+		$('.selected').removeClass('selected');
+		prevOne.addClass('selected');
+		$('.current').removeClass('current').prev('.note').addClass('current');
+		reflowCards();
+		scrollto();
+	};
+};
+
+// ON NOTE FOCUS
+$('.note .textarea textarea').live('focus',function(){
+	$('.current .note-directions').addClass('show');
+	$('div.current').addClass('highlight');
+	$('.window').unmousewheel();
+});
+
+// ON NOTE BLUR
+$('.note .textarea textarea').live('blur',function(){
+	blurkey = $(this).parent().parent().attr('id');
+	if ($(this).val() != $('#list-' + blurkey).data().content){
+		blurnote = $.parseJSON(localStorage.getItem(blurkey));
+		blurnote.content = $(this).val();
+		blurnote.modifydate = (new Date()).getTime()/1000;
+		blurnote.syncnum = blurnote.syncnum + 1;
+		localStorage.setItem(blurkey,JSON.stringify(blurnote));
+		localToDOM(blurnote.key);
+		manualSync();
+	};
+	$('.current .note-directions').removeClass('show');
+	$('.current').removeClass('highlight');
+	mapMousewheel();
+});
+
+// TOGGLE PIN
+function togglePin(listitem){
+	if(listitem.data().systemtags.indexOf('pinned')>-1){
+		// remove pin
+		listitem.data().systemtags.splice(listitem.data().systemtags.indexOf('pinned'),1);
+	}
+	else{
+		// add pin
+		listitem.data().systemtags.push('pinned');
+	};
+	listitem.data().syncnum = listitem.data().syncnum + 1;
+	localStorage.setItem( listitem.data().key, JSON.stringify( listitem.data() ) );
+	localToDOM( listitem.data().key );
+	sortNotes();
+	refreshCards();
+};
+
+// CREATE NEW NOTE
+function createNote() {
+	createdate = (new Date()).getTime();
+	newid = 'notestack' + createdate;
+	newdata = {key: newid, createdate: createdate/1000, modifydate: createdate/1000, systemtags: [], content: "new note"};
+	localStorage.setItem(newid, JSON.stringify(newdata));
+	index = $.parseJSON(localStorage.index);
+	index.data.push(newdata);
+	//console.log(index.data);
+	localStorage.index = JSON.stringify(index);
+	localToDOM( newid );
+	sortNotes();
+	$('.selected').removeClass('selected');
+	$('#list-' + newid).addClass('selected');
+	refreshCards();
+	$('.current .textarea textarea').select();
+};
+
+// SCROLL TO SELECTED
+function scrollto(){
+	if($('.selected').position().top < 0){
+		$('.list').scrollTop($('.list').scrollTop() + $('.selected').position().top);
+	};
+	if($('.selected').position().top + $('.listnote').height() > $('.list').height()){
+		$('.list').scrollTop($('.list').scrollTop() + $('.selected').position().top - $('.list').height() + $('.listnote').height());
+	};
+};
+
+// CLICK NOTE IN LIST
+$(function() {
+	$('.listnote').live('click',function(){
+		$('.selected').removeClass('selected');
+		$(this).addClass('selected');
+		$('.current').removeClass('current');
+		$('#' + $(this).attr('id').split('list-').pop()).addClass('current');
+		reflowCards();
+	});
+});
+
+// CLICK NON-CURRENT NOTE
+$(function() {
+	$('.note').live('click',function(){
+		$('.current').removeClass('current');
+		$(this).addClass('current');
+		$('.selected').removeClass('selected');
+		$('#list-' + $(this).attr('id')).addClass('selected');
+		reflowCards();
+	});
+});
+
+// CLICK SETTINGS
+$(function() {
+	$('.settings_icon').click(function() {
+		$('.settings').toggleClass('show');
+	});
+	$('.username').click(function(){
+		$('.settings').toggleClass('show');
+		$('.settings_pane').removeClass('show');
+		$('.settings_pane.data').addClass('show');
+	});
+});
+
+// CLICK SETTINGS TAB
+$(function(){
+	$('.settings .tabs a').click(function(){
+		$('.settings_pane').removeClass('show');
+		$('.settings_pane.' + $(this).text().replace(" ","_")).addClass('show');
+		e.preventDefault();
+		return false;
+	});
+});
+
+$(function(){
+	// CLICK VERSIONS BUTTON
+	$('.versions-button').live('mousedown',function(){
+		notekey = $(this).parent().attr('id');
+		toggleVersions(notekey);
+	});
+	// CLICK INDIVIDUAL VERSION
+	$('.version-item').live('mousedown',function(){
+		if($('.diff-view').hasClass('depressed')){
+			$('.versions-right .right-inner').html($(this).data().diff);
+		}
+		else{
+			$('.versions-right .right-inner').html('<textarea disabled="disabled">' + $(this).data().content + '</textarea>');
+		}
+		$('.version-select').removeClass('version-select');
+		$(this).addClass('version-select');
+	});
+	// CLICK VERSION VIEW BUTTON
+	$('.versions-toolbar .diff-view,.versions-toolbar .text-view').live('mousedown',function(){
+		$('.versions-toolbar .depressed').removeClass('depressed');
+		$(this).addClass('depressed');
+		if($('.version-select').length < 1){
+			$('.version-item:first').addClass('.version-select');
+		};
+		if($(this).hasClass('diff-view')){
+			$('.versions-right .right-inner').html($('.version-select').data().diff);
+		}
+		else if ($(this).hasClass('text-view')){
+			$('.versions-right .right-inner').html('<textarea disabled="disabled">' + $('.version-select').data().content + '</textarea>');
+		};
+	});
+	// CLICK REVERT
+	$('.versions-toolbar .revert-version').live('mousedown',function(){
+		if( $('.version-select').length==1 ){
+			notekey = $('.version-select').attr('id').split('version').shift();
+			$('.selected').removeClass('selected');
+			$('#list-' + notekey).addClass('selected');
+			$('.current').removeClass('current');
+			$('#' + notekey).addClass('current');
+			reflowCards();
+			clearOverlays();
+			$('.current textarea').select(); 
+		};
+	});
+});
+function toggleVersions(notekey){
+	if($('.versions').hasClass('show')){
+		clearOverlays();
+	}
+	else{
+		fullscreenMode('off');
+		$('.versions').addClass('show');
+		$('.overlay').addClass('show');
+		$('.versions-right .right-inner').html("");
+		populateVersions(notekey);
+	};
+};
+
+$(function(){
+// APPEARANCE SETTINGS
+	// LOAD THEME
+	if(localStorage.theme){
+		themename = localStorage.theme;
+		changeTheme(themename);
+	}
+	else{
+		changeTheme('theme-gmail');
+	};
+	// CLICK THEME
+	$('.appearance .item.theme').click(function(){
+		themename = $(this).attr('id');
+		$(this).removeClass('dim');
+		changeTheme(themename);
+	});
+	function changeTheme(themename){
+		var classes = $('.fullwindow').attr('class').split(" ");
+		for (i=0, len=classes.length ; i<len; i++){
+			if (classes[i].substr(0,6)=="theme-"){
+				classes[i] = "";
+			};
+		};
+		$('.appearance .item.theme').siblings('.theme').addClass('dim');
+		$('#' + themename).removeClass('dim');
+		$('.fullwindow').attr('class',classes.join(" "));
+		$('.fullwindow').addClass(themename);
+		localStorage['theme'] = themename;
 	};
 	// LOAD FONT
 	if(localStorage.font){
