@@ -5,7 +5,7 @@ var britt = function(){
 
 	// ON LOAD
 	$(function(){
-	
+
 		// EVALUATE LOCALSTORAGE
 		if(localStorage.email){
 			$('.email').val(localStorage.email);
