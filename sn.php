@@ -20,8 +20,8 @@ $allowed = array(
 	'conorohalloran@gmail.com',
 	'tanner.jon@gmail.com'
 	);
-
-if(!in_array($email,$allowed)){
+	
+if(($_SERVER['HTTP_HOST']=='dev.notestack.me') && !in_array($email,$allowed)){
 	echo 'notinlist';
 }
 elseif($action=='login'){
@@ -75,7 +75,7 @@ elseif($action=='sendnote'){
 function default_curl_settings(){
 	global $handle;
 	curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($handle, CURLOPT_HTTPHEADER, array("User-Agent: Notestack/0.1"));
+	curl_setopt($handle, CURLOPT_HTTPHEADER, array("User-Agent: Notestack/0.7"));
 	curl_setopt($handle, CURLOPT_HEADER, false);
 };
 	
