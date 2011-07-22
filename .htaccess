@@ -1,0 +1,11 @@
+# DEV .HTACCESS FILE
+
+# REQUIRE PASSWORD
+AuthUserFile /home/britt/.htpasswds/.htpasswd
+AuthGroupFile /dev/null
+AuthName EnterPassword
+AuthType Basic
+require valid-user
+
+# OFFLINE MANIFEST
+AddType text/cache-manifest .manifest
