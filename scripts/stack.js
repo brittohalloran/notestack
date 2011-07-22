@@ -650,7 +650,7 @@ $(function(){
 			$('#' + notekey).addClass('current');
 			reflowCards();
 			clearOverlays();
-			$('.current textarea').select(); 
+			$('.current textarea').focus(); 
 		};
 	});
 });

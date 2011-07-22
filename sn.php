@@ -76,7 +76,7 @@ function default_curl_settings(){
 	global $handle;
 	curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($handle, CURLOPT_HTTPHEADER, array("User-Agent: Notestack/0.7"));
-	curl_setopt($handle, CURLOPT_HEADER, false);
+	curl_setopt($handle, CURLOPT_HEADER, true);
 };
 	
 ?>
