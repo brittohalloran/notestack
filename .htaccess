@@ -1,9 +1,0 @@
-Options +FollowSymLinks
-RewriteEngine On
-RewriteRule ^/login$ https://simple-note.appspot.com/api/login [L]
-
-#SIMPLENOTE API 
-#RewriteRule ^/login$ https://simple-note.appspot.com/api/login [P]
-
-AddType text/cache-manifest .manifest
-
