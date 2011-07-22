@@ -1,0 +1,34 @@
+Notestack.me
+Britt O'Halloran
+britt.j.ohalloran@gmail.com
+
+// CHANGE HISTORY
+7/21/11 - Versions working, but not revert
+
+// CRITICAL PATH TO LAUNCH
+versions
+ -"revert to" button to make a version current (copy text to current version)
+tags
+ -get label filtering working
+ -make edit labels stick
+clean up theme CSS
+fix create note issue 
+allow deleting notes
+addCards() instead of refreshCards() on first load
+localStorage vs. sessionStorage
+
+// LESS CRITICAL
+add getsatisfaction link to bottom corner
+add volkorn to font stack
+up / down arrows in search
+fix highlighting multiple listnotes
+clear data on different login 
+version selection keyboard shortcuts
+
+// LONG TERM
+offline mode
+throttle refresh cards
+make links clickable / markdown support
+fix page up / page down
+make localstorage.size function
+clean up / re-organize code (namespace?)
