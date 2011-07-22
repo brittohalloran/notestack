@@ -1,3 +1,9 @@
+AuthUserFile /home/britt/.htpasswds/.htpasswd
+AuthGroupFile /dev/null
+AuthName EnterPassword
+AuthType Basic
+
+require valid-user
 
 AddType text/cache-manifest .manifest
 
