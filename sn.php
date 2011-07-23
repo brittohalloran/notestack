@@ -13,18 +13,8 @@ $length = $_POST['length'];
 $notekey = $_POST['notekey'];
 $notebody = $_POST['notebody'];
 $noteversion = $_POST['noteversion'];
-
-$allowed = array(
-	'britt.j.ohalloran@gmail.com',
-	'britt@stuntkiter.com',
-	'conorohalloran@gmail.com',
-	'tanner.jon@gmail.com'
-	);
 	
-if(($_SERVER['HTTP_HOST']=='dev.notestack.me') && !in_array($email,$allowed)){
-	echo 'notinlist';
-}
-elseif($action=='login'){
+if($action=='login'){
 	$data = base64_encode('email='.$email.'&password='.$pass); // encode data as base64
 	$url = 'https://simple-note.appspot.com/api/login'; // set URL
 	$handle = curl_init($url); // initiate CURL
@@ -76,7 +66,7 @@ function default_curl_settings(){
 	global $handle;
 	curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($handle, CURLOPT_HTTPHEADER, array("User-Agent: Notestack/0.7"));
-	curl_setopt($handle, CURLOPT_HEADER, true);
+	curl_setopt($handle, CURLOPT_HEADER, false);
 };
 	
 ?>

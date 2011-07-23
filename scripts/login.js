@@ -70,7 +70,7 @@ var britt = function(){
 				else{ // good token, save and login
 					localStorage.setItem('token',token); // store token locally
 					localStorage.setItem('tokenDate',((new Date()).getTime()/1000));
-					window.location = "http://notestack.me/+/";
+					window.location = "/+/";
 				};
 			}
 		});
