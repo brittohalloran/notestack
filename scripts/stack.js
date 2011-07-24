@@ -722,8 +722,8 @@ $(function(){
 			$('#' + notekey).addClass('current');
 			reflowCards();
 			clearOverlays();
-			//console.log($('.current textarea').val());
-			$('.current .textarea textarea').select();
+			$('.note.current .textarea textarea').val(verContent).focus();
+			return false;
 		};
 	});
 });
