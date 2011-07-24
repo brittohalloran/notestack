@@ -387,14 +387,18 @@ function syncIndex(postData){
 				else{
 					existingIndex = newIndex;
 				};
+				localStorage.setItem('mark',newIndex.mark ? newIndex.mark : "");
+				console.log(existingIndex);
+				console.log(localStorage.mark);
 				localStorage.setItem('index',JSON.stringify(existingIndex));
 				localStorage.setItem('indexDate',((new Date()).getTime()/1000));
 				$.when(updateAllNotes()).done(function(){
 					sortNotes();
 					refreshCards();	
-					if (newIndex.mark){ // theres more to get, ask again
+					if (localStorage.mark != ""){ // theres more to get, ask again
+						console.log(localStorage.mark);
 						//console.log('new index had mark, getting again');
-						postData['mark'] = newIndex.mark;
+						postData['mark'] = localStorage.mark;
 						syncIndex(postData);
 					}
 					else{ // index is updated, now update the notes
@@ -423,6 +427,7 @@ function simplenoteSync(){
 				$('.status').text('Syncing with Simplenote');
 				$('.status-div').addClass('loading');
 				since = localStorage.indexDate ? localStorage.indexDate : "" ;
+				mark = localStorage.mark ? localStorage.mark : "" ;
 				email = localStorage.email;
 				token = localStorage.token;
 				//console.log('about to enter syncIndex when');
@@ -431,7 +436,8 @@ function simplenoteSync(){
 					'email': email,
 					'token': token,
 					'since': since,
-					'length': 20
+					'mark' : mark,
+					'length': 50
 				})).done(function(){
 					//console.log('simplenoteSync resolved');
 					dfd_sim.resolve();
@@ -439,7 +445,7 @@ function simplenoteSync(){
 			};
 		}
 		else{ // 
-			//console.log('dont have local index, sending back to login');
+			//console.log('dont have token, sending back to login');
 			window.location = '/';
 		};
 	}).promise();
