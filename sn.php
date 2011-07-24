@@ -13,53 +13,64 @@ $length = $_POST['length'];
 $notekey = $_POST['notekey'];
 $notebody = $_POST['notebody'];
 $noteversion = $_POST['noteversion'];
-	
-if($action=='login'){
-	$data = base64_encode('email='.$email.'&password='.$pass); // encode data as base64
-	$url = 'https://simple-note.appspot.com/api/login'; // set URL
-	$handle = curl_init($url); // initiate CURL
-	curl_setopt($handle, CURLOPT_POST, true); // set as POST request
-	curl_setopt($handle, CURLOPT_POSTFIELDS, $data); // set POST data as encoded username/password
-	default_curl_settings();
-	$token = curl_exec($handle); // execute POST request, return $token
-	echo $token; // return data
-}
-elseif($action=='index'){
-	$data = 'email='.$email.'&auth='.$token.'&mark='.$mark.'&since='.$since.'&length='.$length;
-	$url = 'http://simple-note.appspot.com/api2/index?'.$data;
-	$handle = curl_init($url); // initiate CURL
-	default_curl_settings();
-	$index = curl_exec($handle);
-	echo $index;
-}
-elseif($action=='note'){
-	$data = '/'.$notekey.'?email='.$email.'&auth='.$token;
-	$url = 'http://simple-note.appspot.com/api2/data'.$data;
-	$handle = curl_init($url); // initiate CURL
-	default_curl_settings();
-	$note = curl_exec($handle);
-	echo $note;
-}
-elseif($action=='noteversion'){
-	$data = '/'.$notekey.'/'.$noteversion.'?email='.$email.'&auth='.$token;
-	$url = 'http://simple-note.appspot.com/api2/data'.$data;
-	$handle = curl_init($url); // initiate CURL
-	default_curl_settings();
-	$note = curl_exec($handle);
-	echo $note;
-}
-elseif($action=='sendnote'){
-	if($notekey!=""){
-		$data = '/'.$notekey;
+
+$authorized = array(
+	'britt.j.ohalloran@gmail.com',
+	'conorohalloran@gmail.com',
+	'tanner.jon@gmail.com'
+);
+
+if(in_array($email, $authorized)){
+	if($action=='login'){
+		$data = base64_encode('email='.$email.'&password='.$pass); // encode data as base64
+		$url = 'https://simple-note.appspot.com/api/login'; // set URL
+		$handle = curl_init($url); // initiate CURL
+		curl_setopt($handle, CURLOPT_POST, true); // set as POST request
+		curl_setopt($handle, CURLOPT_POSTFIELDS, $data); // set POST data as encoded username/password
+		default_curl_settings();
+		$token = curl_exec($handle); // execute POST request, return $token
+		echo $token; // return data
+	}
+	elseif($action=='index'){
+		$data = 'email='.$email.'&auth='.$token.'&mark='.$mark.'&since='.$since.'&length='.$length;
+		$url = 'http://simple-note.appspot.com/api2/index?'.$data;
+		$handle = curl_init($url); // initiate CURL
+		default_curl_settings();
+		$index = curl_exec($handle);
+		echo $index;
+	}
+	elseif($action=='note'){
+		$data = '/'.$notekey.'?email='.$email.'&auth='.$token;
+		$url = 'http://simple-note.appspot.com/api2/data'.$data;
+		$handle = curl_init($url); // initiate CURL
+		default_curl_settings();
+		$note = curl_exec($handle);
+		echo $note;
+	}
+	elseif($action=='noteversion'){
+		$data = '/'.$notekey.'/'.$noteversion.'?email='.$email.'&auth='.$token;
+		$url = 'http://simple-note.appspot.com/api2/data'.$data;
+		$handle = curl_init($url); // initiate CURL
+		default_curl_settings();
+		$note = curl_exec($handle);
+		echo $note;
+	}
+	elseif($action=='sendnote'){
+		if($notekey!=""){
+			$data = '/'.$notekey;
+		};
+		$data = $data.'?email='.$email.'&auth='.$token;
+		$url = 'http://simple-note.appspot.com/api2/data'.$data;
+		$handle = curl_init($url); // initiate CURL
+		curl_setopt($handle, CURLOPT_POST, true); // set as POST request
+		curl_setopt($handle, CURLOPT_POSTFIELDS, $notebody); 
+		default_curl_settings();
+		$note = curl_exec($handle); // execute POST request, return $token
+		echo $note;
 	};
-	$data = $data.'?email='.$email.'&auth='.$token;
-	$url = 'http://simple-note.appspot.com/api2/data'.$data;
-	$handle = curl_init($url); // initiate CURL
-	curl_setopt($handle, CURLOPT_POST, true); // set as POST request
-	curl_setopt($handle, CURLOPT_POSTFIELDS, $notebody); 
-	default_curl_settings();
-	$note = curl_exec($handle); // execute POST request, return $token
-	echo $note;
+}
+else{
+	echo "notinlist"; 
 };
 
 function default_curl_settings(){
