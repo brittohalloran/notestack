@@ -515,7 +515,9 @@ a:hover {
 		border: 1px solid #4D90FE;
 	}
 	
-	.fullwindow.theme-gmail .window .note .maximize {
+	/*MAXIMIZE AND HISTORY BUTTON*/
+	.fullwindow.theme-gmail .window .note .maximize,
+	.fullwindow.theme-gmail .window .note .versions-button {
 		border-bottom: 1px solid rgba(0,0,0,0.3);
 		border-right: 1px solid rgba(0,0,0,0.3);
 		border-left: 1px solid rgba(0,0,0,0.3);
@@ -653,7 +655,9 @@ a:hover {
 		border: 1px solid #4D90FE;
 	}
 	
-	.fullwindow.theme-earthy .window .note .maximize {
+	/*MAXIMIZE AND HISTORY BUTTONS*/
+	.fullwindow.theme-earthy .window .note .maximize,
+	.fullwindow.theme-earthy .window .note .versions-button {
 		border-bottom: 1px solid rgba(0,0,0,0.3);
 		border-right: 1px solid rgba(0,0,0,0.3);
 		border-left: 1px solid rgba(0,0,0,0.3);

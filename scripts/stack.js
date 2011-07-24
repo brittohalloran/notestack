@@ -748,7 +748,7 @@ $(function(){
 		changeTheme(themename);
 	}
 	else{
-		changeTheme('theme-gmail');
+		changeTheme('theme-moleskine'); // default theme
 	};
 	// CLICK THEME
 	$('.appearance .item.theme').click(function(){
@@ -773,6 +773,9 @@ $(function(){
 	if(localStorage.font){
 		fontname = localStorage.font;
 		changeFont(fontname);
+	}
+	else{
+		changeFont('font-mono'); // default font
 	};
 	// CLICK FONT
 	$('.appearance .font').click(function(){
@@ -796,6 +799,9 @@ $(function(){
 	if(localStorage.fontsize){
 		fontsize = localStorage.fontsize;
 		changeFontsize(fontsize);
+	}
+	else{
+		changeFontsize('fontsize-12'); // default fontsize
 	};
 	// CLICK FONTSIZE
 	$('.appearance .fontsize').click(function(){
