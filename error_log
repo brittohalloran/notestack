@@ -31,9 +31,3 @@
 [26-Jun-2011 10:52:06] PHP Warning:  curl_setopt(): supplied argument is not a valid cURL handle resource in /home/britt/public_html/notestack.me/sn.php on line 44
 [26-Jun-2011 10:52:06] PHP Warning:  curl_setopt(): supplied argument is not a valid cURL handle resource in /home/britt/public_html/notestack.me/sn.php on line 45
 [26-Jun-2011 10:52:40] PHP Parse error:  syntax error, unexpected '=', expecting ',' or ';' in /home/britt/public_html/notestack.me/sn.php on line 18
-[24-Jul-2011 18:13:36] PHP Parse error:  syntax error, unexpected '@', expecting ')' in /home/britt/public_html/notestack_dev/sn.php on line 18
-[24-Jul-2011 18:13:37] PHP Parse error:  syntax error, unexpected '@', expecting ')' in /home/britt/public_html/notestack_dev/sn.php on line 18
-[24-Jul-2011 18:14:21] PHP Parse error:  syntax error, unexpected '@', expecting ')' in /home/britt/public_html/notestack_dev/sn.php on line 18
-[24-Jul-2011 18:14:22] PHP Parse error:  syntax error, unexpected '@', expecting ')' in /home/britt/public_html/notestack_dev/sn.php on line 18
-[24-Jul-2011 18:16:09] PHP Parse error:  syntax error, unexpected '@', expecting ')' in /home/britt/public_html/notestack_dev/sn.php on line 18
-[24-Jul-2011 18:16:10] PHP Parse error:  syntax error, unexpected '@', expecting ')' in /home/britt/public_html/notestack_dev/sn.php on line 18
