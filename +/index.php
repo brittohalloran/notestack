@@ -140,15 +140,15 @@
 					<div class="data settings_pane">
 						<table>
 							<tr>
-								<td>Notes</td>
+								<td class="l">Notes</td>
 								<td class="data_notes"></td>
 							</tr>
 							<tr>
-								<td>Deleted notes</td>
+								<td class="l">Deleted notes</td>
 								<td class="data_deleted"></td>
 							</tr>
 						</table>
-						<div><a href="#"></a> | <a href="/">Logout</a></div>
+						<div><a href="/">Logout</a> | <a href="/" class="cleardata">Logout & clear data</a></div>
 					</div>
 					<div class="keyboard_shortcuts settings_pane">
 						<table>

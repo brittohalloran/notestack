@@ -124,8 +124,9 @@ function setData(key, val){
 
 // REFLOW CARDS
 function reflowCards(){
-	if($('.current').length!=1){
-		if($('.selected').length!=1){
+	if($('.current').length != 1){
+		if($('.selected').length != 1){
+			$('.selected').removeClass('selected');
 			$('.listnote:first').addClass('selected');
 		}
 		else{
@@ -146,6 +147,7 @@ function reflowCards(){
 function refreshCards(){
 	//console.log('refreshing cards');
 	if($('.selected').length != 1){
+		$('.selected').removeClass('selected');
 		$('.listnote:first').addClass('selected');
 	};
 	$('.note').remove();
@@ -254,6 +256,7 @@ function getNote(notekey){
 			success: function(data){
 				//console.log('inside get success');
 				note = $.parseJSON(data);
+				//console.log(note);
 				localStorage.setItem(note.key,data);
 				localToDOM(note.key);
 				dfd_get.resolve();
@@ -282,6 +285,7 @@ function sendNote(noteobject){
 		success: function(data){
 			//console.log('note updated');
 			note = $.parseJSON(data);
+			//console.log(note);
 			if(!("content" in note)){
 				note['content'] = noteobject.content;
 			};
@@ -289,11 +293,14 @@ function sendNote(noteobject){
 				index = $.parseJSON(localStorage.index);
 				for (i=0; i<=index.data.length-1; i++){
 					if (index.data[i].key.substr(0,9)=='notestack'){
+						//console.log('deleting from index: ' + index.data[i].key);
 						$('#list-' + index.data[i].key).remove();
 						localStorage.removeItem(index.data[i].key);
-						delete index.data[i];
+						index.data.splice(i,1);
+						break
 					};
 				};
+				localStorage.index = JSON.stringify(index);
 			};
 			localStorage.setItem(note.key,JSON.stringify(note));
 			localToDOM(note.key);
@@ -314,7 +321,7 @@ function updateAllNotes(){
 	return $.Deferred(function(dfd_uan){
 		//console.log('iterating through index, showing local, getting if needed');
 		index = $.parseJSON(localStorage.index);
-		var i, snarray=[], notecount=0;
+		var i, snarray=[], notecount=0, deletedcount=0;
 		for (i=0;i<=index.data.length-1;i++){
 			if (localStorage.getItem(index.data[i].key)){
 				localNote = $.parseJSON(localStorage.getItem(index.data[i].key));
@@ -343,10 +350,14 @@ function updateAllNotes(){
 			};
 			if (index.data[i].deleted==0){
 				notecount++;
+			}
+			else if (index.data[i].deleted==1){
+				deletedcount++;
 			};
 		};
 		$('.note-data').text(notecount + ' notes | ');
 		$('.data_notes').text(notecount);
+		$('.data_deleted').text(deletedcount);
 		$('.status').text('Syncing ' + snarray.length + ' notes');
 		$('.status-div').addClass('loading');
 		$.when.apply(null, snarray).done(function(){
@@ -368,7 +379,8 @@ function syncIndex(postData){
 				if(localStorage.index){
 					existingIndex = $.parseJSON(localStorage.index);
 					for (i=0;i<=newIndex.data.length-1;i++){
-						for (j=0; j<=existingIndex.data.length-1;j++){
+						for (j=0;j<=existingIndex.data.length-1;j++){
+							console.log(j);
 							if(existingIndex.data[j].key==newIndex.data[i].key){
 								existingIndex.data.splice(j,1);
 								break
@@ -381,14 +393,18 @@ function syncIndex(postData){
 				else{
 					existingIndex = newIndex;
 				};
+				localStorage.setItem('mark',newIndex.mark ? newIndex.mark : "");
+				//console.log(existingIndex);
+				//console.log(localStorage.mark);
 				localStorage.setItem('index',JSON.stringify(existingIndex));
 				localStorage.setItem('indexDate',((new Date()).getTime()/1000));
 				$.when(updateAllNotes()).done(function(){
 					sortNotes();
 					refreshCards();	
-					if (newIndex.mark){ // theres more to get, ask again
+					if (localStorage.mark != ""){ // theres more to get, ask again
+						//console.log(localStorage.mark);
 						//console.log('new index had mark, getting again');
-						postData['mark'] = newIndex.mark;
+						postData['mark'] = localStorage.mark;
 						syncIndex(postData);
 					}
 					else{ // index is updated, now update the notes
@@ -398,7 +414,7 @@ function syncIndex(postData){
 			},
 			error: function(msg){
 				//console.log('error updating index ' + msg);
-				dfd_syn.failure();
+				//dfd_syn.failure();
 			}
 		});
 	}).promise();
@@ -417,6 +433,7 @@ function simplenoteSync(){
 				$('.status').text('Syncing with Simplenote');
 				$('.status-div').addClass('loading');
 				since = localStorage.indexDate ? localStorage.indexDate : "" ;
+				mark = localStorage.mark ? localStorage.mark : "" ;
 				email = localStorage.email;
 				token = localStorage.token;
 				//console.log('about to enter syncIndex when');
@@ -425,7 +442,8 @@ function simplenoteSync(){
 					'email': email,
 					'token': token,
 					'since': since,
-					'length': 20
+					'mark' : mark,
+					'length': 50
 				})).done(function(){
 					//console.log('simplenoteSync resolved');
 					dfd_sim.resolve();
@@ -433,7 +451,7 @@ function simplenoteSync(){
 			};
 		}
 		else{ // 
-			//console.log('dont have local index, sending back to login');
+			//console.log('dont have token, sending back to login');
 			window.location = '/';
 		};
 	}).promise();
@@ -612,7 +630,7 @@ function togglePin(listitem){
 function createNote() {
 	createdate = (new Date()).getTime();
 	newid = 'notestack' + createdate;
-	newdata = {key: newid, createdate: createdate/1000, modifydate: createdate/1000, systemtags: [], content: "new note"};
+	newdata = {key: newid, createdate: createdate/1000, modifydate: createdate/1000, tags: [], systemtags: [], content: "new note"};
 	localStorage.setItem(newid, JSON.stringify(newdata));
 	index = $.parseJSON(localStorage.index);
 	index.data.push(newdata);
@@ -748,7 +766,7 @@ $(function(){
 		changeTheme(themename);
 	}
 	else{
-		changeTheme('theme-gmail');
+		changeTheme('theme-moleskine'); // default theme
 	};
 	// CLICK THEME
 	$('.appearance .item.theme').click(function(){
@@ -773,6 +791,9 @@ $(function(){
 	if(localStorage.font){
 		fontname = localStorage.font;
 		changeFont(fontname);
+	}
+	else{
+		changeFont('font-mono'); // default font
 	};
 	// CLICK FONT
 	$('.appearance .font').click(function(){
@@ -796,6 +817,9 @@ $(function(){
 	if(localStorage.fontsize){
 		fontsize = localStorage.fontsize;
 		changeFontsize(fontsize);
+	}
+	else{
+		changeFontsize('fontsize-12'); // default fontsize
 	};
 	// CLICK FONTSIZE
 	$('.appearance .fontsize').click(function(){
@@ -868,6 +892,11 @@ function refreshNoteBinds(note_tas){
 	// MAXIMIZE BUTTON
 	$('.maximize').click(function(){
 		fullscreenMode();
+	});
+	
+	// LOGOUT AND CLEAR DATA
+	$('.cleardata').click(function(){
+		localStorage.clear();
 	});
 };
 
