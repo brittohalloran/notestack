@@ -256,6 +256,7 @@ function getNote(notekey){
 			success: function(data){
 				//console.log('inside get success');
 				note = $.parseJSON(data);
+				//console.log(note);
 				localStorage.setItem(note.key,data);
 				localToDOM(note.key);
 				dfd_get.resolve();
@@ -284,6 +285,7 @@ function sendNote(noteobject){
 		success: function(data){
 			//console.log('note updated');
 			note = $.parseJSON(data);
+			//console.log(note);
 			if(!("content" in note)){
 				note['content'] = noteobject.content;
 			};
@@ -291,11 +293,14 @@ function sendNote(noteobject){
 				index = $.parseJSON(localStorage.index);
 				for (i=0; i<=index.data.length-1; i++){
 					if (index.data[i].key.substr(0,9)=='notestack'){
+						//console.log('deleting from index: ' + index.data[i].key);
 						$('#list-' + index.data[i].key).remove();
 						localStorage.removeItem(index.data[i].key);
-						delete index.data[i];
+						index.data.splice(i,1);
+						break
 					};
 				};
+				localStorage.index = JSON.stringify(index);
 			};
 			localStorage.setItem(note.key,JSON.stringify(note));
 			localToDOM(note.key);
@@ -374,7 +379,8 @@ function syncIndex(postData){
 				if(localStorage.index){
 					existingIndex = $.parseJSON(localStorage.index);
 					for (i=0;i<=newIndex.data.length-1;i++){
-						for (j=0; j<=existingIndex.data.length-1;j++){
+						for (j=0;j<=existingIndex.data.length-1;j++){
+							console.log(j);
 							if(existingIndex.data[j].key==newIndex.data[i].key){
 								existingIndex.data.splice(j,1);
 								break
@@ -388,15 +394,15 @@ function syncIndex(postData){
 					existingIndex = newIndex;
 				};
 				localStorage.setItem('mark',newIndex.mark ? newIndex.mark : "");
-				console.log(existingIndex);
-				console.log(localStorage.mark);
+				//console.log(existingIndex);
+				//console.log(localStorage.mark);
 				localStorage.setItem('index',JSON.stringify(existingIndex));
 				localStorage.setItem('indexDate',((new Date()).getTime()/1000));
 				$.when(updateAllNotes()).done(function(){
 					sortNotes();
 					refreshCards();	
 					if (localStorage.mark != ""){ // theres more to get, ask again
-						console.log(localStorage.mark);
+						//console.log(localStorage.mark);
 						//console.log('new index had mark, getting again');
 						postData['mark'] = localStorage.mark;
 						syncIndex(postData);
@@ -408,7 +414,7 @@ function syncIndex(postData){
 			},
 			error: function(msg){
 				//console.log('error updating index ' + msg);
-				dfd_syn.failure();
+				//dfd_syn.failure();
 			}
 		});
 	}).promise();
@@ -624,7 +630,7 @@ function togglePin(listitem){
 function createNote() {
 	createdate = (new Date()).getTime();
 	newid = 'notestack' + createdate;
-	newdata = {key: newid, createdate: createdate/1000, modifydate: createdate/1000, systemtags: [], content: "new note"};
+	newdata = {key: newid, createdate: createdate/1000, modifydate: createdate/1000, tags: [], systemtags: [], content: "new note"};
 	localStorage.setItem(newid, JSON.stringify(newdata));
 	index = $.parseJSON(localStorage.index);
 	index.data.push(newdata);

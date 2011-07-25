@@ -17,7 +17,8 @@ $noteversion = $_POST['noteversion'];
 $authorized = array(
 	'britt.j.ohalloran@gmail.com',
 	'conorohalloran@gmail.com',
-	'tanner.jon@gmail.com'
+	'tanner.jon@gmail.com',
+	'britt@stuntkiter.com'
 );
 
 if(in_array($email, $authorized)){
