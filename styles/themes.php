@@ -1,3 +1,5 @@
+<?php header("Content-type: text/css"); ?>
+
 /* STYLE ################################################################## */
 
 a {
@@ -112,6 +114,17 @@ a:hover {
 	width: 100%; 
 	height: 0px; 
 }
+
+/* THEME VARIABLES ########## */
+<?PHP 
+	$themes = array('$android','$moleskine','$gmail','$earthy');
+	
+	// ANDROID
+	// MOLESKINE
+	$moleskine = array(
+		'highlight_color' => '#',
+	);
+?>
 
 /* DEFAULT THEME1 ################################################################## */
 
