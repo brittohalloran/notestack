@@ -1,54 +1,12 @@
-* {
-	margin: 0;
-	padding: 0;
-	font-family: 'Droid Sans', arial, serif;
-}
-
-/* STRUCTURE ################################################################## */
-
-.body {
-	overflow: hidden;
-}
-
-.fullwindow {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	left: 0;
-	top: 0;
-	overflow: hidden;
-}
-
-.sidebar{
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	bottom: 0px;
-	overflow: hidden;
-	width: 350px;
+* {	margin: 0;	padding: 0;	font-family: 'Droid Sans', arial, serif;}/* STRUCTURE ################################################################## */.body {	overflow: hidden;}.fullwindow {	width: 100%;	height: 100%;	position: absolute;	left: 0;	top: 0;	overflow: hidden;}.sidebar{	position: absolute;	left: 0px;	top: 0px;	bottom: 0px;	overflow: hidden;	width: 350px;
 	-moz-box-shadow: 3px 0px 5px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 3px 0px 5px rgba(0,0,0,0.5);
 	box-shadow: 3px 0px 5px rgba(0,0,0,0.5);
 	z-index: 10;
-}
-
-	.search {
-		position: absolute;
-		left: 0px;
-		top: 0px;
-		height: 35px;
-		width: 100%;
-		overflow: hidden;
-	}
-
-		.search input {
+}	.search {		position: absolute;		left: 0px;		top: 0px;		height: 35px;		width: 100%;		overflow: hidden;	}		.search input {
 			position: absolute;
 			left: 5px;
-			top: 5px;
-			width: 218px;
-			height: 13px;
-			padding: 3px 0px 3px 8px;
-		}
+			top: 5px;			width: 218px;			height: 13px;			padding: 3px 0px 3px 8px;		}
 		
 		.search .addnote,
 		.search .tags,
@@ -88,341 +46,29 @@
 		.search .reload .inner {
 			background: url('../images/reload.png') center no-repeat;
 		}
-		
-	.list {
-		position: absolute;
-		width: 100%;
-		left: 0px;
-		top: 35px;
-		bottom: 0px;
-		overflow-x: hidden;
-		overflow-y: scroll;
-	}
-
-		.listnote-holder {
-			width: 100%;
-		}
-	
-		.listnote {
-			position: relative;
-			width: 100%;
-			height: 40px;
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			cursor: pointer;		
-		}
-		
-			.listnote .title,
-			.listnote .preview {
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				position: absolute;
-				left: 35px;
-				right: 10px;
-				cursor: inherit;
-			}
-		
-			.listnote .title {
-				top: 5px;
-			}
-			
-			.listnote .preview {
-				bottom: 5px;
-			}
-			
-			.listnote .pinboard {
-				position: absolute;
-				top: 0px;
-				height: 100%;
-				left: 0px;
-				width: 35px;
-				cursor: pointer;
-			}
-			
-			.listnote .contents,
-			.listnote .contents textarea {
-				display: none;
-				visibility: hidden;
-			}
-
-.window {
-	overflow: hidden;
-	position: absolute;
-	left: 350px;
-	right: 0;
-	top: 0;
-	height: 100%;
-	display: block;
-}
-
-	.note {
-		display: none;
-		width: 600px;
-		position: absolute;
-		left: 50%;
-		top: 40px;
-		bottom: 30px;
-		min-height: 200px;
-		overflow-y: auto;
-		-webkit-transition: margin 0.25s ease-in-out;
-		-moz-transition: margin 0.25s ease-in-out;
-		-o-transition: margin-left 0.25s ease-in-out;
-		transition: margin 0.25s ease-in-out;
-	}
-
-		.textarea {
-			position: absolute;
-			top: 20px;
-			bottom: 65px;
-			left: 20px;
-			right: 20px;
-		}
-		
-		.textarea textarea {
-			position: absolute;
-			left: 0px;
-			width: 550px;
-			top: 0px;
-			bottom: 0px;
-			padding: 5px;
-		}
-		
-		.note-directions {
-			display: none;
-			visibility: hidden;
-			position: absolute;
-			bottom: 3px;
-			left: 0px;
-			width: 100%;
-			text-align: center;
-			font-size: 0.8em;
-		}
-		
-		.note .maximize {
-			position: absolute;
-			top: 0px;
-			right: 35px;
-			height: 13px;
-			width: 35px;
-			font-size: 10px;
-			border-bottom: 1px solid white;
-			border-right: 1px solid white;
-			border-left: 1px solid white;
-			opacity: 0.5;
-			color: white;
-			text-align: center;
-			cursor: pointer;
-			padding-top: 2px;
-		}
-		
-		.note .maximize:hover {
-			background: rgba(150,150,150,1);
-		}
+			.list {		position: absolute;		width: 100%;		left: 0px;		top: 35px;		bottom: 0px;		overflow-x: hidden;		overflow-y: scroll;	}		.listnote-holder {			width: 100%;		}			.listnote {			position: relative;			width: 100%;			height: 40px;			white-space: nowrap;			overflow: hidden;			text-overflow: ellipsis;			cursor: pointer;				}					.listnote .title,			.listnote .preview {				white-space: nowrap;				overflow: hidden;				text-overflow: ellipsis;				position: absolute;				left: 35px;				right: 10px;				cursor: inherit;			}					.listnote .title {				top: 5px;			}						.listnote .preview {				bottom: 5px;			}						.listnote .pinboard {				position: absolute;				top: 0px;				height: 100%;				left: 0px;				width: 35px;				cursor: pointer;			}						.listnote .contents,			.listnote .contents textarea {				display: none;				visibility: hidden;			}.window {	overflow: hidden;	position: absolute;	left: 350px;	right: 0;	top: 0;	height: 100%;	display: block;}	.note {		display: none;		width: 600px;		position: absolute;		left: 50%;		top: 40px;		bottom: 30px;		min-height: 200px;		overflow-y: auto;		-webkit-transition: margin 0.25s ease-in-out;		-moz-transition: margin 0.25s ease-in-out;		-o-transition: margin-left 0.25s ease-in-out;		transition: margin 0.25s ease-in-out;	}		.textarea {			position: absolute;			top: 20px;			bottom: 65px;			left: 20px;			right: 20px;		}				.textarea textarea {			position: absolute;			left: 0px;			width: 550px;			top: 0px;			bottom: 0px;			padding: 5px;		}				.note-directions {			display: none;			visibility: hidden;			position: absolute;			bottom: 3px;			left: 0px;			width: 100%;			text-align: center;			font-size: 0.8em;		}				.note .maximize,		.note .versions-button,		.note .delete {			position: absolute;			top: 0px;			height: 13px;			font-size: 10px;			border-bottom: 1px solid white;			border-right: 1px solid white;			border-left: 1px solid white;			opacity: 0.5;			color: white;			text-align: center;			cursor: pointer;			padding-top: 2px;		}				.note .delete {			right: 20px;			width: 16px;		}				.note .maximize {			right: 46px;			width: 35px;		}
 		
-		.note .versions-button {
-			position: absolute;
-			top: 0px;
-			right: 80px;
-			height: 13px;
-			width: 45px;
-			font-size: 10px;
-			border-bottom: 1px solid white;
-			border-right: 1px solid white;
-			border-left: 1px solid white;
-			opacity: 0.5;
-			color: white;
-			text-align: center;
-			cursor: pointer;
-			padding-top: 2px;
-		}
-		
-		.note .versions-button:hover {
-			background: rgba(150,150,150,1);
-		}
-		
-		.note .tag-area {
-			position: absolute;
-			left: 20px;
-			width: 560px;
-			bottom: 20px;
-			height: 35px;
-			border: 1px solid rgba(0,0,0,0.1);
-			overflow-y: auto;
-		}
-		
-		.note .tag-area div.tagsinput {
-			min-height: 35px;
-			overflow-y: auto;
-		}
-		
-	.toolbar {
-		position: absolute;
-		width: 100%;
-		top: 0;
-		z-index: 20;
-	}
-	
-		.status-div {
-			position: absolute;
-			height: 100%;
-			left: 5px;
-		}
-		
-			.status-icon {
-				display: none;
-				position: absolute;
-				height: 24px;
-				width: 24px;
-				top: 5px;
-			}
-			
-			.status-div.loading .status-icon {
-				display: block;
-			}
-			
-			.status {
-				position: absolute;
-				top: 5px;
-				left: 5px;
-				width: 300px;
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-			}
-			
-			.status-div.loading .status {
-				left: 25px;
-			}
-			
-	
-		.toolbar .userdata {
-			position: absolute;
-			right: 35px;
-			top: 5px;
-			cursor: pointer;
-		}
-		
-		.toolbar .settings_icon {
-			position: absolute;
-			right: 8px;
-			top: 0px; 
-			cursor: pointer;
-		}
-	
-.settings {
-	position: absolute;
-	left: 350px;
-	height: 60%;
-	right: 0px;
-	top: 100%;
-	-webkit-transition: top 0.25s ease-in-out;
-	-moz-transition: top 0.25s ease-in-out;
-	-o-transition: top 0.25s ease-in-out;
-	transition: top 0.25s ease-in-out;
-}
-
-	.settings.show {
-		top: 40%;
-	}
-	
-	.settings .inner {
-		position: absolute;
-		left: 10px;
-		top: 10px;
-		right: 10px;
-		bottom: 0px;
-		overflow: auto;
-	}
-	
-		.settings .tabs {
+		.note .versions-button {			right: 92px;			width: 45px;		}				.note .maximize:hover,		.note .versions-button:hover,		.note .delete:hover {			background: rgba(150,150,150,1);		}				.message {			position: absolute;			width: 80%;			height: 33px;			top: 0px;			left: 10%;			background: #cccccc;			text-align: center;			padding-top: 10px;			display: none;			-webkit-border-bottom-right-radius: 5px;			-webkit-border-bottom-left-radius: 5px;			-moz-border-radius-bottomright: 5px;			-moz-border-radius-bottomleft: 5px;			border-bottom-right-radius: 5px;			border-bottom-left-radius: 5px;			-moz-box-shadow: 1px 3px 3px rgba(0,0,0,0.3);			-webkit-box-shadow: 1px 3px 3px rgba(0,0,0,0.3);			box-shadow: 1px 3px 3px rgba(0,0,0,0.3);		}				.note .tag-area {			position: absolute;			left: 20px;
+			width: 560px;			bottom: 20px;			height: 35px;			border: 1px solid rgba(0,0,0,0.1);			overflow-y: auto;		}				.note .tag-area div.tagsinput {			min-height: 35px;			overflow-y: auto;		}
+			.toolbar {		position: absolute;		width: 100%;		top: 0;
+		z-index: 20;	}			.status-div {			position: absolute;			height: 100%;			left: 5px;		}					.status-icon {				display: none;				position: absolute;				height: 24px;				width: 24px;				top: 5px;			}						.status-div.loading .status-icon {				display: block;			}						.status {				position: absolute;				top: 5px;				left: 5px;				width: 300px;				white-space: nowrap;				overflow: hidden;				text-overflow: ellipsis;			}						.status-div.loading .status {				left: 25px;			}						.toolbar .userdata {			position: absolute;			right: 35px;			top: 5px;			cursor: pointer;		}				.toolbar .settings_icon {			position: absolute;			right: 8px;			top: 0px; 			cursor: pointer;		}			.bottom-toolbar {		position: absolute;		width: 100%;		bottom: 0px;		z-index: 20;		font-size: 0.75em;	}			.bottom-toolbar .notestack-info {			position: absolute;			bottom: 5px;			right: 10px;			text-align: center;		}	.settings {	position: absolute;	left: 350px;	height: 60%;	right: 0px;	top: 100%;	-webkit-transition: top 0.25s ease-in-out;	-moz-transition: top 0.25s ease-in-out;	-o-transition: top 0.25s ease-in-out;	transition: top 0.25s ease-in-out;	z-index: 50;}	.settings.show {		top: 40%;	}		.settings .inner {		position: absolute;		left: 10px;		top: 10px;		right: 10px;		bottom: 0px;		overflow: auto;	}			.settings .tabs {
 			position: absolute;
-			top: 0px;
-			left: 0px;
+			top: 0px;			left: 0px;
 			padding-bottom: 5px;
-			width: 100%;
-			z-index: 99;	
-		}
-		
-		.settings .content {
+			width: 100%;			z-index: 99;			}				.settings .content {
 			position: absolute;
 			bottom: 0px;
 			top: 25px;
 			width: 100%;
-			overflow: auto;
-		}
-		
-		.settings_pane {
-			display: none;
-		}
+			overflow: auto;		}				.settings_pane {			display: none;		}
 		
 			.settings_pane .pane_section {
 				float: left;
-			}
-		
-		
-		
-		.appearance .item {
-			float: left;
-			height: 100px;
-			width: 100px;
-			margin: 10px;
-			cursor: pointer;
-			position: relative;
-			border-radius: 5px;
-			-moz-border-radius: 5px;
-			-webkit-border-radius: 5px;
-		}
-		
-			.appearance .item .inner {
-				position: absolute;
-				left: 10px;
-				right: 10px;
-				top: 10px;
-				bottom: 10px;
-			}
-		
-			.appearance .item .name,
-			.appearance .item .by {
-				position: absolute;
+			}								.appearance .item {			float: left;			height: 100px;			width: 100px;			margin: 10px;			cursor: pointer;			position: relative;			border-radius: 5px;			-moz-border-radius: 5px;			-webkit-border-radius: 5px;		}					.appearance .item .inner {				position: absolute;				left: 10px;				right: 10px;				top: 10px;				bottom: 10px;
+			}					.appearance .item .name,			.appearance .item .by {				position: absolute;
 				left: 0px;
 				right: 0px;
-				padding: 0px 5px;
-				text-align: center;
-				color: black;
-				font-size: 0.75em;
-				
-			}
-			
-			.appearance .item .name {
-				top: 20px;
-			}
-			
-			.appearance .item .by {
-				top: 40px;
-			}
-			
-			.appearance .font {
-				float: left;
-				height: 30px;
-				padding: 10px;
-				margin: 5px;
-			}
-			
-			.appearance .fontsize {
-				float: left;
-				height: 30px;
-				padding: 10px;
-				margin: 5px;
-			}
-			
-		.appearance .design-a-theme {
-			clear: both;
-			font-size: 0.75em;
-			color: white;
-			padding: 10px;
-		}
+				padding: 0px 5px;				text-align: center;				color: black;				font-size: 0.75em;							}						.appearance .item .name {				top: 20px;			}						.appearance .item .by {				top: 40px;			}						.appearance .font {				float: left;				height: 30px;				padding: 10px;				margin: 5px;			}						.appearance .fontsize {				float: left;				height: 30px;				padding: 10px;				margin: 5px;			}					.appearance .design-a-theme {			clear: both;			font-size: 0.75em;			color: white;			padding: 10px;		}
 		
 		.settings .keyboard_shortcuts table {
 			margin: 0px auto;
@@ -430,105 +76,8 @@
 		
 		.settings .data table {
 			margin: 0px auto;
-		}
-
-.help {
-	height: 100%;
-	width: 100%;
-	top: 0;
-	left: 0;
-}
-
-.overlay {
-	position: absolute;
-	height: 100%;
-	width: 100%;
-	top: 100%;
-	left: 0;
-	z-index: 100;
-	background: rgba(0,0,0,0);
-}
-.overlay.show {
-	top: 0;
-	-webkit-transition: background 0.3s linear;
-    -moz-transition: background 0.3s linear;
-    -o-transition: background 0.3s linear;
-    transition: background 0.3s linear;
-	background: rgba(0,0,0,0.7);
-}
-
-.labels {
-	display: none;
-	position: absolute;
-	width: 500px;
-	left: 50%;
-	margin-left: -250px;
-	height: 500px;
-	top: 50%;
-	margin-top: -250px;
-	background: gray;
-	z-index: 101;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-o-border-radius: 10px;
-	border-radius: 10px;
-}
-
-	.labels .inner {
-		position: absolute;
-		top: 20px;
-		left: 20px;
-		right: 20px;
-		bottom: 20px;
-	}
-	
-		.labels .inner input {
-			position: absolute;
-			top: 12px;
-			right: 12px;
-			left: 12px;
-		}
-		
-		.labels .items {
-			position: absolute;
-			top: 38px;
-			right: 0px;
-			left: 0px;
-			bottom: 0px;
-			overflow: auto;
-		}
-		
-		.labels .item {
-			width: 437px;
-			position: relative;
-			font-size: 18px;
-			margin: 4px auto;
-			background: rgba(0,0,0,0.2);
-			height: 25px;
-			cursor: pointer;
-		}
-		
-		.labels .item .name {
-			position: absolute;
-			left: 35px;
-		}
-		
-		.labels .item .notecount {
-			position: absolute;
-			right: 35px;
-		}
-
-	.labels .close {
-		position: absolute;
-		height: 30px;
-		width: 30px;
-		right: -10px;
-		top: -10px;
-		background: url('../images/close.png') no-repeat bottom left;
-		cursor: pointer;
-	}
-	
-.versions {
+		}.help {	height: 100%;	width: 100%;	top: 0;	left: 0;}.overlay {	position: absolute;	height: 100%;	width: 100%;	top: 100%;	left: 0;	z-index: 100;	background: rgba(0,0,0,0);}.overlay.show {	top: 0;	-webkit-transition: background 0.3s linear;    -moz-transition: background 0.3s linear;    -o-transition: background 0.3s linear;    transition: background 0.3s linear;	background: rgba(0,0,0,0.7);}.labels {	display: none;	position: absolute;	width: 500px;	left: 50%;	margin-left: -250px;	height: 500px;	top: 50%;	margin-top: -250px;	background: gray;	z-index: 101;	-moz-border-radius: 10px;	-webkit-border-radius: 10px;	-o-border-radius: 10px;	border-radius: 10px;}	.labels .inner {		position: absolute;		top: 20px;		left: 20px;		right: 20px;		bottom: 20px;	}			.labels .inner input {			position: absolute;			top: 12px;			right: 12px;			left: 12px;		}				.labels .items {			position: absolute;			top: 38px;			right: 0px;			left: 0px;			bottom: 0px;			overflow: auto;		}				.labels .item {			width: 437px;			position: relative;			font-size: 18px;			margin: 4px auto;			background: rgba(0,0,0,0.2);			height: 25px;			cursor: pointer;		}				.labels .item .name {			position: absolute;			left: 35px;		}				.labels .item .notecount {			position: absolute;			right: 35px;		}	.labels .close {		position: absolute;		height: 30px;		width: 30px;		right: -10px;		top: -10px;		background: url('../images/close.png') no-repeat bottom left;		cursor: pointer;	}
+	.versions {
 	display: none;
 	position: absolute;
 	top: 50px;
@@ -537,12 +86,8 @@
 	left: 50px;
 	background: gray;
 	z-index: 101;
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-}
-
-	.versions .inner {
+	border-radius: 10px;	-moz-border-radius: 10px;	-webkit-border-radius: 10px;
+}	.versions .inner {
 		position: absolute;
 		top: 20px;
 		bottom: 20px;
@@ -632,115 +177,16 @@
 				left: 225px;
 				
 			}
-	
-	.versions .close {
-		position: absolute;
-		height: 30px;
-		width: 30px;
-		right: -10px;
-		top: -10px;
-		background: url('../images/close.png') no-repeat bottom left;
-		cursor: pointer;
-	}
-		
-.templates {
-	display: none;
-	visibility: hidden;
-}
-		
-/* 	SELECTION SPECIFIC STRUCTURE ########################################################## */
-.prev2, .prev1,
-.current, .next1,
-.next2 {
-	visibility: visible;
-	display: block;
-}
-
-.prev2{
-	margin-left: -1600px;
-}
-
-.prev1{
-	margin-left: -950px;
-}
-
-.current {
-	margin-left: -300px;
-}
-
-.next1 {
-	margin-left: 350px;
-}
-
-.next2 {
-	margin-left: 1000px;
-}
-
+		.versions .close {		position: absolute;		height: 30px;		width: 30px;		right: -10px;		top: -10px;		background: url('../images/close.png') no-repeat bottom left;		cursor: pointer;	}		.templates {	display: none;	visibility: hidden;}		/* 	SELECTION SPECIFIC STRUCTURE ########################################################## */.prev2, .prev1,.current, .next1,.next2 {	visibility: visible;	display: block;}.prev2{	margin-left: -1600px;}.prev1{	margin-left: -950px;}.current {	margin-left: -300px;}.next1 {	margin-left: 350px;}.next2 {	margin-left: 1000px;}
 .clear {
 	clear: both;
-}
-
-/* 	FULLSCREEN MODE ########################################################## */
-
-
-.fullwindow.fullscreen-mode .window .note.current {
-	position: fixed;
-	clear: all;
-	left: 50%;
-	width: 700px;
-	top: 20px;
-	bottom: 20px;
-	padding: 0px;
-	margin: 0px;
-	margin-left: -350px;
-	z-index: 101;
-	overflow: hidden;
-	-webkit-transition: margin 0s ease-in-out;
-	-moz-transition: margin 0s ease-in-out;
-	-o-transition: margin-left 0s ease-in-out;
-	transition: margin 0s ease-in-out;
-}
-
-	.fullwindow.fullscreen-mode .current .textarea {
-		position: absolute;
-		left: 40px;
-		right: 40px;
-		top: 40px;
-		bottom: 70px;
-		padding: 0px;
-		z-index: 101;
-	}
-
-		.fullwindow.fullscreen-mode .current .textarea textarea {
-			position: absolute;
-			top: 0px;
-			bottom: 0px;
-			left: 0px;
-			width: 100%;
-			padding: 20px;
-			margin-top: -20px;
-			margin-left: -20px;			z-index: 101;
-		}
+}/* 	FULLSCREEN MODE ########################################################## */.fullwindow.fullscreen-mode .window .note.current {	position: fixed;	clear: all;	left: 50%;	width: 700px;	top: 20px;	bottom: 20px;	padding: 0px;	margin: 0px;
+	margin-left: -350px;	z-index: 101;	overflow: hidden;	-webkit-transition: margin 0s ease-in-out;	-moz-transition: margin 0s ease-in-out;	-o-transition: margin-left 0s ease-in-out;	transition: margin 0s ease-in-out;}	.fullwindow.fullscreen-mode .current .textarea {		position: absolute;		left: 40px;		right: 40px;
+		top: 40px;		bottom: 70px;		padding: 0px;		z-index: 101;	}		.fullwindow.fullscreen-mode .current .textarea textarea {			position: absolute;			top: 0px;			bottom: 0px;			left: 0px;			width: 100%;			padding: 20px;			margin-top: -20px;
+			margin-left: -20px;			z-index: 101;		}
 		
 	.fullwindow.fullscreen-mode .current .tag-area {
 		width: 660px;
-	}
-
-/* 	SHOW / HIDE / DIM / UNDIM ########################################################## */
-
-.show {
-	display: block;
-	visibility: visible;
-}
-
-.hide {
+	}/* 	SHOW / HIDE / DIM / UNDIM ########################################################## */.show {	display: block;	visibility: visible;}.hide {
 	display: none;
-}
-
-.dim {
-	opacity: 0.5;
-}
-
-.undim {
-	opacity: 1.0;
-}
+}.dim {	opacity: 0.5;}.undim {	opacity: 1.0;}

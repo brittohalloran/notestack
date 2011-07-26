@@ -3,14 +3,13 @@ Britt O'Halloran
 britt.j.ohalloran@gmail.com
 
 // CHANGE HISTORY
-2011-07-25
+2011-07-26 - v0.7
+- added delete note functionality
+- added version number, changelog, and getsatisfaction links
+
+2011-07-25 - v0.6
 - fixed issues with creating notes
 - version history browsing is fully functional
 
-2011-07-21 - Versions working, but not revert
-
-// TO DO LIST
-- get tag filtering working
-- get tag editing working
-- allow deleting of notes
-- make usable faster on first load
+2011-07-21 - v0.5
+- versions working, but not revert
