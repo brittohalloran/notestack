@@ -161,7 +161,7 @@ a:hover {
 			'listnote-text-color' 	=> '#454545',
 			'listnote-font' 		=> '"MuseoSans-500", sans-serif',
 			'listnote-title-style' 	=> 'text-transform: uppercase;',
-			'highlight-text-color' 	=> '', // same as non-highlight
+			'highlight-text-color' 	=> '#454545', // same as non-highlight
 			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(0,0,0,0.1);',
 			'highlight-bg' 			=> "-moz-linear-gradient(top,#F29101,#E68901); 
 										background: -o-linear-gradient(top,#F29101,#E68901);
@@ -357,7 +357,14 @@ a:hover {
 	.theme-<?php echo $theme; ?> .window .note .message {
 		background: <?php echo $options['highlight-bg']; ?>;
 		color: <?php echo $options['highlight-text-color']; ?>;
+		<?php echo $options['highlight-text-style']; ?>
 	}
+	
+		/*MESSAGE LINKS*/
+		.theme-<?php echo $theme; ?> .window .note .message a {
+			color: <?php echo $options['highlight-text-color']; ?>;
+			text-decoration: underline;
+		}
 
 	/*TAG AREA*/
 	.theme-<?php echo $theme; ?> .window .note .tag-area {
