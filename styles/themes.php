@@ -131,11 +131,13 @@ a:hover {
 			'listnote-title-style' 	=> 'font-weight: bold;',
 			'highlight-text-color' 	=> 'white',
 			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(0,0,0,0.1);',
-			'highlight-bg' 			=> '#A4C639', // android green
+			'highlight-bg' 			=> "-moz-linear-gradient(top,#A4C639,#9ABA36); 
+										background: -o-linear-gradient(top,#A4C639,#9ABA36);
+										background: -webkit-gradient(linear,left top,left bottom,from(#A4C639),to(#9ABA36));", // android green
 			'note-bg' 				=> 'rgba(64,64,64,0.5)',
 			'note-current-bg' 		=> 'rgba(64,64,64,0.8)',
 			'note-edit-bg' 			=> 'rgba(64,64,64,0.3)',
-			'note-edit-border'		=> '1px solid #A4C639',
+			'note-edit-border'		=> '1px solid #4D90FE',
 			'note-border-rad-px' 	=> '10',
 			'note-border' 			=> '1px solid rgba(0,0,0,0.6)',
 			'note-boxshadow' 		=> 'none',
@@ -159,13 +161,15 @@ a:hover {
 			'listnote-text-color' 	=> '#454545',
 			'listnote-font' 		=> '"MuseoSans-500", sans-serif',
 			'listnote-title-style' 	=> 'text-transform: uppercase;',
-			'highlight-text-color' 	=> '',
+			'highlight-text-color' 	=> '', // same as non-highlight
 			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(0,0,0,0.1);',
-			'highlight-bg' 			=> 'rgba(241, 144, 1, 1)', 
+			'highlight-bg' 			=> "-moz-linear-gradient(top,#F29101,#E68901); 
+										background: -o-linear-gradient(top,#F29101,#E68901);
+										background: -webkit-gradient(linear,left top,left bottom,from(#F29101),to(#E68901));", 
 			'note-bg' 				=> 'rgba(30,30,30,0.5)',
 			'note-current-bg' 		=> 'rgba(30,30,30,0.95)',
 			'note-edit-bg' 			=> 'rgba(100,100,100,0.95)',
-			'note-edit-border'		=> '1px solid rgba(241, 144, 1, 1)',
+			'note-edit-border'		=> '1px solid #4D90FE',
 			'note-border-rad-px' 	=> '10',
 			'note-border' 			=> '1px solid rgba(0,0,0,0.5)',
 			'note-boxshadow' 		=> '5px 5px 10px rgba(0,0,0,0.3)',
@@ -193,7 +197,9 @@ a:hover {
 										background: -o-linear-gradient(top,#DD4B39,#D14836);
 										background: -webkit-gradient(linear,left top,left bottom,from(#DD4B39),to(#D14836));", 
 			'note-bg' 				=> 'rgba(241,241,241,0.5)',
-			'note-current-bg' 		=> 'rgba(241,241,241,0.95)',
+			'note-current-bg' 		=> "-moz-linear-gradient(top,#F2F2F2,#E6E6E6); 
+										background: -o-linear-gradient(top,#F2F2F2,#E6E6E6);
+										background: -webkit-gradient(linear,left top,left bottom,from(#F2F2F2),to(#E6E6E6));",
 			'note-edit-bg' 			=> 'rgba(200,200,200,0.95)',
 			'note-edit-border'		=> '1px solid #4D90FE',
 			'note-border-rad-px' 	=> '5',
@@ -221,7 +227,9 @@ a:hover {
 			'listnote-title-style' 	=> 'text-transform: uppercase;',
 			'highlight-text-color' 	=> 'white',
 			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(0,0,0,0.1);',
-			'highlight-bg' 			=> '#A94D2D', 
+			'highlight-bg' 			=> "-moz-linear-gradient(top,#B55230,#A94D2D); 
+										background: -o-linear-gradient(top,#B55230,#A94D2D);
+										background: -webkit-gradient(linear,left top,left bottom,from(#B55230),to(#A94D2D));", 
 			'note-bg' 				=> 'rgba(168,122,44,0.7)',
 			'note-current-bg' 		=> 'rgba(168,122,44,1)',
 			'note-edit-bg' 			=> 'rgba(219,179,79,1)',
@@ -267,7 +275,7 @@ a:hover {
 
 	/*SIDEBAR NOTE TEXT*/
 	.theme-<?php echo $theme; ?> .list .listnote,
-	.theme-<?php echo $theme; ?> .versions-left .version-item {
+	.theme-<?php echo $theme; ?> .versions .versions-left .version-item {
 		border-bottom: <?php echo $options['sidebar-borders']; ?>;
 		font-size: 0.8em;
 		color: <?php echo $options['listnote-text-color']; ?>;
@@ -282,7 +290,7 @@ a:hover {
 	/*SELECTED NOTE IN SIDEBAR AND SETTINGS PANE*/
 	.theme-<?php echo $theme; ?> .list .listnote.selected,
 	.theme-<?php echo $theme; ?> .labels .item.label-select,
-	.theme-<?php echo $theme; ?> .versions .version-select {
+	.theme-<?php echo $theme; ?> .versions .versions-left .version-select {
 		background: <?php echo $options['highlight-bg']; ?>;
 		color: <?php echo $options['highlight-text-color']; ?>;
 		<?php echo $options['highlight-text-style']; ?>
