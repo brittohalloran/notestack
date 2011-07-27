@@ -182,8 +182,8 @@
 	clear: both;
 }/* 	FULLSCREEN MODE ########################################################## */.fullwindow.fullscreen-mode .window .note.current {	position: fixed;	clear: all;	left: 50%;	width: 700px;	top: 20px;	bottom: 20px;	padding: 0px;	margin: 0px;
 	margin-left: -350px;	z-index: 101;	overflow: hidden;	-webkit-transition: margin 0s ease-in-out;	-moz-transition: margin 0s ease-in-out;	-o-transition: margin-left 0s ease-in-out;	transition: margin 0s ease-in-out;}	.fullwindow.fullscreen-mode .current .textarea {		position: absolute;		left: 40px;		right: 40px;
-		top: 40px;		bottom: 70px;		padding: 0px;		z-index: 101;	}		.fullwindow.fullscreen-mode .current .textarea textarea {			position: absolute;			top: 0px;			bottom: 0px;			left: 0px;			width: 100%;			padding: 20px;			margin-top: -20px;
-			margin-left: -20px;			z-index: 101;		}
+		top: 40px;		bottom: 70px;		padding: 0px;	}		.fullwindow.fullscreen-mode .current .textarea textarea {			position: absolute;			top: 0px;			bottom: 0px;			left: 0px;			width: 100%;			padding: 20px;			margin-top: -20px;
+			margin-left: -20px;		}
 		
 	.fullwindow.fullscreen-mode .current .tag-area {
 		width: 660px;
