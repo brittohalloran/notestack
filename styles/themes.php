@@ -115,598 +115,300 @@ a:hover {
 	height: 0px; 
 }
 
-/* THEME VARIABLES ########## */
+/* ########## THEME OPTIONS ########## */
 <?PHP 
-	$themes = array('$android','$moleskine','$gmail','$earthy');
 	
-	// ANDROID
-	// MOLESKINE
-	$moleskine = array(
-		'highlight_color' => '#',
+	$themes = array(
+		'android' => array(
+			'window-bg' 			=> "linear-gradient(bottom, #FCFCFC, #DBDBDB);
+										background: -webkit-gradient(linear, left bottom, left top, from(#FCFCFC), to(#DBDBDB));
+										background: -moz-linear-gradient(bottom, #FCFCFC, #DBDBDB);",
+			'sidebar-bg' 			=> '#636363',
+			'sidebar-boxshadow' 	=> '5px 0px 10px rgba(0,0,0,0.1)',
+			'sidebar-borders'		=> '1px solid #ccc',
+			'listnote-text-color' 	=> 'white',
+			'listnote-font' 		=> 'inherit',
+			'listnote-title-style' 	=> 'font-weight: bold;',
+			'highlight-text-color' 	=> 'white',
+			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(0,0,0,0.1);',
+			'highlight-bg' 			=> '#A4C639', // android green
+			'note-bg' 				=> 'rgba(64,64,64,0.5)',
+			'note-current-bg' 		=> 'rgba(64,64,64,0.8)',
+			'note-edit-bg' 			=> 'rgba(64,64,64,0.3)',
+			'note-edit-border'		=> '1px solid #A4C639',
+			'note-border-rad-px' 	=> '10',
+			'note-border' 			=> '1px solid rgba(0,0,0,0.6)',
+			'note-boxshadow' 		=> 'none',
+			'note-buttons-color' 	=> 'rgba(255,255,255,1)',
+			'note-textarea-bg' 		=> 'white',
+			'default-font' 			=> '"courier new", monospace',
+			'tag-area-bg' 			=> 'white',
+			'tag-bg' 				=> '#CCC',
+			'tag-border' 			=> 'rgba(0,0,0,0.2)',
+			'theme-card-inner-bg' 	=> '#636363',
+			'theme-card-outer-bg' 	=> '#A4C639',
+			'theme-card-border' 	=> 'rgba(255,255,255,0.3)'
+		),
+		'moleskine' => array(
+			'window-bg' 			=> "linear-gradient(bottom, #FCFCFC, #DBDBDB);
+										background: -webkit-gradient(linear, left bottom, left top, from(#FCFCFC), to(#DBDBDB));
+										background: -moz-linear-gradient(bottom, #FCFCFC, #DBDBDB);",
+			'sidebar-bg' 			=> 'rgba(244,241,232,1)',
+			'sidebar-boxshadow' 	=> '5px 0px 10px rgba(0,0,0,0.1)',
+			'sidebar-borders'		=> '1px solid #ccc',
+			'listnote-text-color' 	=> '#454545',
+			'listnote-font' 		=> '"MuseoSans-500", sans-serif',
+			'listnote-title-style' 	=> 'text-transform: uppercase;',
+			'highlight-text-color' 	=> '',
+			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(0,0,0,0.1);',
+			'highlight-bg' 			=> 'rgba(241, 144, 1, 1)', 
+			'note-bg' 				=> 'rgba(30,30,30,0.5)',
+			'note-current-bg' 		=> 'rgba(30,30,30,0.95)',
+			'note-edit-bg' 			=> 'rgba(100,100,100,0.95)',
+			'note-edit-border'		=> '1px solid rgba(241, 144, 1, 1)',
+			'note-border-rad-px' 	=> '10',
+			'note-border' 			=> '1px solid rgba(0,0,0,0.5)',
+			'note-boxshadow' 		=> '5px 5px 10px rgba(0,0,0,0.3)',
+			'note-textarea-bg' 		=> 'url(../images/moleskine.jpg)',
+			'default-font' 			=> '"courier new", monospace',
+			'tag-area-bg' 			=> 'url(../images/moleskine.jpg)',
+			'tag-bg' 				=> 'rgba(255,255,255,0.2)',
+			'tag-border' 			=> '1px solid rgba(0,0,0,0.5)',
+			'note-buttons-color' 	=> 'white',
+			'theme-card-inner-bg' 	=> 'url(../images/moleskine.jpg)',
+			'theme-card-outer-bg'	=> 'rgba(30,30,30,1)',
+			'theme-card-border' 	=> '1px solid rgba(244,241,232,0.3)'
+		),
+		'gmail' => array(
+			'window-bg' 			=> 'white',
+			'sidebar-bg' 			=> '#F1F1F1',
+			'sidebar-boxshadow' 	=> '5px 0px 10px rgba(0,0,0,0.1)',
+			'sidebar-borders'		=> '1px solid rgba(0,0,0,0.1)',
+			'listnote-text-color' 	=> '#666',
+			'listnote-font' 		=> 'arial, sans-serif',
+			'listnote-title-style' 	=> 'font-weight: bold;',
+			'highlight-text-color' 	=> 'white',
+			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(0,0,0,0.1);',
+			'highlight-bg' 			=> "-moz-linear-gradient(top,#DD4B39,#D14836); 
+										background: -o-linear-gradient(top,#DD4B39,#D14836);
+										background: -webkit-gradient(linear,left top,left bottom,from(#DD4B39),to(#D14836));", 
+			'note-bg' 				=> 'rgba(241,241,241,0.5)',
+			'note-current-bg' 		=> 'rgba(241,241,241,0.95)',
+			'note-edit-bg' 			=> 'rgba(200,200,200,0.95)',
+			'note-edit-border'		=> '1px solid #4D90FE',
+			'note-border-rad-px' 	=> '5',
+			'note-border' 			=> '1px solid rgba(0,0,0,0.3)',
+			'note-buttons-color' 	=> 'rgba(0,0,0,0.8)',
+			'note-boxshadow' 		=> '5px 5px 10px rgba(0,0,0,0.3)',
+			'note-textarea-bg' 		=> 'white',
+			'default-font' 			=> '"courier new", monospace',
+			'tag-area-bg' 			=> 'white',
+			'tag-bg' 				=> 'rgba(100,100,100,0.2)',
+			'tag-border' 			=> '1px solid rgba(0,0,0,0.1)',
+			'theme-card-inner-bg' 	=> 'rgba(200,200,200,0.95)',
+			'theme-card-outer-bg' 	=> "-moz-linear-gradient(top,#DD4B39,#D14836); 
+										background: -o-linear-gradient(top,#DD4B39,#D14836);
+										background: -webkit-gradient(linear,left top,left bottom,from(#DD4B39),to(#D14836));",
+			'theme-card-border' 	=> '1px solid rgba(200,200,200,0.5)'
+		),
+		'earthy' => array(
+			'window-bg' 			=> '#B4B48D',
+			'sidebar-bg' 			=> '#BFB68F',
+			'sidebar-boxshadow' 	=> '5px 0px 10px rgba(0,0,0,0.1)',
+			'sidebar-borders'		=> '1px solid rgba(0,0,0,0.1)',
+			'listnote-text-color' 	=> 'black',
+			'listnote-font' 		=> '"MuseoSans-500", sans-serif',
+			'listnote-title-style' 	=> 'text-transform: uppercase;',
+			'highlight-text-color' 	=> 'white',
+			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(0,0,0,0.1);',
+			'highlight-bg' 			=> '#A94D2D', 
+			'note-bg' 				=> 'rgba(168,122,44,0.7)',
+			'note-current-bg' 		=> 'rgba(168,122,44,1)',
+			'note-edit-bg' 			=> 'rgba(219,179,79,1)',
+			'note-edit-border'		=> '1px solid #A94D2D',
+			'note-border-rad-px' 	=> '5',
+			'note-border' 			=> '1px solid rgba(255,255,255,0.2)',
+			'note-buttons-color' 	=> 'white',
+			'note-boxshadow' 		=> '5px 5px 10px rgba(0,0,0,0.3)',
+			'note-textarea-bg' 		=> '#FFFFD9',
+			'default-font' 			=> '"MuseoSans-500", sans-serif',
+			'tag-area-bg' 			=> '#FFFFD9',
+			'tag-bg' 				=> 'rgba(100,100,100,0.2)',
+			'tag-border' 			=> '1px solid rgba(0,0,0,0.1)',
+			'theme-card-inner-bg' 	=> '#B4B48D',
+			'theme-card-outer-bg' 	=> 'rgba(168,122,44,1)',
+			'theme-card-border' 	=> '1px solid rgba(200,200,200,0.5)'
+		)
 	);
+	
 ?>
 
-/* DEFAULT THEME1 ################################################################## */
-
-/*BACKGROUND BEHIND NOTES*/
-.fullwindow.theme-1 {
-	background: linear-gradient(bottom, #FCFCFC, #DBDBDB);
-	background: -webkit-gradient(linear, left bottom, left top, from(#FCFCFC), to(#DBDBDB));
-	background: -moz-linear-gradient(bottom, #FCFCFC, #DBDBDB);
-}
-
-/*SIDEBAR BACKGROUND*/
-.fullwindow.theme-1 .sidebar,
-.appearance .item.theme-1 .inner {
-	background: gray;
-}
-
-	/*SEARCH AREA*/
-	.fullwindow.theme-1 .search {
-		border-bottom: 1px solid #333;
-	}
-
-	/*SIDEBAR NOTE TEXT*/
-	.fullwindow.theme-1 .list .listnote {
-		border-bottom: 1px solid #CCC;
-		font-size: 0.8em;
-		color: white;
-	}
-	
-	/*SELECTED NOTE IN SIDEBAR AND SETTINGS PANE*/
-	.fullwindow.theme-1 .list .listnote.selected,
-	.labels .item.label-select,
-	.appearance .item.theme-1 {
-		background: #8AC8FF; 
-	}
-	
-		.fullwindow.theme-1 .list .listnote .title{
-			font-weight:bold;
-		}
-		
-		.fullwindow.theme-1 .list .listnote.pinned>.pinboard {
-			background: url(../images/rsz_pin.png) no-repeat center;
-		}
-
-/*FRAME AROUND UNSELECTED NOTES (PARTIALLY OFFSCREEN)*/
-.fullwindow.theme-1 .window .note {
-	background: rgba(128,128,128,0.5);
-	border: none;
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-}
-
-	/*FRAME AROUND SELECTED NOTE*/
-	.fullwindow.theme-1 .window .current.note {
-		background: rgba(128,128,128,0.80);
-	}
-
-	/*FRAME AROUND NOTE WHEN EDITING*/
-	.fullwindow.theme-1 .window .current.highlight {
-		background: rgba(138, 200, 255,0.80);
-	}
-	
-	/*ACTUAL NOTE TEXT*/
-	.fullwindow.theme-1 .window .note textarea {
-		font-family: courier new;
-		line-height: 1.5;
-	}
-
-/*TOOLBAR*/
-.fullwindow.theme-1 .toolbar {
-	font-size: 0.8em;
-}
-	
-	/*USERDATA*/
-	.fullwindow.theme-1 .toolbar .userdata {
-		color: black;
-	}
-
-	/*STATUS ICON*/
-	.fullwindow.theme-1 .status-div.loading .status-icon {
-		background: url('../images/loading5.gif') no-repeat;
-	}
-	
-	/*STATUS MESSAGE*/
-	.fullwindow.theme-1 .status {
-		text-transform: lowercase;
-	}
-
-	
-/* ANDROID THEME ################################################################## */
+<?php foreach ($themes as $theme => $options) { ?>
 
 /*MAIN BACKGROUND BEHIND NOTES*/
-.fullwindow.theme-android {
-	background: linear-gradient(bottom, #FCFCFC, #DBDBDB);
-	background: -webkit-gradient(linear, left bottom, left top, from(#FCFCFC), to(#DBDBDB));
-	background: -moz-linear-gradient(bottom, #FCFCFC, #DBDBDB);
+.theme-<?php echo $theme; ?> {
+	background: <?php echo $options['window-bg']; ?>;
 }
 
 /*SIDEBAR BACKGROUND*/
-.fullwindow.theme-android .sidebar,
-.appearance .item.theme-android .inner {
-	background: #636363;
+.theme-<?php echo $theme; ?> .sidebar,
+.theme-<?php echo $theme; ?> .versions-left {
+	background: <?php echo $options['sidebar-bg']; ?>;
+	border-right: <?php echo $options['sidebar-borders']; ?>;
+	-moz-box-shadow: <?php echo $options['sidebar-boxshadow']; ?>;
+	-webkit-box-shadow: <?php echo $options['sidebar-boxshadow']; ?>;
+	box-shadow: <?php echo $options['sidebar-boxshadow']; ?>;
 }
 
 	/*SEARCH AREA*/
-	.fullwindow.theme-android .search {
-		border-bottom: 1px solid #333;
+	.theme-<?php echo $theme; ?> .search {
+		border-bottom: <?php echo $options['sidebar-borders']; ?>;
 	}
 
 	/*SIDEBAR NOTE TEXT*/
-	.fullwindow.theme-android .list .listnote {
-		border-bottom: 1px solid #CCC;
+	.theme-<?php echo $theme; ?> .list .listnote,
+	.theme-<?php echo $theme; ?> .versions-left .version-item {
+		border-bottom: <?php echo $options['sidebar-borders']; ?>;
 		font-size: 0.8em;
-		color: white;
+		color: <?php echo $options['listnote-text-color']; ?>;
 	}
+	
+		/*SIDEBAR NOTE FONT*/
+		.theme-<?php echo $theme; ?> .listnote .title,
+		.theme-<?php echo $theme; ?> .listnote .preview {
+			font-family: <?php echo $options['listnote-font']; ?>;
+		}
 	
 	/*SELECTED NOTE IN SIDEBAR AND SETTINGS PANE*/
-	.fullwindow.theme-android .list .listnote.selected,
-	.labels .item.label-select,
-	.appearance .item.theme-android {
-		background: #A4C639; 
+	.theme-<?php echo $theme; ?> .list .listnote.selected,
+	.theme-<?php echo $theme; ?> .labels .item.label-select,
+	.theme-<?php echo $theme; ?> .versions .version-select {
+		background: <?php echo $options['highlight-bg']; ?>;
+		color: <?php echo $options['highlight-text-color']; ?>;
+		<?php echo $options['highlight-text-style']; ?>
 	}
 	
-		.fullwindow.theme-android .list .listnote .title{
-			font-weight:bold;
+		.theme-<?php echo $theme; ?> .list .listnote .title{
+			<?php echo $options['listnote-title-style']; ?>
 		}
 		
-		.fullwindow.theme-android .list .listnote.pinned>.pinboard {
+		.theme-<?php echo $theme; ?> .list .listnote.pinned>.pinboard {
 			background: url(../images/rsz_pin.png) no-repeat center;
 		}
 
 /*FRAME AROUND UNSELECTED NOTES (PARTIALLY OFFSCREEN)*/
-.fullwindow.theme-android .window .note {
-	background: rgba(64,64,64,0.5);
-	border: none;
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
+.theme-<?php echo $theme; ?> .window .note {
+	background: <?php echo $options['note-bg']; ?>;
+	border: <?php echo $options['note-border']; ?>;
+	border-radius: <?php echo $options['note-border-rad-px']; ?>px;
+	-moz-border-radius: <?php echo $options['note-border-rad-px']; ?>px;
+	-webkit-border-radius: <?php echo $options['note-border-rad-px']; ?>px;
+	-moz-box-shadow: <?php echo $options['note-boxshadow']; ?>;
+	-webkit-box-shadow: <?php echo $options['note-boxshadow']; ?>;
+	box-shadow: <?php echo $options['note-boxshadow']; ?>;
 }
 
 	/*FRAME AROUND SELECTED NOTE CARD*/
-	.fullwindow.theme-android .window .current.note {
-		background: rgba(64,64,64,0.8);
+	.theme-<?php echo $theme; ?> .window .current.note {
+		background: <?php echo $options['note-current-bg']; ?>;
 	}
 
 	/*FRAME AROUND NOTE WHEN EDITING*/
-	.fullwindow.theme-android .window .current.highlight {
-		background: rgba(164, 198, 57, 0.8);
+	.theme-<?php echo $theme; ?> .window .current.highlight,
+	.theme-<?php echo $theme; ?> .versions {
+		background: <?php echo $options['note-edit-bg']; ?>;
 	}
 	
 	/*ACTUAL NOTE TEXT*/
-	.fullwindow.theme-android .window .note textarea {
-		font-family: courier new;
+	.theme-<?php echo $theme; ?> .window .note textarea,
+	.theme-<?php echo $theme; ?> .labels .inner,
+	.theme-<?php echo $theme; ?> .versions .inner {
+		font-family: <?php echo $options['default-font']; ?>;
 		line-height: 1.5;
-	}
-
-/*TOOLBAR*/
-.fullwindow.theme-android .toolbar {
-	font-size: 0.8em;
-}
-	
-	/*USERDATA*/
-	.fullwindow.theme-android .toolbar .userdata {
-		color: black;
-	}
-
-	/*STATUS ICON*/
-	.fullwindow.theme-android .status-div.loading .status-icon {
-		background: url('../images/loading5.gif') no-repeat;
+		background: <?php echo $options['note-textarea-bg']; ?>;
+		border: <?php echo $options['note-border']; ?>;
 	}
 	
-	/*STATUS MESSAGE*/
-	.fullwindow.theme-android .status {
-		text-transform: lowercase;
-	}
-
-/* MOLESKINE THEME ################################################################## */
-
-/*MAIN BACKGROUND BEHIND NOTES*/
-.fullwindow.theme-moleskine {
-	background: linear-gradient(bottom, #FCFCFC, #DBDBDB);
-	background: -webkit-gradient(linear, left bottom, left top, from(#FCFCFC), to(#DBDBDB));
-	background: -moz-linear-gradient(bottom, #FCFCFC, #DBDBDB);
-}
-
-/*SIDEBAR BACKGROUND*/
-.fullwindow.theme-moleskine .sidebar,
-.fullwindow.theme-moleskine .versions-left {
-	background: rgba(244,241,232,1);
-}
-
-	/*SEARCH AREA*/
-	.fullwindow.theme-moleskine .search {
-		border-bottom: 1px solid #333;
-	}
-
-	/*SIDEBAR NOTE ITEM*/
-	.fullwindow.theme-moleskine .list .listnote,
-	.fullwindow.theme-moleskine .versions-left .version-item {
-		border-bottom: 1px solid #CCC;
-		font-size: 0.8em;
-		color: #454545;
-	}
-	
-		/*SIDEBAR NOTE ITEM TEXT*/
-		.fullwindow.theme-moleskine .listnote .title,
-		.fullwindow.theme-moleskine .listnote .preview {
-			font-family: "MuseoSans-500", sans-serif;
-		}
-		
-		/*SIDEBAR NTOE ITEM TITLE*/
-		.fullwindow.theme-moleskine .list .listnote .title{
-			text-transform: uppercase;
+		/*NOTE TEXTAREA WHEN FOCUSED*/
+		.theme-<?php echo $theme; ?> .window .note textarea:focus {
+			outline: none;
+			border: <?php echo $options['note-edit-border']; ?>;
 		}
 	
-	/*SELECTED NOTE IN SIDEBAR AND SETTINGS PANE*/
-	.fullwindow.theme-moleskine .list .listnote.selected,
-	.fullwindow.theme-moleskine .labels .item.label-select,
-	.fullwindow.theme-moleskine .versions .version-select {
-		background: rgba(241, 144, 1, 1); 
+	/*MAXIMIZE AND HISTORY BUTTON*/
+	.theme-<?php echo $theme; ?> .window .note .maximize,
+	.theme-<?php echo $theme; ?> .window .note .versions-button,
+	.theme-<?php echo $theme; ?> .window .note .delete {
+		border-bottom: 1px solid <?php echo $options['note-buttons-color']; ?>;
+		border-right: 1px solid <?php echo $options['note-buttons-color']; ?>;
+		border-left: 1px solid <?php echo $options['note-buttons-color']; ?>;
+		color: <?php echo $options['note-buttons-color']; ?>;
 	}
 	
-		.fullwindow.theme-moleskine .list .listnote.pinned>.pinboard {
-			background: url(../images/rsz_pin.png) no-repeat center;
-		}
-
-/*FRAME AROUND UNSELECTED NOTES (PARTIALLY OFFSCREEN)*/
-.fullwindow.theme-moleskine .window .note {
-	background: rgba(30,30,30,0.5);
-	border: none;
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-moz-box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
-	-webkit-box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
-	box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
-}
-
-	/*FRAME AROUND SELECTED NOTE CARD (CENTERED ON SCREEN)*/
-	.fullwindow.theme-moleskine .window .current.note {
-		background: rgba(30,30,30,0.95);
-		-moz-box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
-		-webkit-box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
-		box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+	/*NOTE MESSAGE*/
+	.theme-<?php echo $theme; ?> .window .note .message {
+		background: <?php echo $options['highlight-bg']; ?>;
+		color: <?php echo $options['highlight-text-color']; ?>;
 	}
 
-	/*FRAME AROUND NOTE WHEN EDITING*/
-	.fullwindow.theme-moleskine .window .current.highlight,
-	.fullwindow.theme-moleskine .versions {
-		background: rgba(100,100,100,0.95);
-	}
-	
-	/*ACTUAL NOTE TEXT*/
-	.fullwindow.theme-moleskine .window .note textarea,
-	.fullwindow.theme-moleskine .labels .inner,
-	.fullwindow.theme-moleskine .versions .inner {
-		font-family: "FluxRegular", sans-serif;
-		background: url(../images/moleskine.jpg);
-		line-height: 1.5;
+	/*TAG AREA*/
+	.theme-<?php echo $theme; ?> .window .note .tag-area {
+		border: <?php echo $options['note-border']; ?>;
 	}
 	
 	/*TAG AREA BACKGROUND*/
-	.fullwindow.theme-moleskine .window .note .tagsinput {
-		background: url(../images/moleskine.jpg);
+	.theme-<?php echo $theme; ?> .window .note .tagsinput {
+		background: <?php echo $options['tag-area-bg']; ?>;
 	}
 	
 		/*INDIVIDUAL TAG BACKGROUND*/
-		.fullwindow.theme-moleskine .window .note .tagsinput .tag {
-			border: 1px solid rgba(0,0,0,0.5);
-			background: rgba(255,255,255,0.2);
+		.theme-<?php echo $theme; ?> .window .note .tagsinput .tag {
+			border: <?php echo $options['tag-border']; ?>;
+			background: <?php echo $options['tag-bg']; ?>;
 		}
 		
 			/*INDIVIDUAL TAG TEXT*/
-			.fullwindow.theme-moleskine .window .note .tagsinput .tag span {
+			.theme-<?php echo $theme; ?> .window .note .tagsinput .tag span {
 				color: black;
 			}
 			
 		/*'ADD A TAG' TEXT*/
-		.fullwindow.theme-moleskine .window .note .tagsinput div input {
+		.theme-<?php echo $theme; ?> .window .note .tagsinput div input {
 			color: black;
 		}
 
 /*TOOLBAR*/
-.fullwindow.theme-moleskine .toolbar {
+.theme-<?php echo $theme; ?> .toolbar {
 	font-size: 0.8em;
 }
 	
 	/*USERDATA*/
-	.fullwindow.theme-moleskine .toolbar .userdata {
+	.theme-<?php echo $theme; ?> .toolbar .userdata {
 		color: black;
 	}
 
-	/*STATUS ICON*/
-	.fullwindow.theme-moleskine .status-div.loading .status-icon {
+	/*STATUS BUSY ICON*/
+	.theme-<?php echo $theme; ?> .status-div.loading .status-icon {
 		background: url('../images/loading5.gif') no-repeat;
 	}
 	
 	/*STATUS MESSAGE*/
-	.fullwindow.theme-moleskine .status {
+	.theme-<?php echo $theme; ?> .status {
 		text-transform: lowercase;
 	}
 
 /*THEME CARD INNER*/
-.appearance .item.theme-moleskine .inner {
-	background: url(../images/moleskine.jpg);
+.appearance .item.theme-<?php echo $theme; ?> .inner {
+	background: <?php echo $options['theme-card-inner-bg']; ?>;
 }
 
 /*THEME CARD OUTER*/
-.appearance .item.theme-moleskine {
-	background: rgba(30,30,30,1);
-	border: 1px solid rgba(244,241,232,0.3);
+.appearance .item.theme-<?php echo $theme; ?> {
+	background: <?php echo $options['theme-card-outer-bg']; ?>;
+	border: <?php echo $options['theme-card-border']; ?>;
 }
 
-/* GMAIL THEME ################################################################## */
-
-/*MAIN BACKGROUND BEHIND NOTES*/
-.fullwindow.theme-gmail {
-	background: white;
-}
-
-/*SIDEBAR BACKGROUND*/
-.fullwindow.theme-gmail .sidebar {
-	background: #F1F1F1;
-	border-right: 1px solid rgba(0,0,0,0.1);
-	-moz-box-shadow: 5px 0px 10px rgba(0,0,0,0.1);
-	-webkit-box-shadow: 5px 0px 10px rgba(0,0,0,0.1);
-	box-shadow: 5px 0px 10px rgba(0,0,0,0.1);
-}
-
-	/*SEARCH AREA*/
-	.fullwindow.theme-gmail .search {
-		border-bottom: 1px solid rgba(0,0,0,0.1);
-	}
-
-	/*SIDEBAR NOTE TEXT*/
-	.fullwindow.theme-gmail .list .listnote {
-		border-bottom: 1px solid rgba(0,0,0,0.1);
-		font-size: 0.8em;
-		color: #666;
-	}
-	
-	/*SELECTED NOTE IN SIDEBAR AND SETTINGS PANE*/
-	.fullwindow.theme-gmail .list .listnote.selected,
-	.labels .item.label-select {
-		background-image: -moz-linear-gradient(top,#DD4B39,#D14836); 
-		background-image: -o-linear-gradient(top,#DD4B39,#D14836);
-		background-image: -webkit-gradient(linear,left top,left bottom,from(#DD4B39),to(#D14836));
-		color: white;
-		border: 1px solid rgba(0,0,0,0.1);
-		border-radius: 3px;
-		-moz-border-radius: 3px;
-		-webkit-border-radius: 3px;
-	}
-	
-		.fullwindow.theme-gmail .list .listnote.selected .title {
-			text-shadow: 0px 1px 0px rgba(0,0,0,0.1);
-		}
-	
-		.fullwindow.theme-gmail .list .listnote .title{
-			text-transform: uppercase;
-			font-family: arial, sans-serif;
-			font-weight: bold;
-		}
-		
-		.fullwindow.theme-gmail .list .listnote .preview{
-			font-family: arial, sans-serif;
-		}
-		
-		.fullwindow.theme-gmail .list .listnote.pinned>.pinboard {
-			background: url(../images/rsz_pin.png) no-repeat center;
-		}
-
-/*FRAME AROUND GENERIC NOTE CARD (PARTIALLY OFFSCREEN)*/
-.fullwindow.theme-gmail .window .note {
-	background: rgba(241,241,241,0.5);
-	border: 1px solid rgba(0,0,0,0.1);
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-}
-
-	/*FRAME AROUND SELECTED NOTE CARD (CENTERED ON SCREEN)*/
-	.fullwindow.theme-gmail .window .current.note {
-		background: rgba(241,241,241,0.95);
-	}
-
-	/*FRAME AROUND SELECTED NOTE CARD WHEN EDITING*/
-	.fullwindow.theme-gmail .window .current.highlight {
-		background: rgba(200,200,200,0.95);
-	}
-	
-	/*ACTUAL NOTE TEXT*/
-	.fullwindow.theme-gmail .window .note textarea,
-	.labels .inner {
-		font-family: "FluxRegular", sans-serif;
-		line-height: 1.5;
-	}
-	
-	.fullwindow.theme-gmail .window .note .textarea textarea:focus {
-		outline: none;
-		border: 1px solid #4D90FE;
-	}
-	
-	/*MAXIMIZE AND HISTORY BUTTON*/
-	.fullwindow.theme-gmail .window .note .maximize,
-	.fullwindow.theme-gmail .window .note .versions-button {
-		border-bottom: 1px solid rgba(0,0,0,0.3);
-		border-right: 1px solid rgba(0,0,0,0.3);
-		border-left: 1px solid rgba(0,0,0,0.3);
-		color: rgba(0,0,0,0.4);
-	}
-
-/*TOOLBAR*/
-.fullwindow.theme-gmail .toolbar {
-	font-size: 0.8em;
-}
-	
-	/*USERDATA*/
-	.fullwindow.theme-gmail .toolbar .userdata {
-		color: black;
-	}
-
-	/*STATUS ICON*/
-	.fullwindow.theme-gmail .status-div.loading .status-icon {
-		background: url('../images/loading5.gif') no-repeat;
-	}
-	
-	/*STATUS MESSAGE*/
-	.fullwindow.theme-gmail .status {
-		text-transform: lowercase;
-	}
-
-/*THEME CARD INNER*/
-.appearance .item.theme-gmail .inner {
-	background: rgba(200,200,200,0.95);
-}
-
-/*THEME CARD OUTER*/
-.appearance .item.theme-gmail {
-	background-image: -moz-linear-gradient(top,#DD4B39,#D14836); 
-	background-image: -o-linear-gradient(top,#DD4B39,#D14836);
-	background-image: -webkit-gradient(linear,left top,left bottom,from(#DD4B39),to(#D14836));
-	border: 1px solid rgba(200,200,200,0.5);
-}
-
-/* EARTHY THEME ################################################################## */
-
-/*MAIN BACKGROUND BEHIND NOTES*/
-.fullwindow.theme-earthy {
-	background: #B4B48D;
-}
-
-/*SIDEBAR*/
-.fullwindow.theme-earthy .sidebar {
-	background: #BFB68F;
-	border-right: 1px solid rgba(0,0,0,0.1);
-	-moz-box-shadow: 5px 0px 10px rgba(0,0,0,0.1);
-	-webkit-box-shadow: 5px 0px 10px rgba(0,0,0,0.1);
-	box-shadow: 5px 0px 10px rgba(0,0,0,0.1);
-}
-
-	/*SEARCH AREA*/
-	.fullwindow.theme-earthy .search {
-		border-bottom: 1px solid rgba(0,0,0,0.1);
-	}
-
-	/*LISTED NOTES IN SIDEBAR*/
-	.fullwindow.theme-earthy .list .listnote {
-		border-bottom: 1px solid rgba(0,0,0,0.1);
-		font-size: 0.8em;
-		color: black;
-	}
-	
-	/*SELECTED NOTE IN SIDEBAR AND SELECTED LABEL IN SETTINGS PANE*/
-	.fullwindow.theme-earthy .list .listnote.selected,
-	.labels .item.label-select {
-		background: #A94D2D;
-		color: white;
-		border: 1px solid rgba(0,0,0,0.1);
-		border-radius: 3px;
-		-moz-border-radius: 3px;
-		-webkit-border-radius: 3px;
-	}
-	
-		.fullwindow.theme-earthy .list .listnote.selected .title {
-			text-shadow: 0px 1px 0px rgba(0,0,0,0.1);
-		}
-	
-		.fullwindow.theme-earthy .list .listnote .title{
-			font-family: "MuseoSans-500", sans-serif;
-			font-weight: bold;
-		}
-		
-		.fullwindow.theme-earthy .list .listnote .preview{
-			font-family: "MuseoSans-500", sans-serif;
-		}
-		
-		.fullwindow.theme-earthy .list .listnote.pinned>.pinboard {
-			background: url(../images/rsz_pin.png) no-repeat center;
-		}
-
-/*FRAME AROUND NOTE CARDS*/
-.fullwindow.theme-earthy .window .note {
-	background: rgba(168,122,44,0.7);
-	border: 1px solid rgba(0,0,0,0.1);
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-}
-
-	/*FRAME AROUND NOTE CARD (WHEN CENTERED ON SCREEN)*/
-	.fullwindow.theme-earthy .window .current.note,
-	.fullwindow.theme-earthy .labels {
-		background: rgba(168,122,44,1);
-	}
-
-	/*FRAME AROUND SELECTED NOTE CARD WHEN EDITING*/
-	.fullwindow.theme-earthy .window .current.highlight {
-		background: rgba(219,179,79,1);
-	}
-	
-	/*NOTE TEXTAREA*/
-	.fullwindow.theme-earthy .window .note textarea,
-	.fullwindow.theme-earthy .labels .inner,
-	.fullwindow.theme-earthy div.tagsinput {
-		font-family: "MuseoSans-500", sans-serif;
-		color: black;
-		line-height: 1.5;
-		background: #FFFFD9;
-	}
-	
-	/*BORDER AROUND TEXTAREA AND TAG AREA*/
-	.fullwindow.theme-earthy .window .note textarea,
-	.fullwindow.theme-earthy .tag-area {
-		border: 1px solid rgba(0,0,0,0.3);
-		outline: none;
-	}
-	
-	.fullwindow.theme-earthy .window .note textarea:focus {
-		outline: none;
-		border: 1px solid #4D90FE;
-	}
-	
-	/*MAXIMIZE AND HISTORY BUTTONS*/
-	.fullwindow.theme-earthy .window .note .maximize,
-	.fullwindow.theme-earthy .window .note .versions-button {
-		border-bottom: 1px solid rgba(0,0,0,0.3);
-		border-right: 1px solid rgba(0,0,0,0.3);
-		border-left: 1px solid rgba(0,0,0,0.3);
-		color: rgba(0,0,0,0.4);
-	}
-
-/*TOOLBAR*/
-.fullwindow.theme-earthy .toolbar {
-	font-size: 0.8em;
-}
-	
-	/*USERDATA*/
-	.fullwindow.theme-earthy .toolbar .userdata {
-		color: black;
-	}
-
-	/*STATUS ICON*/
-	.fullwindow.theme-earthy .status-div.loading .status-icon {
-		background: url('../images/loading5.gif') no-repeat;
-	}
-	
-	/*STATUS MESSAGE*/
-	.fullwindow.theme-earthy .status {
-		text-transform: lowercase;
-	}
-
-/*THEME CARD INNER*/
-.appearance .item.theme-earthy .inner {
-	background: #B4B48D;
-}
-
-/*THEME CARD OUTER*/
-.appearance .item.theme-earthy {
-	background: rgba(168,122,44,1);
-	border: 1px solid rgba(200,200,200,0.5);
-}
+<?php }; //end foreach ?>
 
 /* FONT THEMES ############################################################################ */
 
