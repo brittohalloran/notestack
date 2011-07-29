@@ -676,6 +676,7 @@ function updateTags(notekey){
 	note.tags = tags;
 	localStorage[notekey] = JSON.stringify(note);
 	localToDOM(notekey);
+	
 };
 
 $(function() {
