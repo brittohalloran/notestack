@@ -668,6 +668,16 @@ function toggleVersions(notekey){
 	};
 };
 
+// UPDATE TAGS
+function updateTags(notekey){
+	tags = $('#' + notekey + ' .tag-area input').val().split(' ');
+	console.log(tags);
+	note = $.parseJSON(localStorage[notekey]);
+	note.tags = tags;
+	localStorage[notekey] = JSON.stringify(note);
+	localToDOM(notekey);
+};
+
 $(function() {
 // APPEARANCE SETTINGS
 	// LOAD THEME
@@ -898,6 +908,11 @@ function refreshNoteBinds(note_tas){
 	// MAXIMIZE BUTTON
 	$('.maximize').click(function(){
 		fullscreenMode();
+	});
+	// CHANGE TAG
+	$('.tag-area input').change(function(){ // TAG CHANGES NOT TRIGGERING CHANGE EVENT
+		console.log('updating tags');
+		updateTags($('.current').attr('id'));
 	});
 };
 
