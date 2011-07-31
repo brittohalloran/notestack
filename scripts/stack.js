@@ -373,10 +373,7 @@ function syncIndex(postData){
 		$.ajax('/sn.php',{
 			type: 'POST',
 			data: postData,
-<<<<<<< HEAD
-=======
-			timeout: 3000,
->>>>>>> dev
+			timeout: 5000,
 			success: function(rawNewIndex){
 				newIndex = $.parseJSON(rawNewIndex);
 				//console.log('recieved new index with ' + newIndex.count + ' new notes');
