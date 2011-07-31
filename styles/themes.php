@@ -147,6 +147,7 @@ a:hover {
 			'tag-area-bg' 			=> 'white',
 			'tag-bg' 				=> '#CCC',
 			'tag-border' 			=> 'rgba(0,0,0,0.2)',
+			'overlay-bg'			=> 'rgba(64,64,64,0.3)',
 			'theme-card-inner-bg' 	=> '#636363',
 			'theme-card-outer-bg' 	=> '#A4C639',
 			'theme-card-border' 	=> 'rgba(255,255,255,0.3)'
@@ -161,24 +162,25 @@ a:hover {
 			'listnote-text-color' 	=> '#454545',
 			'listnote-font' 		=> '"MuseoSans-500", sans-serif',
 			'listnote-title-style' 	=> 'text-transform: uppercase;',
-			'highlight-text-color' 	=> '', // same as non-highlight
-			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(0,0,0,0.1);',
+			'highlight-text-color' 	=> '#454545', // same as non-highlight
+			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(255,255,255,0.1);',
 			'highlight-bg' 			=> "-moz-linear-gradient(top,#F29101,#E68901); 
 										background: -o-linear-gradient(top,#F29101,#E68901);
 										background: -webkit-gradient(linear,left top,left bottom,from(#F29101),to(#E68901));", 
 			'note-bg' 				=> 'rgba(30,30,30,0.5)',
 			'note-current-bg' 		=> 'rgba(30,30,30,0.95)',
 			'note-edit-bg' 			=> 'rgba(100,100,100,0.95)',
-			'note-edit-border'		=> '1px solid #4D90FE',
+			'note-edit-border'		=> '2px solid rgba(0,0,0,0.5)',
 			'note-border-rad-px' 	=> '10',
 			'note-border' 			=> '1px solid rgba(0,0,0,0.5)',
+			'note-buttons-color' 	=> 'white',
 			'note-boxshadow' 		=> '5px 5px 10px rgba(0,0,0,0.3)',
 			'note-textarea-bg' 		=> 'url(../images/moleskine.jpg)',
 			'default-font' 			=> '"courier new", monospace',
 			'tag-area-bg' 			=> 'url(../images/moleskine.jpg)',
 			'tag-bg' 				=> 'rgba(255,255,255,0.2)',
 			'tag-border' 			=> '1px solid rgba(0,0,0,0.5)',
-			'note-buttons-color' 	=> 'white',
+			'overlay-bg'			=> 'rgba(30,30,30,0.95)',
 			'theme-card-inner-bg' 	=> 'url(../images/moleskine.jpg)',
 			'theme-card-outer-bg'	=> 'rgba(30,30,30,1)',
 			'theme-card-border' 	=> '1px solid rgba(244,241,232,0.3)'
@@ -211,6 +213,9 @@ a:hover {
 			'tag-area-bg' 			=> 'white',
 			'tag-bg' 				=> 'rgba(100,100,100,0.2)',
 			'tag-border' 			=> '1px solid rgba(0,0,0,0.1)',
+			'overlay-bg'			=> "-moz-linear-gradient(top,#F2F2F2,#E6E6E6); 
+										background: -o-linear-gradient(top,#F2F2F2,#E6E6E6);
+										background: -webkit-gradient(linear,left top,left bottom,from(#F2F2F2),to(#E6E6E6));",
 			'theme-card-inner-bg' 	=> 'rgba(200,200,200,0.95)',
 			'theme-card-outer-bg' 	=> "-moz-linear-gradient(top,#DD4B39,#D14836); 
 										background: -o-linear-gradient(top,#DD4B39,#D14836);
@@ -243,6 +248,7 @@ a:hover {
 			'tag-area-bg' 			=> '#FFFFD9',
 			'tag-bg' 				=> 'rgba(100,100,100,0.2)',
 			'tag-border' 			=> '1px solid rgba(0,0,0,0.1)',
+			'overlay-bg'			=> 'rgba(168,122,44,1)',
 			'theme-card-inner-bg' 	=> '#B4B48D',
 			'theme-card-outer-bg' 	=> 'rgba(168,122,44,1)',
 			'theme-card-border' 	=> '1px solid rgba(200,200,200,0.5)'
@@ -322,25 +328,29 @@ a:hover {
 	}
 
 	/*FRAME AROUND NOTE WHEN EDITING*/
-	.theme-<?php echo $theme; ?> .window .current.highlight,
-	.theme-<?php echo $theme; ?> .versions {
+	.theme-<?php echo $theme; ?> .window .current.highlight {
 		background: <?php echo $options['note-edit-bg']; ?>;
 	}
 	
+	/*FRAME AROUND OVERLAY*/
+	.theme-<?php echo $theme; ?> .versions,
+	.theme-<?php echo $theme; ?> .labels {
+		background: <?php echo $options['overlay-bg']; ?>;
+	}
+	
 	/*ACTUAL NOTE TEXT*/
-	.theme-<?php echo $theme; ?> .window .note textarea,
+	.theme-<?php echo $theme; ?> .window .note .textarea,
 	.theme-<?php echo $theme; ?> .labels .inner,
 	.theme-<?php echo $theme; ?> .versions .inner {
 		font-family: <?php echo $options['default-font']; ?>;
-		line-height: 1.5;
 		background: <?php echo $options['note-textarea-bg']; ?>;
 		border: <?php echo $options['note-border']; ?>;
 	}
 	
 		/*NOTE TEXTAREA WHEN FOCUSED*/
-		.theme-<?php echo $theme; ?> .window .note textarea:focus {
+		.theme-<?php echo $theme; ?> .window .note .textarea textarea:focus {
 			outline: none;
-			border: <?php echo $options['note-edit-border']; ?>;
+			border: none;
 		}
 	
 	/*MAXIMIZE AND HISTORY BUTTON*/
@@ -498,39 +508,46 @@ a:hover {
 
 /* FONTSIZE ############################################################################ */
 
-.fullwindow.fontsize-10 .window .note .textarea textarea,
+.fontsize-10 .window .note .textarea textarea,
 .appearance .fontsize .name.fontsize-10 {
 	font-size: 10px;
+	line-height: 1.5;
 }
 
-.fullwindow.fontsize-11 .window .note .textarea textarea,
+.fontsize-11 .window .note .textarea textarea,
 .appearance .fontsize .name.fontsize-11 {
 	font-size: 11px;
+	line-height: 1.4;
 }
 
-.fullwindow.fontsize-12 .window .note .textarea textarea,
+.fontsize-12 .window .note .textarea textarea,
 .appearance .fontsize .name.fontsize-12 {
 	font-size: 12px;
+	line-height: 1.4;
 }
 
-.fullwindow.fontsize-13 .window .note .textarea textarea,
+.fontsize-13 .window .note .textarea textarea,
 .appearance .fontsize .name.fontsize-13 {
 	font-size: 13px;
+	line-height: 1.3;
 }
 
-.fullwindow.fontsize-14 .window .note .textarea textarea,
+.fontsize-14 .window .note .textarea textarea,
 .appearance .fontsize .name.fontsize-14 {
 	font-size: 14px;
+	line-height: 1.3;
 }
 
-.fullwindow.fontsize-15 .window .note .textarea textarea,
+.fontsize-15 .window .note .textarea textarea,
 .appearance .fontsize .name.fontsize-15 {
 	font-size: 15px;
+	line-height: 1.2;
 }
 
-.fullwindow.fontsize-16 .window .note .textarea textarea,
+.fontsize-16 .window .note .textarea textarea,
 .appearance .fontsize .name.fontsize-16 {
 	font-size: 16px;
+	line-height: 1.2
 }
 
 /* ############################################################################ */

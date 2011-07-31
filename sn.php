@@ -21,6 +21,13 @@ $authorized = array(
 	'britt@stuntkiter.com'
 );
 
+function default_curl_settings(){
+	global $handle;
+	curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($handle, CURLOPT_HTTPHEADER, array("User-Agent: Notestack/0.7.4"));
+	curl_setopt($handle, CURLOPT_HEADER, false);
+};
+
 if(in_array($email, $authorized)){
 	if($action=='login'){
 		$data = base64_encode('email='.$email.'&password='.$pass); // encode data as base64
@@ -30,7 +37,8 @@ if(in_array($email, $authorized)){
 		curl_setopt($handle, CURLOPT_POSTFIELDS, $data); // set POST data as encoded username/password
 		default_curl_settings();
 		$token = curl_exec($handle); // execute POST request, return $token
-		echo $token; // return data
+		echo '{ "token": "'.$token.'" }'; // return data
+		exit();
 	}
 	elseif($action=='index'){
 		$data = 'email='.$email.'&auth='.$token.'&mark='.$mark.'&since='.$since.'&length='.$length;
@@ -39,6 +47,7 @@ if(in_array($email, $authorized)){
 		default_curl_settings();
 		$index = curl_exec($handle);
 		echo $index;
+		exit();
 	}
 	elseif($action=='note'){
 		$data = '/'.$notekey.'?email='.$email.'&auth='.$token;
@@ -47,6 +56,7 @@ if(in_array($email, $authorized)){
 		default_curl_settings();
 		$note = curl_exec($handle);
 		echo $note;
+		exit();
 	}
 	elseif($action=='noteversion'){
 		$data = '/'.$notekey.'/'.$noteversion.'?email='.$email.'&auth='.$token;
@@ -55,6 +65,7 @@ if(in_array($email, $authorized)){
 		default_curl_settings();
 		$note = curl_exec($handle);
 		echo $note;
+		exit();
 	}
 	elseif($action=='sendnote'){
 		if($notekey!=""){
@@ -68,17 +79,12 @@ if(in_array($email, $authorized)){
 		default_curl_settings();
 		$note = curl_exec($handle); // execute POST request, return $token
 		echo $note;
+		exit();
 	};
 }
 else{
 	echo "notinlist"; 
-};
-
-function default_curl_settings(){
-	global $handle;
-	curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($handle, CURLOPT_HTTPHEADER, array("User-Agent: Notestack/0.7"));
-	curl_setopt($handle, CURLOPT_HEADER, false);
+	exit();
 };
 	
 ?>

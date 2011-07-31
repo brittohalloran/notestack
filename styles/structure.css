@@ -46,7 +46,15 @@
 		.search .reload .inner {
 			background: url('../images/reload.png') center no-repeat;
 		}
-			.list {		position: absolute;		width: 100%;		left: 0px;		top: 35px;		bottom: 0px;		overflow-x: hidden;		overflow-y: scroll;	}		.listnote-holder {			width: 100%;		}			.listnote {			position: relative;			width: 100%;			height: 40px;			white-space: nowrap;			overflow: hidden;			text-overflow: ellipsis;			cursor: pointer;				}					.listnote .title,			.listnote .preview {				white-space: nowrap;				overflow: hidden;				text-overflow: ellipsis;				position: absolute;				left: 35px;				right: 10px;				cursor: inherit;			}					.listnote .title {				top: 5px;			}						.listnote .preview {				bottom: 5px;			}						.listnote .pinboard {				position: absolute;				top: 0px;				height: 100%;				left: 0px;				width: 35px;				cursor: pointer;			}						.listnote .contents,			.listnote .contents textarea {				display: none;				visibility: hidden;			}.window {	overflow: hidden;	position: absolute;	left: 350px;	right: 0;	top: 0;	height: 100%;	display: block;}	.note {		display: none;		width: 600px;		position: absolute;		left: 50%;		top: 40px;		bottom: 30px;		min-height: 200px;		overflow-y: auto;		-webkit-transition: margin 0.25s ease-in-out;		-moz-transition: margin 0.25s ease-in-out;		-o-transition: margin-left 0.25s ease-in-out;		transition: margin 0.25s ease-in-out;	}		.textarea {			position: absolute;			top: 20px;			bottom: 65px;			left: 20px;			right: 20px;		}				.textarea textarea {			position: absolute;			left: 0px;			width: 550px;			top: 0px;			bottom: 0px;			padding: 5px;		}				.note-directions {			display: none;			visibility: hidden;			position: absolute;			bottom: 3px;			left: 0px;			width: 100%;			text-align: center;			font-size: 0.8em;		}				.note .maximize,		.note .versions-button,		.note .delete {			position: absolute;			top: 0px;			height: 13px;			font-size: 10px;			border-bottom: 1px solid white;			border-right: 1px solid white;			border-left: 1px solid white;			opacity: 0.5;			color: white;			text-align: center;			cursor: pointer;			padding-top: 2px;		}				.note .delete {			right: 20px;			width: 16px;		}				.note .maximize {			right: 46px;			width: 35px;		}
+			.list {		position: absolute;		width: 100%;		left: 0px;		top: 35px;		bottom: 0px;		overflow-x: hidden;		overflow-y: scroll;	}		.listnote-holder {			width: 100%;		}			.listnote {			position: relative;			width: 100%;			height: 40px;			white-space: nowrap;			overflow: hidden;			text-overflow: ellipsis;			cursor: pointer;				}					.listnote .title,			.listnote .preview {				white-space: nowrap;				overflow: hidden;				text-overflow: ellipsis;				position: absolute;				left: 35px;				right: 10px;				cursor: inherit;			}					.listnote .title {				top: 5px;			}						.listnote .preview {				bottom: 5px;			}						.listnote .pinboard {				position: absolute;				top: 0px;				height: 100%;				left: 0px;				width: 35px;				cursor: pointer;			}						.listnote .contents,			.listnote .contents textarea {				display: none;				visibility: hidden;			}.window {	overflow: hidden;	position: absolute;	left: 350px;	right: 0;	top: 0;	height: 100%;	display: block;}	.note {		display: none;		width: 600px;		position: absolute;		left: 50%;		top: 40px;		bottom: 30px;		min-height: 200px;		overflow-y: auto;		-webkit-transition: margin 0.25s ease-in-out;		-moz-transition: margin 0.25s ease-in-out;		-o-transition: margin-left 0.25s ease-in-out;		transition: margin 0.25s ease-in-out;	}		.textarea {			position: absolute;			top: 20px;			bottom: 65px;			left: 20px;			right: 20px;
+			padding: 5px;		}				.textarea textarea {
+			height: 100%;
+			width: 100%;
+			border: none;
+			outline: none;
+			font-family: inherit;
+			background: transparent;
+		}				.note-directions {			display: none;			visibility: hidden;			position: absolute;			bottom: 3px;			left: 0px;			width: 100%;			text-align: center;			font-size: 0.8em;		}				.note .maximize,		.note .versions-button,		.note .delete {			position: absolute;			top: 0px;			height: 13px;			font-size: 10px;			border-bottom: 1px solid white;			border-right: 1px solid white;			border-left: 1px solid white;			opacity: 0.5;			color: white;			text-align: center;			cursor: pointer;			padding-top: 2px;		}				.note .delete {			right: 20px;			width: 16px;		}				.note .maximize {			right: 46px;			width: 35px;		}
 		
 		.note .versions-button {			right: 92px;			width: 45px;		}				.note .maximize:hover,		.note .versions-button:hover,		.note .delete:hover {			background: rgba(150,150,150,1);		}				.message {			position: absolute;			width: 80%;			height: 33px;			top: 0px;			left: 10%;			background: #cccccc;			text-align: center;			padding-top: 10px;			display: none;			-webkit-border-bottom-right-radius: 5px;			-webkit-border-bottom-left-radius: 5px;			-moz-border-radius-bottomright: 5px;			-moz-border-radius-bottomleft: 5px;			border-bottom-right-radius: 5px;			border-bottom-left-radius: 5px;			-moz-box-shadow: 1px 3px 3px rgba(0,0,0,0.3);			-webkit-box-shadow: 1px 3px 3px rgba(0,0,0,0.3);			box-shadow: 1px 3px 3px rgba(0,0,0,0.3);		}				.note .tag-area {			position: absolute;			left: 20px;
 			width: 560px;			bottom: 20px;			height: 35px;			border: 1px solid rgba(0,0,0,0.1);			overflow-y: auto;		}				.note .tag-area div.tagsinput {			min-height: 35px;			overflow-y: auto;		}
@@ -77,7 +85,7 @@
 		.settings .data table {
 			margin: 0px auto;
 		}			.settings .close {		position: absolute;		height: 30px;		width: 30px;		right: 5px;		top: 2px;		background: url('../images/close.png') no-repeat bottom left;		cursor: pointer;		z-index: 55;	}	.help {	height: 100%;	width: 100%;	top: 0;	left: 0;}.overlay {	position: absolute;	height: 100%;	width: 100%;	top: 100%;	left: 0;	z-index: 100;	background: rgba(0,0,0,0);}.overlay.show {	top: 0;	-webkit-transition: background 0.3s linear;    -moz-transition: background 0.3s linear;    -o-transition: background 0.3s linear;    transition: background 0.3s linear;	background: rgba(0,0,0,0.7);}.labels {	display: none;	position: absolute;	width: 500px;	left: 50%;	margin-left: -250px;	height: 500px;	top: 50%;	margin-top: -250px;	background: gray;	z-index: 101;	-moz-border-radius: 10px;	-webkit-border-radius: 10px;	-o-border-radius: 10px;	border-radius: 10px;}	.labels .inner {		position: absolute;		top: 20px;		left: 20px;		right: 20px;		bottom: 20px;	}			.labels .inner input {			position: absolute;			top: 12px;			right: 12px;			left: 12px;		}				.labels .items {			position: absolute;			top: 38px;			right: 0px;			left: 0px;			bottom: 0px;			overflow: auto;		}				.labels .item {			width: 437px;			position: relative;			font-size: 18px;			margin: 4px auto;			background: rgba(0,0,0,0.2);			height: 25px;			cursor: pointer;		}				.labels .item .name {			position: absolute;			left: 35px;		}				.labels .item .notecount {			position: absolute;			right: 35px;		}	.labels .close {		position: absolute;		height: 30px;		width: 30px;		right: -10px;		top: -10px;		background: url('../images/close.png') no-repeat bottom left;		cursor: pointer;	}
-	.versions {
+.versions {
 	display: none;
 	position: absolute;
 	top: 50px;
@@ -87,7 +95,7 @@
 	background: gray;
 	z-index: 101;
 	border-radius: 10px;	-moz-border-radius: 10px;	-webkit-border-radius: 10px;
-}	.versions .inner {
+}		.versions .inner {
 		position: absolute;
 		top: 20px;
 		bottom: 20px;
@@ -128,7 +136,7 @@
 			right: 0px;
 			top: 0px;
 			bottom: 30px;
-			overflow-y: auto;
+			overflow-y: auto;			font-size: 0.8em;
 		}
 		
 			.versions .versions-right .right-inner {
