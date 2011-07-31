@@ -373,6 +373,7 @@ function syncIndex(postData){
 		$.ajax('/sn.php',{
 			type: 'POST',
 			data: postData,
+			timeout: 3000,
 			success: function(rawNewIndex){
 				newIndex = $.parseJSON(rawNewIndex);
 				//console.log('recieved new index with ' + newIndex.count + ' new notes');
@@ -413,8 +414,8 @@ function syncIndex(postData){
 				});
 			},
 			error: function(msg){
-				//console.log('error updating index ' + msg);
-				//dfd_syn.failure();
+				$('.status').text('Working offline. Changes will sync when connected.');
+				$('.status-div').removeClass('loading');
 			}
 		});
 	}).promise();
@@ -847,6 +848,10 @@ $(function() {
 		else if ($(this).hasClass('text-view')){
 			$('.versions-right .right-inner').html('<textarea disabled="disabled">' + $('.version-select').data().content + '</textarea>');
 		};
+	});
+	// CLICK OUTSIDE OF OVERLAY WINDOW
+	$('.overlay').click(function(){
+		clearOverlays();
 	});
 	// CLICK REVERT
 	$('.versions-toolbar .revert-version').live('mousedown',function(){
