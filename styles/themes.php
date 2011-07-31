@@ -339,7 +339,7 @@ a:hover {
 	}
 	
 	/*ACTUAL NOTE TEXT*/
-	.theme-<?php echo $theme; ?> .window .note .textarea textarea,
+	.theme-<?php echo $theme; ?> .window .note .textarea,
 	.theme-<?php echo $theme; ?> .labels .inner,
 	.theme-<?php echo $theme; ?> .versions .inner {
 		font-family: <?php echo $options['default-font']; ?>;
@@ -349,8 +349,8 @@ a:hover {
 	
 		/*NOTE TEXTAREA WHEN FOCUSED*/
 		.theme-<?php echo $theme; ?> .window .note .textarea textarea:focus {
-			outline: <?php echo $options['note-edit-border']; ?>;
-			border: ;
+			outline: none;
+			border: none;
 		}
 	
 	/*MAXIMIZE AND HISTORY BUTTON*/

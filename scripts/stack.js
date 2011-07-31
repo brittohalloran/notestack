@@ -673,10 +673,13 @@ function updateTags(notekey){
 	tags = $('#' + notekey + ' .tag-area input').val().split(' ');
 	console.log(tags);
 	note = $.parseJSON(localStorage[notekey]);
-	note.tags = tags;
-	localStorage[notekey] = JSON.stringify(note);
-	localToDOM(notekey);
-	
+	if (note.tags != tags){
+		note.tags = tags;
+		note.syncnum = note.syncnum + 1;
+		localStorage[notekey] = JSON.stringify(note);
+		localToDOM(notekey);
+		manualSync();
+	};
 };
 
 $(function() {
@@ -911,8 +914,8 @@ function refreshNoteBinds(note_tas){
 		fullscreenMode();
 	});
 	// CHANGE TAG
-	$('.tag-area input').change(function(){ // TAG CHANGES NOT TRIGGERING CHANGE EVENT
-		console.log('updating tags');
+	$('.tagsinput div input').blur(function(){ // TAG CHANGES NOT TRIGGERING CHANGE EVENT
+		//console.log('updating tags');
 		updateTags($('.current').attr('id'));
 	});
 };
