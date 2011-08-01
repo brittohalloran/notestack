@@ -49,6 +49,15 @@ if(in_array($email, $authorized)){
 		echo $index;
 		exit();
 	}
+	elseif($action=='tagIndex'){
+		$data = 'email='.$email.'&auth='.$token;
+		$url = 'http://simple-note.appspot.com/api2/tags?'.$data;
+		$handle = curl_init($url); // initiate CURL
+		default_curl_settings();
+		$index = curl_exec($handle);
+		echo $index;
+		exit();
+	}
 	elseif($action=='note'){
 		$data = '/'.$notekey.'?email='.$email.'&auth='.$token;
 		$url = 'http://simple-note.appspot.com/api2/data'.$data;

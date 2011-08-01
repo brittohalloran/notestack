@@ -10,7 +10,7 @@ a {
 a:hover {
 	color: #B56262;
 }
-
+	
 .button1 {
 	border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -207,7 +207,7 @@ a:hover {
 			'note-edit-border'		=> '1px solid #4D90FE',
 			'note-border-rad-px' 	=> '5',
 			'note-border' 			=> '1px solid rgba(0,0,0,0.3)',
-			'note-buttons-color' 	=> 'rgba(0,0,0,0.8)',
+			'note-buttons-color' 	=> 'rgba(0,0,0,0.3)',
 			'note-boxshadow' 		=> '5px 5px 10px rgba(0,0,0,0.3)',
 			'note-textarea-bg' 		=> 'white',
 			'default-font' 			=> '"courier new", monospace',
@@ -361,7 +361,10 @@ a:hover {
 		border-bottom: 1px solid <?php echo $options['note-buttons-color']; ?>;
 		border-right: 1px solid <?php echo $options['note-buttons-color']; ?>;
 		border-left: 1px solid <?php echo $options['note-buttons-color']; ?>;
-		color: <?php echo $options['note-buttons-color']; ?>;
+		color: black;
+		background: linear-gradient(bottom, #DDDDDD, #E6E6E6);
+		background: -webkit-gradient(linear, left bottom, left top, from(#DDDDDD), to(#E6E6E6));
+		background: -moz-linear-gradient(bottom, #DDDDD, #E6E6E6);
 	}
 	
 	/*NOTE MESSAGE*/
@@ -369,6 +372,12 @@ a:hover {
 		background: <?php echo $options['highlight-bg']; ?>;
 		color: <?php echo $options['highlight-text-color']; ?>;
 	}
+	
+		/*NOTE MESSAGE LINKS*/
+		.theme-<?php echo $theme; ?> .window .note .message a {
+			color: <?php echo $options['highlight-text-color']; ?>;
+			text-decoration: underline;
+		}
 
 	/*TAG AREA*/
 	.theme-<?php echo $theme; ?> .window .note .tag-area {

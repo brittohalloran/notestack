@@ -167,15 +167,15 @@ function refreshCards(){
 		notecard.children('.textarea').children('textarea').val($(this).data().content);
 		// populate tags
 		var tagstring = $(this).data().tags.join(' ');
-		var allTagsArr = [
-			{'name':'tree'},
-			{'name':'treefort'},
-			{'name':'treehugger'},
-			{'name':'treestand'}
-		];
+		var allTagsArr = $.parseJSON(localStorage.tagIndex).tags;
 		var tagInput = notecard.children('.tag-area').children('input');
-		tagInput.attr('id','tag' + $(this).data().key).val(tagstring);
-		tagInput.autoSuggest(allTagsArr, {selectedItemProp: "name", searchObjProps: "name"});
+		tagInput.autoSuggest(allTagsArr, {
+			selectedItemProp: "name", 
+			searchObjProps: "name",
+			startText: "add a tag",
+			emptyText: "press [space] to make a new tag"
+		});
+		tagInput.val(tagstring);
 	});
 	$('#' + $('.selected').data().key).addClass('current');
 	refreshNoteBinds('.note .textarea textarea');
@@ -474,6 +474,28 @@ function simplenoteSync(){
 	}).promise();
 };
 
+// GET TAG INDEX
+function getTagIndex(){
+	return $.Deferred(function(dfd_tag){
+		postData = {
+			'action': 'tagIndex',
+			'email': localStorage.email,
+			'token': localStorage.token
+		};
+		console.log('starting tagIndex pull');
+		$.ajax('/sn.php',{
+			type: 'POST',
+			data: postData,
+			timeout: 5000,
+			success: function(rawTagIndex){
+				localStorage['tagIndex'] = rawTagIndex;
+				console.log('stored tagIndex')
+				dfd_tag.resolve();
+			}
+		});
+	});
+};
+
 // UPDATE NOTE PREVIEW AND PIN
 function updateListnote(key){
 	thisnote = $('#list-' + key);
@@ -526,14 +548,17 @@ function allLocalToDOM(){
 
 // MANUAL SYNC
 function manualSync(){
-	$.when(simplenoteSync()).done(function(){
-		//console.log('done with all simplenoteSync promises');
-		indexDate = stackTime(localStorage.indexDate);
-		$('.status').html('synced <abbr class="timeago" title="' + indexDate + '"></abbr>');
-		bindTimeago();
-		$('.status-div').removeClass('loading');
-		sortNotes();
-		refreshCards();	
+	$.when(getTagIndex()).done(function(){
+		console.log('done with tag index');
+		$.when(simplenoteSync()).done(function(){
+			//console.log('done with all simplenoteSync promises');
+			indexDate = stackTime(localStorage.indexDate);
+			$('.status').html('synced <abbr class="timeago" title="' + indexDate + '"></abbr>');
+			bindTimeago();
+			$('.status-div').removeClass('loading');
+			sortNotes();
+			refreshCards();	
+		});
 	});
 };
 
@@ -553,7 +578,6 @@ $(function(){
 	else{
 		window.location = '/';
 	};
-	// //console.log(getItem('email'));
 	if(localStorage.email){
 		$('.username').text(localStorage.email);
 		if(localStorage.index){
