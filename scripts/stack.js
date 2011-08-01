@@ -373,6 +373,7 @@ function syncIndex(postData){
 		$.ajax('/sn.php',{
 			type: 'POST',
 			data: postData,
+			timeout: 5000,
 			success: function(rawNewIndex){
 				newIndex = $.parseJSON(rawNewIndex);
 				//console.log('recieved new index with ' + newIndex.count + ' new notes');
@@ -413,8 +414,8 @@ function syncIndex(postData){
 				});
 			},
 			error: function(msg){
-				//console.log('error updating index ' + msg);
-				//dfd_syn.failure();
+				$('.status').text('Working offline. Changes will sync when connected.');
+				$('.status-div').removeClass('loading');
 			}
 		});
 	}).promise();
@@ -668,6 +669,20 @@ function toggleVersions(notekey){
 	};
 };
 
+// UPDATE TAGS
+function updateTags(notekey){
+	tags = $('#' + notekey + ' .tag-area input').val().split(' ');
+	console.log(tags);
+	note = $.parseJSON(localStorage[notekey]);
+	if (note.tags != tags){
+		note.tags = tags;
+		note.syncnum = note.syncnum + 1;
+		localStorage[notekey] = JSON.stringify(note);
+		localToDOM(notekey);
+		manualSync();
+	};
+};
+
 $(function() {
 // APPEARANCE SETTINGS
 	// LOAD THEME
@@ -834,6 +849,10 @@ $(function() {
 			$('.versions-right .right-inner').html('<textarea disabled="disabled">' + $('.version-select').data().content + '</textarea>');
 		};
 	});
+	// CLICK OUTSIDE OF OVERLAY WINDOW
+	$('.overlay').click(function(){
+		clearOverlays();
+	});
 	// CLICK REVERT
 	$('.versions-toolbar .revert-version').live('mousedown',function(){
 		if( $('.version-select').length==1 ){
@@ -898,6 +917,11 @@ function refreshNoteBinds(note_tas){
 	// MAXIMIZE BUTTON
 	$('.maximize').click(function(){
 		fullscreenMode();
+	});
+	// CHANGE TAG
+	$('.tagsinput div input').blur(function(){ // TAG CHANGES NOT TRIGGERING CHANGE EVENT
+		//console.log('updating tags');
+		updateTags($('.current').attr('id'));
 	});
 };
 

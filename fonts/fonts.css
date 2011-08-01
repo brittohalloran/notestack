@@ -11,6 +11,19 @@
 
 }
 
+/* CABIN BOLD */
+@font-face {
+    font-family: 'CabinBold';
+    src: url('Cabin/Cabin-Bold-webfont.eot');
+    src: url('Cabin/Cabin-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('Cabin/Cabin-Bold-webfont.woff') format('woff'),
+         url('Cabin/Cabin-Bold-webfont.ttf') format('truetype'),
+         url('Cabin/Cabin-Bold-webfont.svg#CabinBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 /* COLABORATE */
 @font-face {
     font-family: 'ColaborateLightRegular';
