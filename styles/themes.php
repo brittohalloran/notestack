@@ -140,10 +140,11 @@ a:hover {
 			'note-edit-bg' 			=> 'rgba(64,64,64,0.3)',
 			'note-edit-border'		=> '1px solid #4D90FE',
 			'note-border-rad-px' 	=> '10',
-			'note-border' 			=> '1px solid rgba(0,0,0,0.6)',
-			'note-boxshadow' 		=> 'none',
+			'note-border' 			=> '1px solid rgba(50,50,50,1)',
+			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
 			'note-buttons-color' 	=> 'rgba(255,255,255,1)',
 			'note-textarea-bg' 		=> 'white',
+			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.4)',
 			'default-font' 			=> '"courier new", monospace',
 			'tag-area-bg' 			=> 'white',
 			'tag-bg' 				=> '#CCC',
@@ -173,10 +174,11 @@ a:hover {
 			'note-edit-bg' 			=> 'rgba(100,100,100,0.95)',
 			'note-edit-border'		=> '2px solid rgba(0,0,0,0.5)',
 			'note-border-rad-px' 	=> '10',
-			'note-border' 			=> '1px solid rgba(0,0,0,0.5)',
-			'note-buttons-color' 	=> 'white',
-			'note-boxshadow' 		=> '5px 5px 10px rgba(0,0,0,0.3)',
+			'note-border' 			=> '1px solid rgba(50,50,50,1)',
+			'note-buttons-color' 	=> 'rgba(50,50,50,1)',
+			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.9)',
 			'note-textarea-bg' 		=> 'url(../images/moleskine.jpg)',
+			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.4)',
 			'default-font' 			=> '"courier new", monospace',
 			'tag-area-bg' 			=> 'url(../images/moleskine.jpg)',
 			'tag-bg' 				=> 'rgba(255,255,255,0.2)',
@@ -208,8 +210,9 @@ a:hover {
 			'note-border-rad-px' 	=> '5',
 			'note-border' 			=> '1px solid rgba(0,0,0,0.3)',
 			'note-buttons-color' 	=> 'rgba(0,0,0,0.3)',
-			'note-boxshadow' 		=> '5px 5px 10px rgba(0,0,0,0.3)',
+			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
 			'note-textarea-bg' 		=> 'white',
+			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.2)',
 			'default-font' 			=> '"courier new", monospace',
 			'tag-area-bg' 			=> 'white',
 			'tag-bg' 				=> 'rgba(100,100,100,0.2)',
@@ -240,11 +243,12 @@ a:hover {
 			'note-current-bg' 		=> 'rgba(168,122,44,1)',
 			'note-edit-bg' 			=> 'rgba(219,179,79,1)',
 			'note-edit-border'		=> '1px solid #A94D2D',
-			'note-border-rad-px' 	=> '5',
-			'note-border' 			=> '1px solid rgba(255,255,255,0.2)',
+			'note-border-rad-px' 	=> '10',
+			'note-border' 			=> '1px solid rgba(230,230,230,0.3)',
 			'note-buttons-color' 	=> 'white',
-			'note-boxshadow' 		=> '5px 5px 10px rgba(0,0,0,0.3)',
+			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
 			'note-textarea-bg' 		=> '#FFFFD9',
+			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.4)',
 			'default-font' 			=> '"MuseoSans-500", sans-serif',
 			'tag-area-bg' 			=> '#FFFFD9',
 			'tag-bg' 				=> 'rgba(100,100,100,0.2)',
@@ -345,8 +349,14 @@ a:hover {
 	.theme-<?php echo $theme; ?> .versions .inner {
 		font-family: <?php echo $options['default-font']; ?>;
 		background: <?php echo $options['note-textarea-bg']; ?>;
-		border: <?php echo $options['note-border']; ?>;
+		/*border: <?php echo $options['note-border']; ?>;*/
 	}
+	
+		.theme-<?php echo $theme; ?> .window .note .textarea {
+			box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
+			-webkit-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
+			-moz-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
+		}
 	
 		/*NOTE TEXTAREA WHEN FOCUSED*/
 		.theme-<?php echo $theme; ?> .window .note .textarea textarea:focus {
@@ -366,6 +376,12 @@ a:hover {
 		background: -webkit-gradient(linear, left bottom, left top, from(#DDDDDD), to(#E6E6E6));
 		background: -moz-linear-gradient(bottom, #DDDDD, #E6E6E6);
 	}
+		.theme-<?php echo $theme; ?> .window .note .maximize:hover,
+		.theme-<?php echo $theme; ?> .window .note .versions-button:hover,
+		.theme-<?php echo $theme; ?> .window .note .delete:hover {
+			color: <?php echo $options['highlight-text-color']; ?>;
+			background: <?php echo $options['highlight-bg']; ?>;
+		}
 	
 	/*NOTE MESSAGE*/
 	.theme-<?php echo $theme; ?> .window .note .message {

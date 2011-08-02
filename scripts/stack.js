@@ -784,6 +784,26 @@ $(function() {
 		$('.fullwindow').addClass(fontsize);
 		localStorage['fontsize'] = fontsize;
 	};
+	// LOAD TAG-PREF
+	if(localStorage.tagPref == "no-tags"){
+		$('.fullwindow').addClass('no-tags');
+		$('.tag-pref').addClass('dim');
+	};
+	// CLICK TAG-PREF
+	$('.appearance .tag-pref').click(function(){
+		if($(this).hasClass('dim')){
+			// enable tags
+			$(this).removeClass('dim');
+			$('.fullwindow').removeClass('no-tags');
+			localStorage.removeItem('tagPref');
+		}
+		else{
+			// disable tags
+			$(this).addClass('dim');
+			$('.fullwindow').addClass('no-tags');
+			localStorage.setItem('tagPref','no-tags');
+		};
+	});
 
 // BUTTONS
 	// NEW NOTE BUTTON
