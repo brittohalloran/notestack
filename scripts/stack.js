@@ -335,13 +335,10 @@ function sendNote(noteobject){
 // CHECK ALL NOTES FOR UPDATES AGAINST INDEX
 function updateAllNotes(){
 	return $.Deferred(function(dfd_uan){
-		$('.status').text('Updating notes');
-		$('.status-div').addClass('loading');
-		console.log('starting UAN');
+		//console.log('iterating through index, showing local, getting if needed');
 		index = $.parseJSON(localStorage.index);
-		var i=0, snarray=[], notecount=0, deletedcount=0, end=index.data.length-1;
-		function checkNotes(){
-			//console.log(i);
+		var i, snarray=[], notecount=0, deletedcount=0;
+		for (i=0;i<=index.data.length-1;i++){
 			if (localStorage.getItem(index.data[i].key)){
 				localNote = $.parseJSON(localStorage.getItem(index.data[i].key));
 				if (localNote.key.substr(0,9) == 'notestack'){
@@ -350,7 +347,7 @@ function updateAllNotes(){
 				}
 				else{
 					if (localNote.syncnum < index.data[i].syncnum){ 
-						// new remote version, get it
+						// new remove version, get it
 						snarray.push(getNote(localNote.key));
 					}
 					else if (localNote.syncnum > index.data[i].syncnum){ 
@@ -373,39 +370,22 @@ function updateAllNotes(){
 			else if (index.data[i].deleted==1){
 				deletedcount++;
 			};
-			if ((i % 20 === 0)||(i == end)){
-				$.when.apply(null, snarray).done(function(){
-					sortNotes();
-					refreshCards();
-					i++;
-					snarray=[];
-					if(i<end){
-						checkNotes();
-					}
-					else{
-						$('.note-data').text(notecount + ' notes | ');
-						$('.data_notes').text(notecount);
-						$('.data_deleted').text(deletedcount);
-						console.log(snarray);
-						console.log('snarray.length=' + snarray.length);
-						dfd_uan.resolve();
-					};
-				});
-			}
-			else{
-				i++;
-				checkNotes();
-			};
 		};
-		checkNotes();
+		$('.note-data').text(notecount + ' notes | ');
+		$('.data_notes').text(notecount);
+		$('.data_deleted').text(deletedcount);
+		$('.status').text('Syncing ' + snarray.length + ' notes');
+		$('.status-div').addClass('loading');
+		$.when.apply(null, snarray).done(function(){
+			//console.log('all gets resolved');
+			dfd_uan.resolve();
+		});
 	}).promise();
 };
 
 // SYNC INDEX
 function syncIndex(postData){
 	return $.Deferred(function(dfd_syn){
-		$('.status').text('Getting notes index');
-		$('.status-div').addClass('loading');
 		$.ajax('/sn.php',{
 			type: 'POST',
 			data: postData,
@@ -415,10 +395,12 @@ function syncIndex(postData){
 					window.location = '/?login=expired';
 				};
 				newIndex = $.parseJSON(rawNewIndex);
+				//console.log('recieved new index with ' + newIndex.count + ' new notes');
 				if(localStorage.index){
 					existingIndex = $.parseJSON(localStorage.index);
 					for (i=0;i<=newIndex.data.length-1;i++){
 						for (j=0;j<=existingIndex.data.length-1;j++){
+							//console.log(j);
 							if(existingIndex.data[j].key==newIndex.data[i].key){
 								existingIndex.data.splice(j,1);
 								break
@@ -432,9 +414,13 @@ function syncIndex(postData){
 					existingIndex = newIndex;
 				};
 				localStorage.setItem('mark',newIndex.mark ? newIndex.mark : "DONE");
+
 				//console.log(localStorage.mark);
 				localStorage.setItem('index',JSON.stringify(existingIndex));
 				localStorage.setItem('indexDate',((new Date()).getTime()/1000));
+
+
+
 				if (localStorage.mark == "DONE"){ 
 					localStorage.removeItem('mark');
 					console.log('done syncing index');
@@ -448,11 +434,11 @@ function syncIndex(postData){
 			error: function(msg){
 				$('.status').text('Working offline. Changes will sync when connected.');
 				$('.status-div').removeClass('loading');
-				dfd_syn.resolve();
 			}
 		});
 	}).promise();
 };
+
 
 // GET TAG INDEX
 function getTagIndex(){
@@ -462,14 +448,14 @@ function getTagIndex(){
 			'email': localStorage.email,
 			'token': localStorage.token
 		};
-		//console.log('starting tagIndex pull');
+		console.log('starting tagIndex pull');
 		$.ajax('/sn.php',{
 			type: 'POST',
 			data: postData,
 			timeout: 5000,
 			success: function(rawTagIndex){
 				localStorage['tagIndex'] = rawTagIndex;
-				//console.log('stored tagIndex')
+				console.log('stored tagIndex')
 				dfd_tag.resolve();
 			}
 		});
@@ -548,6 +534,7 @@ function manualSync(){
 				indexFinish = new Date().getTime();
 				console.log('indexTime = ' + (indexFinish - indexStart));
 				$.when(updateAllNotes()).done(function(){
+
 					indexDate = stackTime(localStorage.indexDate);
 					$('.status').html('synced <abbr class="timeago" title="' + indexDate + '"></abbr>');
 					bindTimeago();
@@ -556,15 +543,19 @@ function manualSync(){
 					refreshCards();	
 				});
 			});
+
+
 		});
 	}
 	else{
 		window.location = '/';
 	};
+
 };
 
 // ON PAGE LOAD
 var storage = '',indexStart = '',indexFinish = '';
+
 $(function(){
 	if(localStorage.email){
 		$('.username').text(localStorage.email);
