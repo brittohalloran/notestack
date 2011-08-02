@@ -46,7 +46,13 @@ if(in_array($email, $authorized)){
 		$handle = curl_init($url); // initiate CURL
 		default_curl_settings();
 		$index = curl_exec($handle);
-		echo $index;
+		$http_status = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+		if($http_status=='401'){
+			echo '401';
+		}
+		else{
+			echo $index;
+		};
 		exit();
 	}
 	elseif($action=='tagIndex'){
