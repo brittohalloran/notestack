@@ -339,9 +339,9 @@ function updateAllNotes(){
 		$('.status-div').addClass('loading');
 		console.log('starting UAN');
 		index = $.parseJSON(localStorage.index);
-		var i, snarray=[], notecount=0, deletedcount=0, end=index.data.length-1;
-		for (i=0;i<=end;i++){
-			console.log(i);
+		var i=0, snarray=[], notecount=0, deletedcount=0, end=index.data.length-1;
+		function checkNotes(){
+			//console.log(i);
 			if (localStorage.getItem(index.data[i].key)){
 				localNote = $.parseJSON(localStorage.getItem(index.data[i].key));
 				if (localNote.key.substr(0,9) == 'notestack'){
@@ -373,18 +373,31 @@ function updateAllNotes(){
 			else if (index.data[i].deleted==1){
 				deletedcount++;
 			};
-			if (i % 15 === 0){
-				//snarray.push(sortNotes());
-				//snarray.push(refreshCards());
-				console.log('divisible by 15');
+			if ((i % 20 === 0)||(i == end)){
+				$.when.apply(null, snarray).done(function(){
+					sortNotes();
+					refreshCards();
+					i++;
+					snarray=[];
+					if(i<end){
+						checkNotes();
+					}
+					else{
+						$('.note-data').text(notecount + ' notes | ');
+						$('.data_notes').text(notecount);
+						$('.data_deleted').text(deletedcount);
+						console.log(snarray);
+						console.log('snarray.length=' + snarray.length);
+						dfd_uan.resolve();
+					};
+				});
+			}
+			else{
+				i++;
+				checkNotes();
 			};
 		};
-		$('.note-data').text(notecount + ' notes | ');
-		$('.data_notes').text(notecount);
-		$('.data_deleted').text(deletedcount);
-		$.when.apply(null, snarray).done(function(){
-			dfd_uan.resolve();
-		});
+		checkNotes();
 	}).promise();
 };
 
@@ -532,6 +545,8 @@ function manualSync(){
 				'mark' : mark,
 				'length': 100
 			})).done(function(){
+				indexFinish = new Date().getTime();
+				console.log('indexTime = ' + (indexFinish - indexStart));
 				$.when(updateAllNotes()).done(function(){
 					indexDate = stackTime(localStorage.indexDate);
 					$('.status').html('synced <abbr class="timeago" title="' + indexDate + '"></abbr>');
@@ -549,7 +564,7 @@ function manualSync(){
 };
 
 // ON PAGE LOAD
-var storage = '';
+var storage = '',indexStart = '',indexFinish = '';
 $(function(){
 	if(localStorage.email){
 		$('.username').text(localStorage.email);
@@ -560,6 +575,7 @@ $(function(){
 				refreshCards();
 			};
 		};
+		indexStart = new Date().getTime();
 		manualSync();
 	}
 	else{
