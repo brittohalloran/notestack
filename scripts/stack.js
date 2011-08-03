@@ -337,49 +337,61 @@ function updateAllNotes(){
 	return $.Deferred(function(dfd_uan){
 		//console.log('iterating through index, showing local, getting if needed');
 		index = $.parseJSON(localStorage.index);
-		var i, snarray=[], notecount=0, deletedcount=0;
-		for (i=0;i<=index.data.length-1;i++){
-			if (localStorage.getItem(index.data[i].key)){
-				localNote = $.parseJSON(localStorage.getItem(index.data[i].key));
-				if (localNote.key.substr(0,9) == 'notestack'){
-					// completely new local note, send it
-					snarray.push(sendNote(localNote));
-				}
-				else{
-					if (localNote.syncnum < index.data[i].syncnum){ 
-						// new remove version, get it
-						snarray.push(getNote(localNote.key));
-					}
-					else if (localNote.syncnum > index.data[i].syncnum){ 
-						// local version is newer, send it
+		var i=0, set=0, snarray=[], notecount=0, deletedcount=0;
+		function updateSome(num){
+			for (i=set;i<=set+num;i++){
+				if (!index.data[i]){
+					console.log('broke at ' + i);
+					dfd_uan.resolve();
+					return false;
+				};
+				if (localStorage.getItem(index.data[i].key)){
+					localNote = $.parseJSON(localStorage.getItem(index.data[i].key));
+					if (localNote.key.substr(0,9) == 'notestack'){
+						// completely new local note, send it
 						snarray.push(sendNote(localNote));
 					}
-					else{ 
-						// have latest note, just show it
-						localToDOM(localNote.key);
+					else{
+						if (localNote.syncnum < index.data[i].syncnum){ 
+							// new remove version, get it
+							snarray.push(getNote(localNote.key));
+						}
+						else if (localNote.syncnum > index.data[i].syncnum){ 
+							// local version is newer, send it
+							snarray.push(sendNote(localNote));
+						}
+						else{ 
+							// have latest note, just show it
+							localToDOM(localNote.key);
+						};
 					};
+				}
+				else{ 
+					// completely new remote note, get it
+					snarray.push(getNote(index.data[i].key));
 				};
-			}
-			else{ 
-				// completely new remote note, get it
-				snarray.push(getNote(index.data[i].key));
+				if (index.data[i].deleted==0){
+					notecount++;
+				}
+				else if (index.data[i].deleted==1){
+					deletedcount++;
+				};
 			};
-			if (index.data[i].deleted==0){
-				notecount++;
-			}
-			else if (index.data[i].deleted==1){
-				deletedcount++;
-			};
+			$.when.apply(null, snarray).done(function(){
+				set = set + 20;
+				snarray = [];
+				console.log('set=' + set);
+				sortNotes();
+				refreshCards();
+				updateSome(num);
+			});
 		};
+		updateSome(20);
 		$('.note-data').text(notecount + ' notes | ');
 		$('.data_notes').text(notecount);
 		$('.data_deleted').text(deletedcount);
 		$('.status').text('Syncing ' + snarray.length + ' notes');
 		$('.status-div').addClass('loading');
-		$.when.apply(null, snarray).done(function(){
-			//console.log('all gets resolved');
-			dfd_uan.resolve();
-		});
 	}).promise();
 };
 
@@ -395,18 +407,17 @@ function syncIndex(postData){
 					window.location = '/?login=expired';
 				};
 				newIndex = $.parseJSON(rawNewIndex);
-				//console.log('recieved new index with ' + newIndex.count + ' new notes');
+				console.log('recieved new index with ' + newIndex.count + ' new notes');
 				if(localStorage.index){
 					existingIndex = $.parseJSON(localStorage.index);
 					for (i=0;i<=newIndex.data.length-1;i++){
 						for (j=0;j<=existingIndex.data.length-1;j++){
-							//console.log(j);
 							if(existingIndex.data[j].key==newIndex.data[i].key){
 								existingIndex.data.splice(j,1);
 								break
 							};
 						};
-						existingIndex.data.unshift(newIndex.data[i]);
+						existingIndex.data.push(newIndex.data[i]);
 					};
 					existingIndex.count = existingIndex.data.length;
 				}
@@ -414,21 +425,20 @@ function syncIndex(postData){
 					existingIndex = newIndex;
 				};
 				localStorage.setItem('mark',newIndex.mark ? newIndex.mark : "DONE");
-
-				//console.log(localStorage.mark);
+				console.log(localStorage.mark);
 				localStorage.setItem('index',JSON.stringify(existingIndex));
-				localStorage.setItem('indexDate',((new Date()).getTime()/1000));
-
-
-
+				localStorage.setItem('indexDate',newIndex.time);
 				if (localStorage.mark == "DONE"){ 
 					localStorage.removeItem('mark');
 					console.log('done syncing index');
 					dfd_syn.resolve();
 				}
 				else{ 
+					// dfd_syn.reject();
 					postData['mark'] = localStorage.mark;
-					syncIndex(postData);					
+					$.when(syncIndex(postData)).done(function(){
+						dfd_syn.resolve();
+					});					
 				};
 			},
 			error: function(msg){
@@ -436,6 +446,7 @@ function syncIndex(postData){
 				$('.status-div').removeClass('loading');
 			}
 		});
+		console.log('outside index ajax()');
 	}).promise();
 };
 
@@ -513,14 +524,26 @@ function allLocalToDOM(){
 };
 
 // MANUAL SYNC
-function manualSync(){
+function manualSync(syncType){
 	if(localStorage.token){
 		$.when(getTagIndex()).done(function(){
 			console.log('done with tag index');
 			$('.status').text('Syncing with Simplenote');
 			$('.status-div').addClass('loading');
-			since = localStorage.indexDate ? localStorage.indexDate : "" ;
-			mark = localStorage.mark ? localStorage.mark : "" ;
+			if(syncType == 'full'){
+				since = "";
+				mark = "";
+			}
+			else{
+				if(localStorage.mark){
+					since = "";
+					mark = localStorage.mark;
+				}
+				else{
+					since = localStorage.indexDate ? localStorage.indexDate : "";
+					mark = "";
+				};
+			};
 			email = localStorage.email;
 			token = localStorage.token;
 			$.when(syncIndex({
@@ -534,7 +557,6 @@ function manualSync(){
 				indexFinish = new Date().getTime();
 				console.log('indexTime = ' + (indexFinish - indexStart));
 				$.when(updateAllNotes()).done(function(){
-
 					indexDate = stackTime(localStorage.indexDate);
 					$('.status').html('synced <abbr class="timeago" title="' + indexDate + '"></abbr>');
 					bindTimeago();
@@ -543,8 +565,6 @@ function manualSync(){
 					refreshCards();	
 				});
 			});
-
-
 		});
 	}
 	else{

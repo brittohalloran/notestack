@@ -176,7 +176,7 @@ a:hover {
 			'note-border-rad-px' 	=> '10',
 			'note-border' 			=> '1px solid rgba(50,50,50,1)',
 			'note-buttons-color' 	=> 'rgba(50,50,50,1)',
-			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.9)',
+			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.5)',
 			'note-textarea-bg' 		=> 'url(../images/moleskine.jpg)',
 			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.4)',
 			'default-font' 			=> '"courier new", monospace',

@@ -51,10 +51,10 @@ $(function(){
 				localnotes++;
 			};
 		};
-		$('.login_data_status').hide().text('found ' + localnotes + " local notes | ").fadeIn(2000);
+		$('.under_message').hide().html('found ' + localnotes + " local notes | <a class='clear_data' href='#'>clear local data</a>").fadeIn(2000);
 	}
 	else{
-		$('.login_data_status').hide().text("no local notes | ").delay(500).fadeIn(1000);
+		//$('.login_data_status').hide().text("no local notes | ").delay(500).fadeIn(1000);
 	};
 	if($.getUrlVar('login')=='expired'){
 		$('.login_message').text('Your simplenote login has expired, please login again.').slideDown('fast');
