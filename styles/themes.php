@@ -5,12 +5,16 @@
 a {
 	text-decoration: none;
 	color: #628EB5;
+	-webkit-transition:color 0.25s ease-in;  
+	-moz-transition:color 0.25s ease-in;  
+	-o-transition:color 0.25s ease-in;  
+	transition:color 0.25s ease-in; 
 }
 
 a:hover {
 	color: #B56262;
 }
-
+	
 .button1 {
 	border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -82,6 +86,7 @@ a:hover {
 	margin-top:5px;
 	font-family: helvetica;  
 	font-size:13px;
+	height: 16px;
 }
 
 .tagsinput .tag a { 
@@ -139,10 +144,11 @@ a:hover {
 			'note-edit-bg' 			=> 'rgba(64,64,64,0.3)',
 			'note-edit-border'		=> '1px solid #4D90FE',
 			'note-border-rad-px' 	=> '10',
-			'note-border' 			=> '1px solid rgba(0,0,0,0.6)',
-			'note-boxshadow' 		=> 'none',
-			'note-buttons-color' 	=> 'rgba(255,255,255,1)',
+			'note-border' 			=> '1px solid rgba(50,50,50,0.6)',
+			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
+			'note-buttons-color' 	=> 'rgba(50,50,50,0.6)', 
 			'note-textarea-bg' 		=> 'white',
+			'textarea-box-shadow'	=> 'inset 0px 0px 10px rgba(0,0,0,0.5)',
 			'default-font' 			=> '"courier new", monospace',
 			'tag-area-bg' 			=> 'white',
 			'tag-bg' 				=> '#CCC',
@@ -172,10 +178,11 @@ a:hover {
 			'note-edit-bg' 			=> 'rgba(100,100,100,0.95)',
 			'note-edit-border'		=> '2px solid rgba(0,0,0,0.5)',
 			'note-border-rad-px' 	=> '10',
-			'note-border' 			=> '1px solid rgba(0,0,0,0.5)',
-			'note-buttons-color' 	=> 'white',
-			'note-boxshadow' 		=> '5px 5px 10px rgba(0,0,0,0.3)',
+			'note-border' 			=> '1px solid rgba(50,50,50,1)',
+			'note-buttons-color' 	=> 'rgba(50,50,50,1)',
+			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.5)',
 			'note-textarea-bg' 		=> 'url(../images/moleskine.jpg)',
+			'textarea-box-shadow'	=> 'inset 0px 0px 10px rgba(0,0,0,0.6)',
 			'default-font' 			=> '"courier new", monospace',
 			'tag-area-bg' 			=> 'url(../images/moleskine.jpg)',
 			'tag-bg' 				=> 'rgba(255,255,255,0.2)',
@@ -206,9 +213,10 @@ a:hover {
 			'note-edit-border'		=> '1px solid #4D90FE',
 			'note-border-rad-px' 	=> '5',
 			'note-border' 			=> '1px solid rgba(0,0,0,0.3)',
-			'note-buttons-color' 	=> 'rgba(0,0,0,0.8)',
-			'note-boxshadow' 		=> '5px 5px 10px rgba(0,0,0,0.3)',
+			'note-buttons-color' 	=> 'rgba(0,0,0,0.3)',
+			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
 			'note-textarea-bg' 		=> 'white',
+			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.2)',
 			'default-font' 			=> '"courier new", monospace',
 			'tag-area-bg' 			=> 'white',
 			'tag-bg' 				=> 'rgba(100,100,100,0.2)',
@@ -239,11 +247,12 @@ a:hover {
 			'note-current-bg' 		=> 'rgba(168,122,44,1)',
 			'note-edit-bg' 			=> 'rgba(219,179,79,1)',
 			'note-edit-border'		=> '1px solid #A94D2D',
-			'note-border-rad-px' 	=> '5',
-			'note-border' 			=> '1px solid rgba(255,255,255,0.2)',
-			'note-buttons-color' 	=> 'white',
-			'note-boxshadow' 		=> '5px 5px 10px rgba(0,0,0,0.3)',
+			'note-border-rad-px' 	=> '10',
+			'note-border' 			=> '1px solid rgba(168, 122, 44, 0.8)',
+			'note-buttons-color' 	=> 'rgba(168, 122, 44, 0.8)',
+			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
 			'note-textarea-bg' 		=> '#FFFFD9',
+			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.4)',
 			'default-font' 			=> '"MuseoSans-500", sans-serif',
 			'tag-area-bg' 			=> '#FFFFD9',
 			'tag-bg' 				=> 'rgba(100,100,100,0.2)',
@@ -347,6 +356,12 @@ a:hover {
 		border: <?php echo $options['note-border']; ?>;
 	}
 	
+		.theme-<?php echo $theme; ?> .window .note .textarea {
+			box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
+			-webkit-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
+			-moz-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
+		}
+	
 		/*NOTE TEXTAREA WHEN FOCUSED*/
 		.theme-<?php echo $theme; ?> .window .note .textarea textarea:focus {
 			outline: none;
@@ -360,23 +375,42 @@ a:hover {
 		border-bottom: 1px solid <?php echo $options['note-buttons-color']; ?>;
 		border-right: 1px solid <?php echo $options['note-buttons-color']; ?>;
 		border-left: 1px solid <?php echo $options['note-buttons-color']; ?>;
-		color: <?php echo $options['note-buttons-color']; ?>;
+		color: black;
+		background: linear-gradient(bottom, #DDDDDD, #E6E6E6);
+		background: -webkit-gradient(linear, left bottom, left top, from(#DDDDDD), to(#E6E6E6));
+		background: -moz-linear-gradient(bottom, #DDDDD, #E6E6E6);
 	}
+		.theme-<?php echo $theme; ?> .window .note .maximize:hover,
+		.theme-<?php echo $theme; ?> .window .note .versions-button:hover,
+		.theme-<?php echo $theme; ?> .window .note .delete:hover {
+			color: <?php echo $options['highlight-text-color']; ?>;
+			background: <?php echo $options['highlight-bg']; ?>;
+		}
 	
 	/*NOTE MESSAGE*/
 	.theme-<?php echo $theme; ?> .window .note .message {
 		background: <?php echo $options['highlight-bg']; ?>;
 		color: <?php echo $options['highlight-text-color']; ?>;
 	}
+	
+		/*NOTE MESSAGE LINKS*/
+		.theme-<?php echo $theme; ?> .window .note .message a {
+			color: <?php echo $options['highlight-text-color']; ?>;
+			text-decoration: underline;
+		}
 
 	/*TAG AREA*/
 	.theme-<?php echo $theme; ?> .window .note .tag-area {
 		border: <?php echo $options['note-border']; ?>;
+		background: <?php echo $options['tag-area-bg']; ?>;
+		box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
+		-webkit-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
+		-moz-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 	}
 	
 	/*TAG AREA BACKGROUND*/
 	.theme-<?php echo $theme; ?> .window .note .tagsinput {
-		background: <?php echo $options['tag-area-bg']; ?>;
+		background: transparent;
 	}
 	
 		/*INDIVIDUAL TAG BACKGROUND*/
@@ -414,6 +448,11 @@ a:hover {
 	.theme-<?php echo $theme; ?> .status {
 		text-transform: lowercase;
 	}
+	
+		/*PROGRESS BAR*/
+		.theme-<?php echo $theme; ?> .status .progress .inner {
+			background: <?php echo $options['highlight-bg']; ?>;
+		}
 
 /*THEME CARD INNER*/
 .appearance .item.theme-<?php echo $theme; ?> .inner {
@@ -495,17 +534,6 @@ a:hover {
 	font-family: "ColaborateLightRegular", sans-serif;
 }
 
-.appearance .font,
-.appearance .fontsize {
-	font-size: 1.5em;
-	background: white;
-	color: black;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	cursor: pointer;
-}
-
 /* FONTSIZE ############################################################################ */
 
 .fontsize-10 .window .note .textarea textarea,
@@ -578,6 +606,18 @@ a:hover {
 		background: white;
 	}
 	
+		.appearance .font,
+		.appearance .fontsize,
+		.appearance .tag-pref {
+			font-size: 1.5em;
+			background: white;
+			color: black;
+			border-radius: 5px;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			cursor: pointer;
+		}
+			
 	.keyboard_shortcuts {
 		color: white;
 	}
@@ -594,4 +634,222 @@ a:hover {
 	-webkit-border-radius: 10px;
 	opacity: 0.9;
 	color: white;
+}
+
+/* ########### AutoSuggest CSS - Version 1.2 ################ */
+
+ul.as-selections {
+	list-style-type: none;
+	border-top: 1px solid #888;
+	border-bottom: 1px solid #b6b6b6;
+	border-left: 1px solid #aaa;
+	border-right: 1px solid #aaa;
+	padding: 4px 0 4px 4px;
+	margin: 0;
+	overflow: auto;
+	background-color: #fff;
+	box-shadow:inset 0 1px 2px #888;
+	-webkit-box-shadow:inset 0 1px 2px #888;
+	-moz-box-shadow:inset 0 1px 2px #888;
+}
+
+ul.as-selections.loading {
+	background-color: #eee;
+}
+
+ul.as-selections li {
+	float: left;
+	margin: 1px 4px 1px 0;
+}
+
+ul.as-selections li.as-selection-item {
+	color: #2b3840;
+	font-size: 13px;
+	font-family: "Lucida Grande", arial, sans-serif;
+	text-shadow: 0 1px 1px #fff;
+	background-color: #ddeefe;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ddeefe), to(#bfe0f1));
+	border: 1px solid #acc3ec;
+	border-top-color: #c0d9e9;
+	padding: 2px 7px 2px 10px;
+	border-radius: 12px;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	box-shadow: 0 1px 1px #e4edf2;
+	-webkit-box-shadow: 0 1px 1px #e4edf2;
+	-moz-box-shadow: 0 1px 1px #e4edf2;
+}
+
+ul.as-selections li.as-selection-item:last-child {
+	margin-left: 30px;
+}
+
+ul.as-selections li.as-selection-item a.as-close {
+	float: right;
+	margin: 1px 0 0 7px;
+	padding: 0 2px;
+	cursor: pointer;
+	color: #5491be;
+	font-family: "Helvetica", helvetica, arial, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	text-shadow: 0 1px 1px #fff;
+	-webkit-transition: color .1s ease-in;
+}
+
+ul.as-selections li.as-selection-item.blur {
+	color: #666666;
+	background-color: #f4f4f4;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f4f4f4), to(#d5d5d5));
+	border-color: #bbb;
+	border-top-color: #ccc;
+	box-shadow: 0 1px 1px #e9e9e9;
+	-webkit-box-shadow: 0 1px 1px #e9e9e9;
+	-moz-box-shadow: 0 1px 1px #e9e9e9;
+}
+
+ul.as-selections li.as-selection-item.blur a.as-close {
+	color: #999;
+}
+
+ul.as-selections li:hover.as-selection-item {
+	color: #2b3840;
+	background-color: #bbd4f1;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#bbd4f1), to(#a3c2e5));
+	border-color: #6da0e0;
+	border-top-color: #8bb7ed;
+}
+
+ul.as-selections li:hover.as-selection-item a.as-close {
+	color: #4d70b0;
+}
+
+ul.as-selections li.as-selection-item.selected {
+	border-color: #1f30e4;
+}
+
+ul.as-selections li.as-selection-item a:hover.as-close {
+	color: #1b3c65;
+}
+
+ul.as-selections li.as-selection-item a:active.as-close {
+	color: #4d70b0;
+}
+
+ul.as-selections li.as-original {
+	margin-left: 0;
+}
+
+ul.as-selections li.as-original input {
+	border: none;
+	outline: none;
+	font-size: 13px;
+	width: 120px;
+	height: 18px;
+	padding-top: 3px;
+}
+
+ul.as-list {
+	position: absolute;
+	list-style-type: none;
+	margin: 2px 0 0 0;
+	padding: 0;
+	font-size: 14px;
+	color: #000;
+	font-family: "Lucida Grande", arial, sans-serif;
+	background-color: #fff;
+	background-color: rgba(255,255,255,0.95);
+	z-index: 2;
+	box-shadow: 0 2px 12px #222;
+	-webkit-box-shadow: 0 2px 12px #222;
+	-moz-box-shadow: 0 2px 12px #222;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+li.as-result-item, li.as-message {
+	margin: 0 0 0 0;
+	padding: 5px 12px;
+	background-color: transparent;
+	border: 1px solid #fff;
+	border-bottom: 1px solid #ddd;
+	cursor: pointer;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+li:first-child.as-result-item {
+	margin: 0;
+}
+
+li.as-message {
+	margin: 0;
+	cursor: default;
+}
+
+li.as-result-item.active {
+	background-color: #3668d9;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 64%, from(rgb(110, 129, 245)), to(rgb(62, 82, 242)));
+	border-color: #3342e8;
+	color: #fff;
+	text-shadow: 0 1px 2px #122042;
+}
+
+li.as-result-item em { 
+	font-style: normal; 
+	background: #444;  
+	padding: 0 2px;
+	color: #fff;
+}
+
+li.as-result-item.active em { 
+	background: #253f7a;  
+	color: #fff;
+}
+
+/* Webkit Hacks  */
+@media screen and (-webkit-min-device-pixel-ratio:0) {	
+	ul.as-selections {
+		border-top-width: 2px;
+	}
+	ul.as-selections li.as-selection-item {
+		padding-top: 3px;
+		padding-bottom: 3px;
+	}
+	ul.as-selections li.as-selection-item a.as-close {
+		margin-top: -1px;
+	}
+	ul.as-selections li.as-original input {
+		height: 19px;
+	}
+}
+
+/* Opera Hacks  */
+@media all and (-webkit-min-device-pixel-ratio:10000), not all and (-webkit-min-device-pixel-ratio:0) {
+	ul.as-list {
+		border: 1px solid #888;
+	}
+	ul.as-selections li.as-selection-item a.as-close {
+		margin-left: 4px;
+		margin-top: 0;
+	}
+}
+
+/* IE Hacks  */
+ul.as-list {
+	border: 1px solid #888\9;
+}
+ul.as-selections li.as-selection-item a.as-close {
+	margin-left: 4px\9;
+	margin-top: 0\9;
+}
+
+/* Firefox 3.0 Hacks */
+ul.as-list,  x:-moz-any-link, x:default { 
+	border: 1px solid #888;
+}
+BODY:first-of-type ul.as-list, x:-moz-any-link, x:default { /* Target FF 3.5+ */
+	border: none;
 }

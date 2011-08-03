@@ -1,3 +1,6 @@
+// GET URL VARS PLUGIN
+$.extend({getUrlVars:function(){for(var a=[],b,d=window.location.href.slice(window.location.href.indexOf("?")+1).split("&"),c=0;c<d.length;c++)b=d[c].split("="),a.push(b[0]),a[b[0]]=b[1];return a},getUrlVar:function(a){return $.getUrlVars()[a]}});
+
 // JQUERY NO CONFLICT
 var $=jQuery.noConflict();
 
@@ -48,20 +51,17 @@ $(function(){
 				localnotes++;
 			};
 		};
-		$('.login_data_status').hide().text('found ' + localnotes + " local notes | ").fadeIn(2000);
+		$('.under_message').hide().html('found ' + localnotes + " local notes | <a class='clear_data' href='#'>clear local data</a>").fadeIn(2000);
 	}
 	else{
-		$('.login_data_status').hide().text("no local notes | ").delay(500).fadeIn(1000);
+		//$('.login_data_status').hide().text("no local notes | ").delay(500).fadeIn(1000);
 	};
-	if(localStorage.token){
-		tokenAge = parseFloat((new Date()).getTime()/1000) - parseFloat(localStorage.tokenDate);
-		if(tokenAge > 72000.0){
-			$('.login_message').text('Your simplenote login has expired, please login again.').slideDown('fast');
-		}
-		else{
-			$('.login_message').html('<a href="/+/">' + localStorage.email + '</a>').slideDown('fast');
-			$('.login_inner form').hide();
-		};
+	if($.getUrlVar('login')=='expired'){
+		$('.login_message').text('Your simplenote login has expired, please login again.').slideDown('fast');
+	}
+	else if(localStorage.token){
+		$('.login_message').html('<a href="/+/">' + localStorage.email + '</a>').slideDown('fast');
+		$('.login_inner form').hide();
 	};
 	
 	// ON PASSWORD - ENTER
