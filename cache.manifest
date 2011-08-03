@@ -1,6 +1,5 @@
 CACHE MANIFEST
-# Notestack v0.7.4
-# UPDATED
+# Notestack v0.8.0
 
 CACHE:
 +/index.php
@@ -20,8 +19,8 @@ images/rsz_pin.png
 images/settings.png
 images/simplenote.png
 images/tag.png
-scripts/stack.js
-scripts/login.js
+scripts/stack.min.js
+scripts/login.min.js
 styles/structure.css
 styles/themes.php
 styles/home.css

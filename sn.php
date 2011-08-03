@@ -24,7 +24,7 @@ $authorized = array(
 function default_curl_settings(){
 	global $handle;
 	curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($handle, CURLOPT_HTTPHEADER, array("User-Agent: Notestack/0.7.4"));
+	curl_setopt($handle, CURLOPT_HTTPHEADER, array("User-Agent: Notestack/v0.8.0"));
 	curl_setopt($handle, CURLOPT_HEADER, false);
 };
 
