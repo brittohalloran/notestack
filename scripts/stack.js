@@ -1,5 +1,8 @@
 // ################## PLUGINS ########################## //
 
+// JQUERY.THROTTLE-DEBOUNCE.MIN.JS
+(function(b,c){var $=b.jQuery||b.Cowboy||(b.Cowboy={}),a;$.throttle=a=function(e,f,j,i){var h,d=0;if(typeof f!=="boolean"){i=j;j=f;f=c}function g(){var o=this,m=+new Date()-d,n=arguments;function l(){d=+new Date();j.apply(o,n)}function k(){h=c}if(i&&!h){l()}h&&clearTimeout(h);if(i===c&&m>e){l()}else{if(f!==true){h=setTimeout(i?k:l,i===c?e-m:e)}}}if($.guid){g.guid=j.guid=j.guid||$.guid++}return g};$.debounce=function(d,e,f){return f===c?a(d,e,false):a(d,f,e!==false)}})(this);
+
 // JQUERY.SORTELEMENTS.MIN.JS
 jQuery.fn.sortElements=function(){var e=[].sort;return function(f,a){var a=a||function(){return this},g=this.map(function(){var b=a.call(this),c=b.parentNode,d=c.insertBefore(document.createTextNode(""),b.nextSibling);return function(){if(c===this)throw Error("You can't sort elements if any one is a descendant of another.");c.insertBefore(this,d);c.removeChild(d)}});return e.call(this,f).each(function(b){g[b].call(a.call(this))})}}();
 
@@ -168,14 +171,7 @@ function refreshCards(){
 		// populate tags
 		var tagstring = $(this).data().tags.join(' ');
 		var allTagsArr = $.parseJSON(localStorage.tagIndex).tags;
-		var tagInput = notecard.children('.tag-area').children('input');
-		tagInput.autoSuggest(allTagsArr, {
-			selectedItemProp: "name", 
-			searchObjProps: "name",
-			startText: "add a tag",
-			emptyText: "press [space] to make a new tag"
-		});
-		tagInput.val(tagstring);
+		notecard.children('.tag-area').children('input').attr('id','tag' + $(this).data().key).val(tagstring).tagsInput();
 	});
 	$('#' + $('.selected').data().key).addClass('current');
 	refreshNoteBinds('.note .textarea textarea');
@@ -332,6 +328,16 @@ function sendNote(noteobject){
 	return dfd.promise();
 };
 
+// PROGRESS BAR
+function progressBar(percent){
+	if($('.status .progress .inner').length==0){
+		$('.status').html(
+			'<div class="progress"><div class="inner"></div></div>'
+		);
+	};
+	$('.status .progress .inner').css('width',percent + '%');
+}; 
+
 // CHECK ALL NOTES FOR UPDATES AGAINST INDEX
 function updateAllNotes(){
 	return $.Deferred(function(dfd_uan){
@@ -340,10 +346,13 @@ function updateAllNotes(){
 		var i=0, set=0, snarray=[], notecount=0, deletedcount=0;
 		function updateSome(num){
 			for (i=set;i<=set+num;i++){
+				progressBar(Math.round(100*(i/index.data.length)));
+				//console.log(i);
 				if (!index.data[i]){
 					console.log('broke at ' + i);
 					dfd_uan.resolve();
-					return false;
+					var breaker = true;
+					break;
 				};
 				if (localStorage.getItem(index.data[i].key)){
 					localNote = $.parseJSON(localStorage.getItem(index.data[i].key));
@@ -372,19 +381,29 @@ function updateAllNotes(){
 				};
 				if (index.data[i].deleted==0){
 					notecount++;
+					//console.log('notecount=' + notecount);
 				}
 				else if (index.data[i].deleted==1){
 					deletedcount++;
 				};
 			};
-			$.when.apply(null, snarray).done(function(){
-				set = set + 20;
+			if(breaker == true){return false};
+			if(snarray.length>0){
+				$.when.apply(null, snarray).done(function(){
+					set = set + num + 1;
+					snarray = [];
+					//console.log('set=' + set);
+					sortNotes();
+					refreshCards();
+					updateSome(num);
+				});
+			}
+			else{
+				set = set + num + 1;
 				snarray = [];
-				console.log('set=' + set);
-				sortNotes();
-				refreshCards();
+				//console.log('set=' + set);
 				updateSome(num);
-			});
+			};
 		};
 		updateSome(20);
 		$('.note-data').text(notecount + ' notes | ');
@@ -1125,7 +1144,7 @@ function mapMousewheel(){
 // SEARCH
 $(function(){
 	$('.search input').keyup(function(){
-		refreshSearch();
+		$.debounce(250,refreshSearch());
 	});
 });
 function refreshSearch(){

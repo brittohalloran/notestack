@@ -5,6 +5,10 @@
 a {
 	text-decoration: none;
 	color: #628EB5;
+	-webkit-transition:color 0.25s ease-in;  
+	-moz-transition:color 0.25s ease-in;  
+	-o-transition:color 0.25s ease-in;  
+	transition:color 0.25s ease-in; 
 }
 
 a:hover {
@@ -140,11 +144,11 @@ a:hover {
 			'note-edit-bg' 			=> 'rgba(64,64,64,0.3)',
 			'note-edit-border'		=> '1px solid #4D90FE',
 			'note-border-rad-px' 	=> '10',
-			'note-border' 			=> '1px solid rgba(50,50,50,1)',
+			'note-border' 			=> '1px solid rgba(50,50,50,0.6)',
 			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
-			'note-buttons-color' 	=> 'rgba(255,255,255,1)',
+			'note-buttons-color' 	=> 'rgba(50,50,50,0.6)', 
 			'note-textarea-bg' 		=> 'white',
-			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.4)',
+			'textarea-box-shadow'	=> 'inset 0px 0px 10px rgba(0,0,0,0.5)',
 			'default-font' 			=> '"courier new", monospace',
 			'tag-area-bg' 			=> 'white',
 			'tag-bg' 				=> '#CCC',
@@ -178,7 +182,7 @@ a:hover {
 			'note-buttons-color' 	=> 'rgba(50,50,50,1)',
 			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.5)',
 			'note-textarea-bg' 		=> 'url(../images/moleskine.jpg)',
-			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.4)',
+			'textarea-box-shadow'	=> 'inset 0px 0px 10px rgba(0,0,0,0.6)',
 			'default-font' 			=> '"courier new", monospace',
 			'tag-area-bg' 			=> 'url(../images/moleskine.jpg)',
 			'tag-bg' 				=> 'rgba(255,255,255,0.2)',
@@ -244,8 +248,8 @@ a:hover {
 			'note-edit-bg' 			=> 'rgba(219,179,79,1)',
 			'note-edit-border'		=> '1px solid #A94D2D',
 			'note-border-rad-px' 	=> '10',
-			'note-border' 			=> '1px solid rgba(230,230,230,0.3)',
-			'note-buttons-color' 	=> 'white',
+			'note-border' 			=> '1px solid rgba(168, 122, 44, 0.8)',
+			'note-buttons-color' 	=> 'rgba(168, 122, 44, 0.8)',
 			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
 			'note-textarea-bg' 		=> '#FFFFD9',
 			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.4)',
@@ -349,7 +353,7 @@ a:hover {
 	.theme-<?php echo $theme; ?> .versions .inner {
 		font-family: <?php echo $options['default-font']; ?>;
 		background: <?php echo $options['note-textarea-bg']; ?>;
-		/*border: <?php echo $options['note-border']; ?>;*/
+		border: <?php echo $options['note-border']; ?>;
 	}
 	
 		.theme-<?php echo $theme; ?> .window .note .textarea {
@@ -398,11 +402,15 @@ a:hover {
 	/*TAG AREA*/
 	.theme-<?php echo $theme; ?> .window .note .tag-area {
 		border: <?php echo $options['note-border']; ?>;
+		background: <?php echo $options['tag-area-bg']; ?>;
+		box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
+		-webkit-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
+		-moz-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 	}
 	
 	/*TAG AREA BACKGROUND*/
 	.theme-<?php echo $theme; ?> .window .note .tagsinput {
-		background: <?php echo $options['tag-area-bg']; ?>;
+		background: transparent;
 	}
 	
 		/*INDIVIDUAL TAG BACKGROUND*/
@@ -440,6 +448,11 @@ a:hover {
 	.theme-<?php echo $theme; ?> .status {
 		text-transform: lowercase;
 	}
+	
+		/*PROGRESS BAR*/
+		.theme-<?php echo $theme; ?> .status .progress .inner {
+			background: <?php echo $options['highlight-bg']; ?>;
+		}
 
 /*THEME CARD INNER*/
 .appearance .item.theme-<?php echo $theme; ?> .inner {
@@ -521,17 +534,6 @@ a:hover {
 	font-family: "ColaborateLightRegular", sans-serif;
 }
 
-.appearance .font,
-.appearance .fontsize {
-	font-size: 1.5em;
-	background: white;
-	color: black;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	cursor: pointer;
-}
-
 /* FONTSIZE ############################################################################ */
 
 .fontsize-10 .window .note .textarea textarea,
@@ -604,6 +606,18 @@ a:hover {
 		background: white;
 	}
 	
+		.appearance .font,
+		.appearance .fontsize,
+		.appearance .tag-pref {
+			font-size: 1.5em;
+			background: white;
+			color: black;
+			border-radius: 5px;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			cursor: pointer;
+		}
+			
 	.keyboard_shortcuts {
 		color: white;
 	}
