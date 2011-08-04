@@ -287,6 +287,14 @@ a:hover {
 	.theme-<?php echo $theme; ?> .search {
 		border-bottom: <?php echo $options['sidebar-borders']; ?>;
 	}
+	
+	/*FILTER STATUS BAR*/
+	.theme-<?php echo $theme; ?> .active-tag-filter {
+		border-bottom: <?php echo $options['sidebar-borders']; ?>;
+	}
+		.theme-<?php echo $theme; ?> .active-tag-filter span {
+			font-family: <?php echo $options['listnote-font']; ?>;
+		}
 
 	/*SIDEBAR NOTE TEXT*/
 	.theme-<?php echo $theme; ?> .list .listnote,
