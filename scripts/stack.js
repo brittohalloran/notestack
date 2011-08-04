@@ -329,13 +329,22 @@ function sendNote(noteobject){
 };
 
 // PROGRESS BAR
-function progressBar(percent){
+function progressBar(percent,callback){
 	if($('.status .progress .inner').length==0){
 		$('.status').html(
 			'<div class="progress"><div class="inner"></div></div>'
 		);
 	};
-	$('.status .progress .inner').css('width',percent + '%');
+	if(callback == undefined){
+		console.log('test');
+		$('.status .progress .inner').animate({'width': percent + '%'},250);
+		$.throttle( 100, function(){
+			console.log('success');
+		});
+	}
+	else{
+		$('.status .progress .inner').animate({'width': percent + '%'},250,callback);
+	};
 }; 
 
 // CHECK ALL NOTES FOR UPDATES AGAINST INDEX
@@ -346,8 +355,7 @@ function updateAllNotes(){
 		var i=0, set=0, snarray=[], notecount=0, deletedcount=0;
 		function updateSome(num){
 			for (i=set;i<=set+num;i++){
-				progressBar(Math.round(100*(i/index.data.length)));
-				//console.log(i);
+				//progressBar(50 + Math.round(50*(i/index.data.length)));
 				if (!index.data[i]){
 					console.log('broke at ' + i);
 					dfd_uan.resolve();
@@ -409,8 +417,8 @@ function updateAllNotes(){
 		$('.note-data').text(notecount + ' notes | ');
 		$('.data_notes').text(notecount);
 		$('.data_deleted').text(deletedcount);
-		$('.status').text('Syncing ' + snarray.length + ' notes');
-		$('.status-div').addClass('loading');
+		//$('.status').text('Syncing ' + snarray.length + ' notes');
+		//$('.status-div').addClass('loading');
 	}).promise();
 };
 
@@ -528,8 +536,9 @@ function localToDOM(key){ // add to DOM from localStorage
 
 // SHOW ALL LOCAL NOTES
 function allLocalToDOM(){
-	$('.status').text('Loading notes from local storage');
-	$('.status-div').addClass('loading');
+	//$('.status').text('Loading notes from local storage');
+	//$('.status-div').addClass('loading');
+	progressBar(10);
 	if(localStorage.index){
 		index = $.parseJSON(localStorage.index);
 		//console.log( 'loading ' + index.data.length + ' local notes' );
@@ -547,8 +556,9 @@ function manualSync(syncType){
 	if(localStorage.token){
 		$.when(getTagIndex()).done(function(){
 			console.log('done with tag index');
-			$('.status').text('Syncing with Simplenote');
-			$('.status-div').addClass('loading');
+			//$('.status').text('Syncing with Simplenote');
+			//$('.status-div').addClass('loading');
+			progressBar(25);
 			if(syncType == 'full'){
 				since = "";
 				mark = "";
@@ -573,18 +583,22 @@ function manualSync(syncType){
 				'mark' : mark,
 				'length': 100
 			})).done(function(){
+				progressBar(50);
 				indexFinish = new Date().getTime();
 				console.log('indexTime = ' + (indexFinish - indexStart));
 				$.when(updateAllNotes()).done(function(){
-					indexDate = stackTime(localStorage.indexDate);
-					$('.status').html('synced <abbr class="timeago" title="' + indexDate + '"></abbr>');
-					bindTimeago();
-					$('.status-div').removeClass('loading');
-					sortNotes();
-					refreshCards();	
-				});
-			});
-		});
+					progressBar(100,function(){
+						console.log('inside progressBar done');
+						indexDate = stackTime(localStorage.indexDate);
+						$('.status').html('synced <abbr class="timeago" title="' + indexDate + '"></abbr>');
+						bindTimeago();
+						$('.status-div').removeClass('loading');
+						sortNotes();
+						refreshCards();	
+					});
+				}); // updateAllNotes
+			}); // syncIndex
+		}); // tagIndex
 	}
 	else{
 		window.location = '/';
