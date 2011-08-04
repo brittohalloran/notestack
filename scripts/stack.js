@@ -151,7 +151,7 @@ function reflowCards(){
 };
 
 // REFRESH CARDS
-function refreshCards(){
+var refreshCards = function(){
 	//console.log('refreshing cards');
 	if($('.selected').length != 1){
 		$('.selected').removeClass('selected');
@@ -345,7 +345,7 @@ function updateAllNotes(){
 			for (i=set;i<=set+num;i++){
 				throttledProgress(50 + Math.round(50*(i/index.data.length))); 
 				if (!index.data[i]){
-					console.log('broke at ' + i);
+					//console.log('broke at ' + i);
 					dfd_uan.resolve();
 					var breaker = true;
 					break;
@@ -424,7 +424,7 @@ function syncIndex(postData){
 					window.location = '/?login=expired';
 				};
 				newIndex = $.parseJSON(rawNewIndex);
-				console.log('recieved new index with ' + newIndex.count + ' new notes');
+				//console.log('recieved new index with ' + newIndex.count + ' new notes');
 				if(localStorage.index){
 					existingIndex = $.parseJSON(localStorage.index);
 					for (i=0;i<=newIndex.data.length-1;i++){
@@ -442,12 +442,12 @@ function syncIndex(postData){
 					existingIndex = newIndex;
 				};
 				localStorage.setItem('mark',newIndex.mark ? newIndex.mark : "DONE");
-				console.log(localStorage.mark);
+				//console.log(localStorage.mark);
 				localStorage.setItem('index',JSON.stringify(existingIndex));
 				localStorage.setItem('indexDate',newIndex.time);
 				if (localStorage.mark == "DONE"){ 
 					localStorage.removeItem('mark');
-					console.log('done syncing index');
+					//console.log('done syncing index');
 					dfd_syn.resolve();
 				}
 				else{ 
@@ -463,7 +463,7 @@ function syncIndex(postData){
 				$('.status-div').removeClass('loading');
 			}
 		});
-		console.log('outside index ajax()');
+		//console.log('outside index ajax()');
 	}).promise();
 };
 
@@ -476,7 +476,7 @@ function getTagIndex(){
 			'email': localStorage.email,
 			'token': localStorage.token
 		};
-		console.log('starting tagIndex pull');
+		//console.log('starting tagIndex pull');
 		$.ajax('/sn.php',{
 			type: 'POST',
 			data: postData,
@@ -486,7 +486,7 @@ function getTagIndex(){
 					window.location = '/?login=expired';
 				};
 				localStorage['tagIndex'] = rawTagIndex;
-				console.log('stored tagIndex')
+				//console.log('stored tagIndex')
 				dfd_tag.resolve();
 			},
 			error: function(msg){
@@ -552,7 +552,7 @@ function allLocalToDOM(){
 function manualSync(syncType){
 	if(localStorage.token){
 		$.when(getTagIndex()).done(function(){
-			console.log('done with tag index');
+			//console.log('done with tag index');
 			//$('.status').text('Syncing with Simplenote');
 			//$('.status-div').addClass('loading');
 			progressBar(25);
@@ -582,10 +582,10 @@ function manualSync(syncType){
 			})).done(function(){
 				progressBar(50);
 				indexFinish = new Date().getTime();
-				console.log('indexTime = ' + (indexFinish - indexStart));
+				//console.log('indexTime = ' + (indexFinish - indexStart));
 				$.when(updateAllNotes()).done(function(){
 					progressBar(100,function(){
-						console.log('inside progressBar done');
+						//console.log('inside progressBar done');
 						indexDate = stackTime(localStorage.indexDate);
 						$('.status').html('synced <abbr class="timeago" title="' + indexDate + '"></abbr>');
 						bindTimeago();
@@ -656,28 +656,6 @@ function prevNote() {
 	};
 };
 
-// ON NOTE FOCUS
-$('.note .textarea textarea').live('focus',function(){
-	$('.current .note-directions').addClass('show');
-	$('div.current').addClass('highlight');
-});
-
-// ON NOTE BLUR
-$('.note .textarea textarea').live('blur',function(){
-	blurkey = $(this).parent().parent().attr('id');
-	if ($(this).val() != $('#list-' + blurkey).data().content){
-		blurnote = $.parseJSON(localStorage.getItem(blurkey));
-		blurnote.content = $(this).val();
-		blurnote.modifydate = (new Date()).getTime()/1000;
-		blurnote.syncnum = blurnote.syncnum + 1;
-		localStorage.setItem(blurkey,JSON.stringify(blurnote));
-		localToDOM(blurnote.key);
-		manualSync();
-	};
-	$('.current .note-directions').removeClass('show');
-	$('.current').removeClass('highlight');
-});
-
 // TOGGLE PIN
 function togglePin(listitem){
 	if(listitem.data().systemtags.indexOf('pinned')>-1){
@@ -740,7 +718,7 @@ function toggleVersions(notekey){
 // UPDATE TAGS
 function updateTags(notekey){
 	tags = $('#' + notekey + ' .tag-area input').val().split(' ');
-	console.log(tags);
+	//console.log(tags);
 	note = $.parseJSON(localStorage[notekey]);
 	if (note.tags != tags){
 		note.tags = tags;
@@ -752,6 +730,28 @@ function updateTags(notekey){
 };
 
 $(function() {
+	// ON NOTE FOCUS
+	$('.note .textarea textarea').live('focus',function(){
+		$('.current .note-directions').addClass('show');
+		$('div.current').addClass('highlight');
+	});
+
+	// ON NOTE BLUR
+	$('.note .textarea textarea').live('blur',function(){
+		blurkey = $(this).parent().parent().attr('id');
+		if ($(this).val() != $('#list-' + blurkey).data().content){
+			blurnote = $.parseJSON(localStorage.getItem(blurkey));
+			blurnote.content = $(this).val();
+			blurnote.modifydate = (new Date()).getTime()/1000;
+			blurnote.syncnum = blurnote.syncnum + 1;
+			localStorage.setItem(blurkey,JSON.stringify(blurnote));
+			localToDOM(blurnote.key);
+			manualSync();
+		};
+		$('.current .note-directions').removeClass('show');
+		$('.current').removeClass('highlight');
+	});
+	
 // APPEARANCE SETTINGS
 	// LOAD THEME
 	if(localStorage.theme){
@@ -962,10 +962,9 @@ $(function() {
 	});
 	// CLICK TAG FROM TAG LIST
 	$('.labels .item').live('mouseup',function(){
-		//console.log($(this).attr('id'));
 		filterByLabel($(this).attr('id'));
 	});
-	// LOGOUT AND CLEAR DATA
+	// CLICK LOGOUT AND CLEAR DATA
 	$('.cleardata').click(function(){
 		localStorage.clear();
 	});
@@ -991,12 +990,13 @@ $(function() {
 	$(document).bind('keydown','l',function(){showLabels();return false;});
 	$(document).bind('keydown','t',function(){showLabels();return false;});
 	$(document).bind('keydown','v',function(){toggleVersions($('.current').attr('id'));return false;});
+	$(document).bind('keydown','a',function(){viewAll();return false;});
 	
 	//FROM WITHIN SEARCH BAR
 	$('.search input').bind('keydown','return',function(){$(this).blur();return false;});
 	$('.search input').bind('keydown','esc',function(){$(this).val('');refreshSearch();$(this).blur();return false;});
-	//$('.search input').bind('keydown','down',function(){nextNote();return false;});
-	//$('.search input').bind('keydown','up',function(){prevNote();return false;});
+	$('.search input').bind('keydown','down',function(){$(this).blur();nextNote();return false;});
+	$('.search input').bind('keydown','up',function(){$(this).blur();prevNote();return false;});
 	
 	//FROM WITHIN LABEL SEARCH
 	$('.labels input').bind('keydown','esc',function(){$(this).val('');$(this).blur();clearOverlays();return false;});
@@ -1009,17 +1009,26 @@ $(function() {
 function refreshNoteBinds(note_tas){
 	//FROM WITHIN NOTE TEXT AREA
 	$(note_tas).bind('keydown','esc',function(){$('.note-directions').removeClass('show');$(this).blur();});
-	//$(note_tas).bind('keydown','tab',function(){return false;});
 	$(note_tas).tabby();
 	// MAXIMIZE BUTTON
 	$('.maximize').click(function(){
 		fullscreenMode();
 	});
-	// CHANGE TAG
-	$('.tagsinput div input').blur(function(){ // TAG CHANGES NOT TRIGGERING CHANGE EVENT
-		//console.log('updating tags');
+	// ON TAG CHANGE
+	$('.tagsinput div input').blur(function(){ 
 		updateTags($('.current').attr('id'));
 	});
+};
+
+// VIEW ALL
+function viewAll(){
+	$('.fullwindow').removeClass('tag-filter');
+	$('.active-tag-filter').remove();
+	$('.listnote').removeClass('tag-hide');
+	$('.selected').removeClass('selected');
+	$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
+	$('.search input').val('');
+	refreshSearch();
 };
 
 // FILTER BY LABEL
@@ -1100,34 +1109,22 @@ function showLabels(){
 	e.preventDefault();
 };
 function populateLabels(){
-	// remove existing labels
 	$('.labels .item').remove();
-	// collect labels
-	var index = $.parseJSON(localStorage.index),
-		i=0,
-		j=0,
-		len=0,
-		taglen=0,
-		tag = "",
-		labelobj = {};
-	for (i=0, len = index.data.length; i < len; i++){
-		for (j=0, taglen = index.data[i].tags.length; j < taglen; j++){
-			tag = index.data[i].tags[j];
-			if(labelobj[tag]){
-				labelobj[tag]++;
-			}
-			else{
-				labelobj[tag] = 1;
+	var tagIndex = $.parseJSON(localStorage.tagIndex);
+	var notecount=$('.listnote').length;
+	for (i=0;i<tagIndex.count;i++) {
+		tagname = tagIndex.tags[i].name;
+		tagid = tagname.replace('@', '').replace('.','');
+		j=0;
+		$('.listnote').each(function(){
+			if($.inArray(tagname,$(this).data().tags)>-1){
+				console.log(tagname + $(this).data().tags);
+				j++;
 			};
-		};
-	};
-	// put labels in label box
-	for (var key in labelobj) {
-		if (labelobj.hasOwnProperty(key)) {
-			$('#label-template').clone().attr('id',key).addClass('item').appendTo('.labels .items');
-			$('#' + key).children('.name').text(key);
-			$('#' + key).children('.notecount').text(labelobj[key] + " notes");
-		};
+		});
+		$('#label-template').clone().attr('id',tagid).addClass('item').appendTo('.labels .items');
+		$('#' + tagid).children('.name').html('<pre>' + tagname + '</pre>');
+		$('#' + tagid).children('.notecount').text(j + " notes");
 	};
 	$('.labels .item').sortElements(function(a, b){
 		return parseFloat($(a).children('.notecount').text()) < parseFloat($(b).children('.notecount').text()) ? 1 : -1;
@@ -1173,7 +1170,7 @@ function nextLabel(){
 // SEARCH
 var refreshSearch = function(){
 	query = $('.search input').val().toLowerCase();
-	console.log(query);
+	//console.log(query);
 	$('.listnote').each(function(){
 		if ($(this).data().content.toLowerCase().indexOf(query) > -1){
 			$(this).removeClass('search-hide');
@@ -1182,8 +1179,10 @@ var refreshSearch = function(){
 			$(this).addClass('search-hide');
 		};
 	});
-	$('.selected').removeClass('selected');
-	$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
+	if($('.selected:not(.search-hide,.tag-hide)').length==0){
+		$('.selected').removeClass('selected');
+		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
+	};
 	refreshCards();
 };
 $(function(){
@@ -1191,9 +1190,6 @@ $(function(){
 });
 
 // TIMEAGO
-$(function(){
-	bindTimeago();
-});
 function bindTimeago(){
 	$(".timeago").timeago();
 };
