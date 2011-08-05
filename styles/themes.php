@@ -422,14 +422,24 @@ a:hover {
 	}
 	
 		/*INDIVIDUAL TAG BACKGROUND*/
-		.theme-<?php echo $theme; ?> .window .note .tagsinput .tag {
+		.theme-<?php echo $theme; ?> .tagit-choice {
 			border: <?php echo $options['tag-border']; ?>;
 			background: <?php echo $options['tag-bg']; ?>;
+			border-radius: 4px;
+			-moz-border-radius: 4px;
+			-webkit-border-radius: 4px;
 		}
 		
 			/*INDIVIDUAL TAG TEXT*/
-			.theme-<?php echo $theme; ?> .window .note .tagsinput .tag span {
-				color: black;
+			.theme-<?php echo $theme; ?> .tagit-label {
+				color: <?php echo $options['listnote-text-color']; ?>;
+				font-family: <?php echo $options['listnote-font']; ?>;
+				font-size: 0.8em;
+			}
+			
+			.theme-<?php echo $theme; ?> .tagit-choice .close {
+				right: 4px;
+				color: <?php echo $options['listnote-text-color']; ?>;
 			}
 			
 		/*'ADD A TAG' TEXT*/
@@ -860,4 +870,54 @@ ul.as-list,  x:-moz-any-link, x:default {
 }
 BODY:first-of-type ul.as-list, x:-moz-any-link, x:default { /* Target FF 3.5+ */
 	border: none;
+}
+
+/* TAGIT PLUGIN */
+ul.tagit {
+	padding: 1px 5px;
+	overflow: auto;
+    margin-left: inherit; /* usually we don't want the regular ul margins. */
+    margin-right: inherit;
+}
+ul.tagit li {
+	display: block;
+	float: left;
+	margin: 2px 5px 2px 0;
+}
+ul.tagit li.tagit-choice {
+	padding: .2em 18px .2em .5em;
+    position: relative;
+    line-height: inherit;
+}
+ul.tagit li.tagit-new {
+	padding: .25em 4px .25em 0;
+}
+
+ul.tagit li.tagit-choice a.tagit-label {
+	cursor: pointer;
+	text-decoration: none;
+}
+ul.tagit li.tagit-choice .close {
+	cursor: pointer;
+    position: absolute;
+    top: 50%;
+    margin-top: -8px;
+}
+
+ul.tagit li.tagit-choice input {
+	display: block;
+	float: left;
+	margin: 2px 5px 2px 0;
+}
+ul.tagit input[type="text"] {
+    -moz-box-sizing:    border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing:         border-box;
+
+    border: none;
+	margin: 0;
+	padding: 0;
+	width: inherit;
+	background-color: inherit;
+    outline: none;
 }

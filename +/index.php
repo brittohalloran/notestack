@@ -24,4 +24,5 @@
 			<div class="version-date">date</div>		</div>
 		<div id="tag-filter-template">
 			<div class="inner">				<span>filtered by tag: </span>				<span class="tag-filter-label"></span>			</div>			<div class="clear-tag-filter">x</div>
-		</div>	</div>	<!-- SCRIPTS -->	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>	<script src="../scripts/stack.js" type="text/javascript"></script></body></html>
+		</div>	</div>	<!-- SCRIPTS -->	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js"></script>	<script src="../scripts/stack.js" type="text/javascript"></script></body></html>
