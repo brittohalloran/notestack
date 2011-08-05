@@ -179,7 +179,7 @@ var refreshCards = function(){
 		notecard.children('.textarea').children('textarea').val($(this).data().content);
 		// populate tags
 		var tagStr = $(this).data().tags.join(' ');
-		tagfield = notecard.children('.tag-area').children('input');
+		tagfield = notecard.children('.textarea').children('.tag-area').children('input');
 		tagfield.attr('id','tag' + $(this).data().key);
 		console.log(tagStr);
 		tagfield.val(tagStr);

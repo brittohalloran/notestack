@@ -185,7 +185,7 @@ a:hover {
 			'textarea-box-shadow'	=> 'inset 0px 0px 10px rgba(0,0,0,0.6)',
 			'default-font' 			=> '"courier new", monospace',
 			'tag-area-bg' 			=> 'url(../images/moleskine.jpg)',
-			'tag-bg' 				=> 'rgba(255,255,255,0.2)',
+			'tag-bg' 				=> 'rgba(255,255,255,0.8)',
 			'tag-border' 			=> '1px solid rgba(0,0,0,0.5)',
 			'overlay-bg'			=> 'rgba(30,30,30,0.95)',
 			'theme-card-inner-bg' 	=> 'url(../images/moleskine.jpg)',
@@ -407,14 +407,14 @@ a:hover {
 			text-decoration: underline;
 		}
 
-	/*TAG AREA*/
+	/*TAG AREA
 	.theme-<?php echo $theme; ?> .window .note .tag-area {
 		border: <?php echo $options['note-border']; ?>;
 		background: <?php echo $options['tag-area-bg']; ?>;
 		box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 		-webkit-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 		-moz-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
-	}
+	}*/
 	
 	/*TAG AREA BACKGROUND*/
 	.theme-<?php echo $theme; ?> .window .note .tagsinput {

@@ -18,8 +18,8 @@
 				</div>
 			</div><!--inner-->
 			<div class="close"></div>
-		</div><!--versions-->	</div><!-- fullwindow -->		<div class='templates'>		<div id='note-template'>			<div class="textarea"><textarea></textarea></div>			<div class='note-directions'><p>esc to save</p></div>			<div class='versions-button'>history</div>			<div class='maximize'>focus</div>
-			<div class='delete'>x</div>			<div class="tag-area"><input type="text"></input></div>			<div class='message'></div>		</div>		<div id="listnote-template">			<div class="title"></div>			<div class="preview"></div>			<div class="pinboard"></div>		</div>		<div id="label-template">			<div class="name"></div>			<div class="notecount"></div>		</div>
+		</div><!--versions-->	</div><!-- fullwindow -->		<div class='templates'>		<div id='note-template'>			<div class="textarea">				<textarea></textarea>				<div class="tag-area">					<input type="text"></input>				</div>			</div>			<div class='note-directions'><p>esc to save</p></div>			<div class='versions-button'>history</div>			<div class='maximize'>focus</div>
+			<div class='delete'>x</div>						<div class='message'></div>		</div>		<div id="listnote-template">			<div class="title"></div>			<div class="preview"></div>			<div class="pinboard"></div>		</div>		<div id="label-template">			<div class="name"></div>			<div class="notecount"></div>		</div>
 		<div id="version-template">
 			<div class="version-date">date</div>		</div>
 		<div id="tag-filter-template">
