@@ -151,9 +151,7 @@ a:hover {
 										background: -o-linear-gradient(top,#DD4B39,#D14836);
 										background: -webkit-gradient(linear,left top,left bottom,from(#DD4B39),to(#D14836));", 
 			'note-bg' 				=> 'rgba(241,241,241,0.5)',
-			'note-current-bg' 		=> "-moz-linear-gradient(top,#F2F2F2,#E6E6E6); 
-										background: -o-linear-gradient(top,#F2F2F2,#E6E6E6);
-										background: -webkit-gradient(linear,left top,left bottom,from(#F2F2F2),to(#E6E6E6));",
+			'note-current-bg' 		=> "#F2F2F2",
 			'note-edit-bg' 			=> 'rgba(200,200,200,0.95)',
 			'note-edit-border'		=> '1px solid #4D90FE',
 			'note-border-rad-px' 	=> '5',
@@ -308,7 +306,6 @@ a:hover {
 		background: <?php echo $options['note-textarea-bg']; ?>;
 		border: <?php echo $options['note-border']; ?>;
 	}
-	
 		.theme-<?php echo $theme; ?> .window .note .textarea {
 			box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 			-webkit-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
@@ -344,6 +341,7 @@ a:hover {
 	.theme-<?php echo $theme; ?> .window .note .message {
 		background: <?php echo $options['highlight-bg']; ?>;
 		color: <?php echo $options['highlight-text-color']; ?>;
+		<?php echo $options['highlight-text-style']; ?>
 	}
 	
 		/*NOTE MESSAGE LINKS*/
@@ -373,6 +371,7 @@ a:hover {
 			border-radius: 4px;
 			-moz-border-radius: 4px;
 			-webkit-border-radius: 4px;
+			cursor: pointer;
 		}
 		
 			/*INDIVIDUAL TAG TEXT*/
@@ -406,11 +405,16 @@ a:hover {
 						border-radius: 3px;
 						color: <?php echo $options['listnote-text-color']; ?>;
 						font-family: <?php echo $options['listnote-font']; ?>;
+						-webkit-transition: none;  
+						-moz-transition: none;  
+						-o-transition: none;  
+						transition: none; 
 					}
-				.theme-<?php echo $theme; ?> .ui-state-hover {
-					background: <?php echo $options['highlight-bg']; ?>;
-					color: <?php echo $options['highlight-text-color']; ?>;
-				}
+					.theme-<?php echo $theme; ?> .ui-autocomplete li a.ui-state-hover {
+						background: <?php echo $options['highlight-bg']; ?>;
+						color: <?php echo $options['highlight-text-color']; ?>;
+						<?php echo $options['highlight-text-style']; ?>
+					}
 
 /*TOOLBAR*/
 .theme-<?php echo $theme; ?> .toolbar {
