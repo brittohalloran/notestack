@@ -1,5 +1,3 @@
-// ################## PLUGINS ########################## //
-
 // THROTTLE-DEBOUNCE
 // http://benalman.com/projects/jquery-throttle-debounce-plugin/
 (function(b,c){var $=b.jQuery||b.Cowboy||(b.Cowboy={}),a;$.throttle=a=function(e,f,j,i){var h,d=0;if(typeof f!=="boolean"){i=j;j=f;f=c}function g(){var o=this,m=+new Date()-d,n=arguments;function l(){d=+new Date();j.apply(o,n)}function k(){h=c}if(i&&!h){l()}h&&clearTimeout(h);if(i===c&&m>e){l()}else{if(f!==true){h=setTimeout(i?k:l,i===c?e-m:e)}}}if($.guid){g.guid=j.guid=j.guid||$.guid++}return g};$.debounce=function(d,e,f){return f===c?a(d,e,false):a(d,f,e!==false)}})(this);
@@ -85,7 +83,6 @@ function(){var a,b;a=this.length1===0?this.start1+",0":this.length1==1?this.star
 -1;window.DIFF_INSERT=1;window.DIFF_EQUAL=0})();
 
 // SHOWDOWN.JS (Markdown handler)
-// 
 var Attacklab=Attacklab||{};Attacklab.showdown=Attacklab.showdown||{};
 Attacklab.showdown.converter=function(){var u=function(){this.set=function(a,c){this["s_"+a]=c};this.get=function(a){return this["s_"+a]}},i,j,n,o=0;this.makeHtml=function(a){i=new u;j=new u;n=[];a=a.replace(/~/g,"~T");a=a.replace(/\$/g,"~D");a=a.replace(/\r\n/g,"\n");a=a.replace(/\r/g,"\n");a=v("\n\n"+a+"\n\n");a=a.replace(/^[ \t]+$/mg,"");a=w(a);a=D(a);a=p(a);a=x(a);a=a.replace(/~D/g,"$$");return a.replace(/~T/g,"~")};var D=function(a){return a=a.replace(/^[ ]{0,3}\[(.+)\]:[ \t]*\n?[ \t]*<?(\S+?)>?(?=\s|$)[ \t]*\n?[ \t]*((\n*)["(](.+?)[")][ \t]*)?(?:\n+)/gm,
 function(a,b,d,e,g,h){b=b.toLowerCase();i.set(b,y(d));if(g)return e;else h&&j.set(b,h.replace(/"/g,"&quot;"));return""})},w=function(a){a=a.replace(/^(<(p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math|ins|del)\b[^\r]*?\n<\/\2>[ \t]*(?=\n+))/gm,l);a=a.replace(/^(<(p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math)\b[^\r]*?.*<\/\2>[ \t]*(?=\n+)\n)/gm,l);a=a.replace(/\n[ ]{0,3}((<(hr)\b([^<>])*?\/?>)[ \t]*(?=\n{2,}))/g,l);a=a.replace(/\n\n[ ]{0,3}(<!(--(?:|(?:[^>-]|-[^>])(?:[^-]|-[^-])*)--)>[ \t]*(?=\n{2,}))/g,
@@ -103,8 +100,7 @@ a=a.replace(/>/g,"&gt;");return k(a,"*_{}[]\\",!1)},G=function(a){return a=a.rep
 k=function(a,c,b){c="(["+c.replace(/([\[\]\\])/g,"\\$1")+"])";b&&(c="\\\\"+c);return a.replace(RegExp(c,"g"),q)},q=function(a,c){return"~E"+c.charCodeAt(0)+"E"}};var Showdown=Attacklab.showdown;Attacklab.fileLoaded&&Attacklab.fileLoaded("showdown.js");
 
 // NOTESTACK CODE
-// Britt O'Halloran
-// britt.j.ohalloran@gmail.com
+// Britt O'Halloran (britt.j.ohalloran@gmail.com)
 
 var notestack = function() {
 
