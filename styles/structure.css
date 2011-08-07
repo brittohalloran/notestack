@@ -46,20 +46,48 @@
 		.search .reload .inner {
 			background: url('../images/reload.png') center no-repeat;
 		}
-			.list {		position: absolute;		width: 100%;		left: 0px;		top: 35px;		bottom: 0px;		overflow-x: hidden;		overflow-y: scroll;	}		.listnote-holder {			width: 100%;		}			.listnote {			position: relative;			width: 100%;			height: 40px;			white-space: nowrap;			overflow: hidden;			text-overflow: ellipsis;			cursor: pointer;				}					.listnote .title,			.listnote .preview {				white-space: nowrap;				overflow: hidden;				text-overflow: ellipsis;				position: absolute;				left: 35px;				right: 10px;				cursor: inherit;			}					.listnote .title {				top: 5px;			}						.listnote .preview {				bottom: 5px;			}						.listnote .pinboard {				position: absolute;				top: 0px;				height: 100%;				left: 0px;				width: 35px;				cursor: pointer;			}						.listnote .contents,			.listnote .contents textarea {				display: none;				visibility: hidden;			}.window {	overflow: hidden;	position: absolute;	left: 350px;	right: 0;	top: 0;	height: 100%;	display: block;}	.note {		display: none;		width: 600px;		position: absolute;		left: 50%;		top: 40px;		bottom: 30px;		min-height: 200px;		overflow-y: auto;		-webkit-transition: all 0.25s ease-in-out;		-moz-transition: all 0.25s ease-in-out;		-o-transition: all 0.25s ease-in-out;		transition: all 0.25s ease-in-out;	}		.textarea {			position: absolute;			top: 20px;			bottom: 70px;			left: 20px;			right: 20px;
-			padding: 5px 5px 5px 10px;		}					.no-tags .textarea {				bottom: 20px;			}				.textarea textarea {
-			height: 100%;
-			width: 100%;
-			border: none;
-			outline: none;
-			font-family: inherit;
-			background: transparent;			resize: none;
-		}				.note-directions {			display: none;			visibility: hidden;			position: absolute;			bottom: 3px;			left: 0px;			width: 100%;			text-align: center;			font-size: 0.8em;		}				.note .maximize,		.note .versions-button,		.note .delete {			position: absolute;			top: 0px;			height: 13px;			font-size: 10px;			border-bottom: 1px solid white;			border-right: 1px solid white;			border-left: 1px solid white;			-webkit-border-bottom-right-radius: 3px;			-webkit-border-bottom-left-radius: 3px;			-moz-border-radius-bottomright: 3px;			-moz-border-radius-bottomleft: 3px;			border-bottom-right-radius: 3px;			border-bottom-left-radius: 3px;			color: white;			text-align: center;			cursor: pointer;			padding-top: 2px;			-webkit-transition: background 1s ease-in-out;			-moz-transition: background 1s ease-in-out;			-o-transition: background 1s ease-in-out;			transition: background 1s ease-in-out; 		}				.note .delete {			right: 20px;			width: 16px;		}				.note .maximize {			right: 46px;			width: 35px;		}
 		
-		.note .versions-button {			right: 92px;			width: 45px;		}				.note .maximize:hover,		.note .versions-button:hover,		.note .delete:hover {			background: rgba(150,150,150,1);		}				.message {			position: absolute;			width: 80%;			height: 33px;			top: 0px;			left: 10%;			background: #cccccc;			text-align: center;			padding-top: 10px;			display: none;			-webkit-border-bottom-right-radius: 5px;			-webkit-border-bottom-left-radius: 5px;			-moz-border-radius-bottomright: 5px;			-moz-border-radius-bottomleft: 5px;			border-bottom-right-radius: 5px;			border-bottom-left-radius: 5px;			-moz-box-shadow: 1px 3px 3px rgba(0,0,0,0.3);			-webkit-box-shadow: 1px 3px 3px rgba(0,0,0,0.3);			box-shadow: 1px 3px 3px rgba(0,0,0,0.3);		}				.note .tag-area {			position: absolute;			left: 20px;
-			right: 20px;			bottom: 20px;			height: 35px;			border: 1px solid rgba(0,0,0,0.1);		}				.no-tags .tag-area {			display: none;		}				.note .tag-area div.tagsinput {			min-height: 35px;		}
-			.toolbar {		position: absolute;		width: 100%;		top: 0;
-		z-index: 20;	}			.status-div {			position: absolute;			height: 100%;			left: 5px;		}					.status-icon {				display: none;				position: absolute;				height: 24px;				width: 24px;				top: 5px;			}						.status-div.loading .status-icon {				display: block;			}						.status {				position: absolute;				top: 5px;				left: 5px;				width: 300px;				white-space: nowrap;				overflow: hidden;				text-overflow: ellipsis;			}							.status .progress {					width: 150px;					padding: 1px;					background: white;					border-radius: 2px;					overflow: hidden;					padding: 1px;				}									.status .progress .inner {						background: green;						width: 2%;						height: 15px;						-webkit-transition: width 1s ease-in-out;						-moz-transition: width 1s ease-in-out;						-o-transition: width 1s ease-in-out;						transition: width 1s ease-in-out;						border-radius: 2px;					}						.status-div.loading .status {				left: 25px;			}						.toolbar .userdata {			position: absolute;			right: 35px;			top: 5px;			cursor: pointer;		}				.toolbar .settings_icon {			position: absolute;			right: 8px;			top: 0px; 			cursor: pointer;		}			.bottom-toolbar {		position: absolute;		width: 100%;		bottom: 0px;		z-index: 20;		font-size: 0.75em;	}			.bottom-toolbar .notestack-info {			position: absolute;			bottom: 5px;			right: 10px;			text-align: center;		}	.settings {	position: absolute;	left: 350px;	height: 60%;	right: 0px;	top: 100%;	-webkit-transition: top 0.25s ease-in-out;	-moz-transition: top 0.25s ease-in-out;	-o-transition: top 0.25s ease-in-out;	transition: top 0.25s ease-in-out;	z-index: 50;}	.settings.show {		top: 40%;	}		.settings .inner {		position: absolute;		left: 10px;		top: 10px;		right: 10px;		bottom: 0px;		overflow: auto;	}			.settings .tabs {
+	.active-tag-filter {
+		position: absolute;
+		width: 100%;
+		top: 35px;
+		height: 20px;
+	}			.active-tag-filter .inner {			position: absolute;			left: 5px;			right: 20px;			top: 0px;			bottom: 0px;			text-overflow: ellipsis;			text-align: center;		}					.active-tag-filter .inner span {				font-size: 0.8em;				height: 100%;			}				.active-tag-filter .clear-tag-filter {			position: absolute;			top: 2px;			bottom: 2px;			right: 2px;			width: 10px;			font-size: 0.8em;			cursor: pointer;			background: rgba(0,0,0,0.1);			text-align: center;		}
+			.list {		position: absolute;		width: 100%;		left: 0px;		top: 35px;		bottom: 0px;		overflow-x: hidden;		overflow-y: scroll;		-webkit-transition: top 0.5s ease;		-moz-transition: top 0.5s ease;		-o-transition: top 0.5s ease;		transition: top 0.5s ease;	}
+	
+		.tag-filter .list {
+			top: 55px;
+		}
+			.listnote-holder {			width: 100%;		}			.listnote {			position: relative;			width: 100%;			height: 40px;			white-space: nowrap;			overflow: hidden;			text-overflow: ellipsis;			cursor: pointer;				}					.listnote .title,			.listnote .preview {				white-space: nowrap;				overflow: hidden;				text-overflow: ellipsis;				position: absolute;				left: 35px;				right: 10px;				cursor: inherit;			}					.listnote .title {				top: 5px;			}						.listnote .preview {				bottom: 5px;			}						.listnote .pinboard {				position: absolute;				top: 0px;				height: 100%;				left: 0px;				width: 35px;				cursor: pointer;			}						.listnote .contents,			.listnote .contents textarea {				display: none;				visibility: hidden;			}.window {	overflow: hidden;	position: absolute;	left: 350px;	right: 0;	top: 0;	height: 100%;	display: block;}	.note {		display: none;		width: 600px;		position: absolute;		left: 50%;		top: 40px;		bottom: 30px;		min-height: 200px;		-webkit-transition: all 0.25s ease-in-out;		-moz-transition: all 0.25s ease-in-out;		-o-transition: all 0.25s ease-in-out;		transition: all 0.25s ease-in-out;	}		.textarea {			position: absolute;			top: 20px;			bottom: 20px;			left: 20px;			right: 20px;
+			padding: 5px 5px 5px 10px;		}					.textarea textarea {
+				position: absolute;				left: 10px;				right: 5px;				top: 5px;				bottom: 42px;
+				border: none;
+				outline: none;
+				font-family: inherit;
+				background: transparent;				resize: none;
+			}							.no-tags .textarea textarea {					bottom: 5px;				}							.note .tag-area {				position: absolute;				left: 5px;				right: 5px;				bottom: 5px;				height: 32px;				border-top: 1px solid rgba(0,0,0,0.1);			}						.no-tags .tag-area {				display: none;			}						.note .tag-area div.tagsinput {				min-height: 35px;			}				.note-directions {			display: none;			visibility: hidden;			position: absolute;			bottom: 3px;			left: 0px;			width: 100%;			text-align: center;			font-size: 0.8em;		}				.note .maximize,		.note .versions-button,		.note .delete {			position: absolute;			top: 0px;			height: 13px;			font-size: 10px;			border-bottom: 1px solid white;			border-right: 1px solid white;			border-left: 1px solid white;			-webkit-border-bottom-right-radius: 3px;			-webkit-border-bottom-left-radius: 3px;			-moz-border-radius-bottomright: 3px;			-moz-border-radius-bottomleft: 3px;			border-bottom-right-radius: 3px;			border-bottom-left-radius: 3px;			color: white;			text-align: center;			cursor: pointer;			padding-top: 2px;			-webkit-transition: background 1s ease-in-out;			-moz-transition: background 1s ease-in-out;			-o-transition: background 1s ease-in-out;			transition: background 1s ease-in-out; 		}				.note .delete {			right: 20px;			width: 16px;		}				.note .maximize {			right: 46px;			width: 35px;		}
+		
+		.note .versions-button {			right: 92px;			width: 45px;		}				.note .maximize:hover,		.note .versions-button:hover,		.note .delete:hover {			background: rgba(150,150,150,1);		}				.message {			position: absolute;			width: 80%;			height: 33px;			top: 0px;			left: 10%;			background: #cccccc;			text-align: center;			padding-top: 10px;			display: none;			-webkit-border-bottom-right-radius: 5px;			-webkit-border-bottom-left-radius: 5px;			-moz-border-radius-bottomright: 5px;			-moz-border-radius-bottomleft: 5px;			border-bottom-right-radius: 5px;			border-bottom-left-radius: 5px;			-moz-box-shadow: 1px 3px 3px rgba(0,0,0,0.3);			-webkit-box-shadow: 1px 3px 3px rgba(0,0,0,0.3);			box-shadow: 1px 3px 3px rgba(0,0,0,0.3);		}			.toolbar {		position: absolute;		width: 100%;		top: 0;
+		z-index: 20;		font-size: 0.8em;	}			.status-div {			position: absolute;			height: 100%;			left: 5px;		}					.status-icon {				display: none;				position: absolute;				height: 24px;				width: 24px;				top: 5px;			}						.status-div.loading .status-icon {				display: block;			}						.status {				position: absolute;				top: 5px;				left: 5px;				width: 300px;				white-space: nowrap;				overflow: hidden;				text-overflow: ellipsis;			}							.status .progress {					width: 200px;					background: white;					border-radius: 4px;					overflow: hidden;					padding: 2px;
+					box-shadow: inset 0px 0px 3px rgba(0,0,0,0.2);
+					border: 1px solid rgba(0,0,0,0.4);				}									.status .progress .inner {						background: green;						width: 2%;						height: 15px;						border-radius: 3px;					}						.status-div.loading .status {				left: 25px;			}					.toolbar .userdata,
+		.toolbar .settings_icon {
+			position: absolute;
+			border-radius: 3px;
+			cursor: pointer;
+			-webkit-transition: all 0.5s ease-in-out;
+			-moz-transition: all 0.5s ease-in-out;
+			-o-transition: all 0.5s ease-in-out;
+			-ms-transition: all 0.5s ease-in-out;
+			transition: all 0.5s ease-in-out;
+		}
+				.toolbar .userdata {			right: 35px;			top: 5px;			padding: 0px 4px;		}				.toolbar .settings_icon {			right: 8px;			top: 2px;
+			height: 24px; 		}
+		
+			.toolbar .userdata:hover,
+			.toolbar .settings_icon:hover {
+				background: rgba(0,0,0,0.1);
+			}			.bottom-toolbar {		position: absolute;		width: 100%;		bottom: 0px;		z-index: 20;		font-size: 0.75em;	}			.bottom-toolbar .notestack-info {			position: absolute;			bottom: 5px;			right: 10px;			text-align: center;		}	.settings {	position: absolute;	left: 350px;	height: 60%;	right: 0px;	top: 100%;	-webkit-transition: top 0.25s ease-in-out;	-moz-transition: top 0.25s ease-in-out;	-o-transition: top 0.25s ease-in-out;	transition: top 0.25s ease-in-out;	z-index: 50;}	.settings.show {		top: 40%;	}		.settings .inner {		position: absolute;		left: 10px;		top: 10px;		right: 10px;		bottom: 0px;		overflow: auto;	}			.settings .tabs {
 			position: absolute;
 			top: 0px;			left: 0px;
 			padding-bottom: 5px;
@@ -84,7 +112,8 @@
 		
 		.settings .data table {
 			margin: 0px auto;
-		}			.settings .close {		position: absolute;		height: 30px;		width: 30px;		right: 5px;		top: 2px;		background: url('../images/close.png') no-repeat bottom left;		cursor: pointer;		z-index: 55;	}	.help {	height: 100%;	width: 100%;	top: 0;	left: 0;}.overlay {	position: absolute;	height: 100%;	width: 100%;	top: 100%;	left: 0;	z-index: 100;	background: rgba(0,0,0,0);}.overlay.show {	top: 0;	-webkit-transition: background 0.3s linear;    -moz-transition: background 0.3s linear;    -o-transition: background 0.3s linear;    transition: background 0.3s linear;	background: rgba(0,0,0,0.7);}.labels {	display: none;	position: absolute;	width: 500px;	left: 50%;	margin-left: -250px;	height: 500px;	top: 50%;	margin-top: -250px;	background: gray;	z-index: 101;	-moz-border-radius: 10px;	-webkit-border-radius: 10px;	-o-border-radius: 10px;	border-radius: 10px;}	.labels .inner {		position: absolute;		top: 20px;		left: 20px;		right: 20px;		bottom: 20px;	}			.labels .inner input {			position: absolute;			top: 12px;			right: 12px;			left: 12px;		}				.labels .items {			position: absolute;			top: 38px;			right: 0px;			left: 0px;			bottom: 0px;			overflow: auto;		}				.labels .item {			width: 437px;			position: relative;			font-size: 18px;			margin: 4px auto;			background: rgba(0,0,0,0.2);			height: 25px;			cursor: pointer;		}				.labels .item .name {			position: absolute;			left: 35px;		}				.labels .item .notecount {			position: absolute;			right: 35px;		}	.labels .close {		position: absolute;		height: 30px;		width: 30px;		right: -10px;		top: -10px;		background: url('../images/close.png') no-repeat bottom left;		cursor: pointer;	}
+		}			.settings .close {		position: absolute;		height: 30px;		width: 30px;		right: 5px;		top: 2px;		background: url('../images/close.png') no-repeat bottom left;		cursor: pointer;		z-index: 55;	}	.help {	height: 100%;	width: 100%;	top: 0;	left: 0;}.overlay {	position: absolute;	height: 100%;	width: 100%;	top: 100%;	left: 0;	z-index: 100;	background: rgba(0,0,0,0);}.overlay.show {	top: 0;	-webkit-transition: background 0.3s linear;    -moz-transition: background 0.3s linear;    -o-transition: background 0.3s linear;    transition: background 0.3s linear;	background: rgba(0,0,0,0.7);}.labels {	display: none;	position: absolute;	width: 500px;	left: 50%;	margin-left: -250px;	height: 500px;	top: 50%;	margin-top: -250px;	background: gray;	z-index: 101;	-moz-border-radius: 10px;	-webkit-border-radius: 10px;	-o-border-radius: 10px;	border-radius: 10px;}	.labels .inner {		position: absolute;		top: 20px;		left: 20px;		right: 20px;		bottom: 20px;	}			.labels .inner input {			position: absolute;			top: 12px;			right: 12px;			left: 12px;		}				.labels .items {			position: absolute;			top: 38px;			right: 0px;			left: 0px;			bottom: 0px;			overflow: auto;		}				.labels .item {			width: 437px;			position: relative;			font-size: 18px;			margin: 4px auto;			background: rgba(0,0,0,0.2);			height: 25px;			cursor: pointer;
+			-moz-border-radius: 3px;			-webkit-border-radius: 3px;			-o-border-radius: 3px;			border-radius: 3px;		}				.labels .item .name {			position: absolute;			left: 35px;		}				.labels .item .notecount {			position: absolute;			right: 35px;		}	.labels .close {		position: absolute;		height: 30px;		width: 30px;		right: -10px;		top: -10px;		background: url('../images/close.png') no-repeat bottom left;		cursor: pointer;	}
 .versions {
 	display: none;
 	position: absolute;
@@ -154,6 +183,7 @@
 					right: 0px;
 					left: 0px;
 					background: transparent;
+					border: none;
 				}
 			
 		.versions .versions-toolbar {
@@ -188,12 +218,11 @@
 		.versions .close {		position: absolute;		height: 30px;		width: 30px;		right: -10px;		top: -10px;		background: url('../images/close.png') no-repeat bottom left;		cursor: pointer;	}		.templates {	display: none;	visibility: hidden;}		/* 	SELECTION SPECIFIC STRUCTURE ########################################################## */.prev2, .prev1,.current, .next1,.next2 {	visibility: visible;	display: block;}.prev2{	margin-left: -1600px;}.prev1{	margin-left: -950px;}.current {	margin-left: -300px;}.next1 {	margin-left: 350px;}.next2 {	margin-left: 1000px;}
 .clear {
 	clear: both;
-}/* 	FULLSCREEN MODE ########################################################## */.fullwindow.fullscreen-mode .window .note.current {	position: fixed;	clear: all;	left: 50%;	width: 700px;	top: 20px;	bottom: 20px;	padding: 0px;	margin: 0px;
-	margin-left: -350px;	z-index: 101;	overflow: hidden;	-webkit-transition: margin 0s ease-in-out;	-moz-transition: margin 0s ease-in-out;	-o-transition: margin-left 0s ease-in-out;	transition: margin 0s ease-in-out;}	.fullwindow.fullscreen-mode .current .textarea {		position: absolute;		left: 20px;		right: 20px;
-		top: 20px;		bottom: 70px;		padding: 10px;	}			.fullscreen-mode.no-tags .current .textarea {			bottom: 20px;		}		.fullwindow.fullscreen-mode .current .textarea textarea {			height: 100%;			width: 100%;			border: none;			outline: none;			font-family: inherit;			background: transparent;		}
+}/* 	FULLSCREEN MODE ########################################################## */.fullscreen-mode .window .note.current {	position: fixed;	clear: all;	left: 50%;	width: 700px;	top: 20px;	bottom: 20px;	padding: 0px;	margin: 0px;
+	margin-left: -350px;	z-index: 101;	overflow: hidden;	-webkit-transition: margin 0s ease-in-out;	-moz-transition: margin 0s ease-in-out;	-o-transition: margin-left 0s ease-in-out;	transition: margin 0s ease-in-out;}		.fullscreen-mode .current .textarea textarea {			left: 10px;			right: 10px;			top: 10px;			bottom: 45px;			border: none;			outline: none;			background: transparent;		}					.fullscreen-mode.no-tags .current .textarea textarea {				bottom: 10px;			}
 		
-	.fullwindow.fullscreen-mode .current .tag-area {
+	.fullscreen-mode .current .tag-area {
 		width: 660px;
-	}/* 	SHOW / HIDE / DIM / UNDIM ########################################################## */.show {	display: block;	visibility: visible;}.hide {
+	}/* 	SHOW / HIDE / DIM / UNDIM ########################################################## */.show {	display: block;	visibility: visible;}.hide,.tag-hide,.search-hide {
 	display: none;
-}.dim {	opacity: 0.5;}.undim {	opacity: 1.0;}
+}.dim {	opacity: 0.5;}.undim {	opacity: 1.0;}

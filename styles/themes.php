@@ -65,61 +65,6 @@ a:hover {
 		border-bottom-left-radius: 0px;
 	}
 
-/* TAGS ############################################################################ */
-
-.tagsinput { 
-	padding:0px 5px; 
-	background: white;
-}
-
-.tagsinput .tag { 
-	border: 1px solid #a5d24a; 
-	-moz-border-radius:2px; 
-	-webkit-border-radius:2px; 
-	display: block; 
-	float: left; 
-	padding: 2px; 
-	text-decoration:none; 
-	background: #cde69c; 
-	color: #638421; 
-	margin-right: 5px; 
-	margin-top:5px;
-	font-family: helvetica;  
-	font-size:13px;
-	height: 16px;
-}
-
-.tagsinput .tag a { 
-	font-weight: bold; 
-	color: #82ad2b; 
-	text-decoration:none; 
-	font-size: 11px;
-} 
-
-.tagsinput input { 
-	width:80px; 
-	margin:0px; 
-	font-family: helvetica; 
-	font-size: 13px; 
-	border:1px solid transparent; 
-	padding:5px; 
-	background: transparent; 
-	color: #000; 
-	outline:0px;  
-	margin-right:5px; 
-	margin-bottom:5px; 
-}
-
-.tagsinput div { 
-	display:block; 
-	float: left; 
-} 
-.tags_clear { 
-	clear: both; 
-	width: 100%; 
-	height: 0px; 
-}
-
 /* ########## THEME OPTIONS ########## */
 <?PHP 
 	
@@ -185,7 +130,7 @@ a:hover {
 			'textarea-box-shadow'	=> 'inset 0px 0px 10px rgba(0,0,0,0.6)',
 			'default-font' 			=> '"courier new", monospace',
 			'tag-area-bg' 			=> 'url(../images/moleskine.jpg)',
-			'tag-bg' 				=> 'rgba(255,255,255,0.2)',
+			'tag-bg' 				=> 'rgba(255,255,255,0.8)',
 			'tag-border' 			=> '1px solid rgba(0,0,0,0.5)',
 			'overlay-bg'			=> 'rgba(30,30,30,0.95)',
 			'theme-card-inner-bg' 	=> 'url(../images/moleskine.jpg)',
@@ -206,9 +151,7 @@ a:hover {
 										background: -o-linear-gradient(top,#DD4B39,#D14836);
 										background: -webkit-gradient(linear,left top,left bottom,from(#DD4B39),to(#D14836));", 
 			'note-bg' 				=> 'rgba(241,241,241,0.5)',
-			'note-current-bg' 		=> "-moz-linear-gradient(top,#F2F2F2,#E6E6E6); 
-										background: -o-linear-gradient(top,#F2F2F2,#E6E6E6);
-										background: -webkit-gradient(linear,left top,left bottom,from(#F2F2F2),to(#E6E6E6));",
+			'note-current-bg' 		=> "#F2F2F2",
 			'note-edit-bg' 			=> 'rgba(200,200,200,0.95)',
 			'note-edit-border'		=> '1px solid #4D90FE',
 			'note-border-rad-px' 	=> '5',
@@ -269,7 +212,7 @@ a:hover {
 <?php foreach ($themes as $theme => $options) { ?>
 
 /*MAIN BACKGROUND BEHIND NOTES*/
-.theme-<?php echo $theme; ?> {
+.theme-<?php echo $theme; ?> .fullwindow {
 	background: <?php echo $options['window-bg']; ?>;
 }
 
@@ -287,6 +230,14 @@ a:hover {
 	.theme-<?php echo $theme; ?> .search {
 		border-bottom: <?php echo $options['sidebar-borders']; ?>;
 	}
+	
+	/*FILTER STATUS BAR*/
+	.theme-<?php echo $theme; ?> .active-tag-filter {
+		border-bottom: <?php echo $options['sidebar-borders']; ?>;
+	}
+		.theme-<?php echo $theme; ?> .active-tag-filter span {
+			font-family: <?php echo $options['listnote-font']; ?>;
+		}
 
 	/*SIDEBAR NOTE TEXT*/
 	.theme-<?php echo $theme; ?> .list .listnote,
@@ -355,7 +306,6 @@ a:hover {
 		background: <?php echo $options['note-textarea-bg']; ?>;
 		border: <?php echo $options['note-border']; ?>;
 	}
-	
 		.theme-<?php echo $theme; ?> .window .note .textarea {
 			box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 			-webkit-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
@@ -391,6 +341,7 @@ a:hover {
 	.theme-<?php echo $theme; ?> .window .note .message {
 		background: <?php echo $options['highlight-bg']; ?>;
 		color: <?php echo $options['highlight-text-color']; ?>;
+		<?php echo $options['highlight-text-style']; ?>
 	}
 	
 		/*NOTE MESSAGE LINKS*/
@@ -399,14 +350,14 @@ a:hover {
 			text-decoration: underline;
 		}
 
-	/*TAG AREA*/
+	/*TAG AREA
 	.theme-<?php echo $theme; ?> .window .note .tag-area {
 		border: <?php echo $options['note-border']; ?>;
 		background: <?php echo $options['tag-area-bg']; ?>;
 		box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 		-webkit-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 		-moz-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
-	}
+	}*/
 	
 	/*TAG AREA BACKGROUND*/
 	.theme-<?php echo $theme; ?> .window .note .tagsinput {
@@ -414,20 +365,56 @@ a:hover {
 	}
 	
 		/*INDIVIDUAL TAG BACKGROUND*/
-		.theme-<?php echo $theme; ?> .window .note .tagsinput .tag {
+		.theme-<?php echo $theme; ?> .tagit-choice {
 			border: <?php echo $options['tag-border']; ?>;
 			background: <?php echo $options['tag-bg']; ?>;
+			border-radius: 4px;
+			-moz-border-radius: 4px;
+			-webkit-border-radius: 4px;
+			cursor: pointer;
 		}
 		
 			/*INDIVIDUAL TAG TEXT*/
-			.theme-<?php echo $theme; ?> .window .note .tagsinput .tag span {
-				color: black;
+			.theme-<?php echo $theme; ?> .tagit-label {
+				color: <?php echo $options['listnote-text-color']; ?>;
+				font-family: <?php echo $options['listnote-font']; ?>;
+				font-size: 0.8em;
+			}
+			.theme-<?php echo $theme; ?> .tagit-choice .close {
+				right: 4px;
+				color: <?php echo $options['listnote-text-color']; ?>;
 			}
 			
-		/*'ADD A TAG' TEXT*/
-		.theme-<?php echo $theme; ?> .window .note .tagsinput div input {
-			color: black;
-		}
+			/*AUTOCOMPLETE*/
+			.theme-<?php echo $theme; ?> .ui-autocomplete {
+				width: 175px;
+				border: 1px solid rgba(0,0,0,0.1);
+				border-radius: 5px;
+				padding: 2px;
+				background: <?php echo $options['sidebar-bg']; ?>;
+			}
+				.theme-<?php echo $theme; ?> .ui-autocomplete li {
+					font-size: 0.8em;
+					list-style: none;
+				}
+					.theme-<?php echo $theme; ?> .ui-autocomplete li a {
+						display: block;
+						height: 20px;
+						line-height: 20px;
+						padding: 0px 5px;
+						border-radius: 3px;
+						color: <?php echo $options['listnote-text-color']; ?>;
+						font-family: <?php echo $options['listnote-font']; ?>;
+						-webkit-transition: none;  
+						-moz-transition: none;  
+						-o-transition: none;  
+						transition: none; 
+					}
+					.theme-<?php echo $theme; ?> .ui-autocomplete li a.ui-state-hover {
+						background: <?php echo $options['highlight-bg']; ?>;
+						color: <?php echo $options['highlight-text-color']; ?>;
+						<?php echo $options['highlight-text-style']; ?>
+					}
 
 /*TOOLBAR*/
 .theme-<?php echo $theme; ?> .toolbar {
@@ -469,67 +456,67 @@ a:hover {
 
 /* FONT THEMES ############################################################################ */
 
-.fullwindow.font-mono .window .note textarea,
+.font-mono .window .note textarea,
 .appearance .font .name.mono {
 	font-family: "Courier New", Courier, monospace;
 }
 
-.fullwindow.font-veramono .window .note textarea,
+.font-veramono .window .note textarea,
 .appearance .font .name.veramono {
 	font-family: "BitstreamVeraSansMonoRoman", "Courier New", Courier, monospace;
 }
 
-.fullwindow.font-lmmono .window .note textarea,
+.font-lmmono .window .note textarea,
 .appearance .font .name.lmmono {
 	font-family: "LatinModernMono10Regular", monospace;
 }
 
-.fullwindow.font-dsmono .window .note textarea,
+.font-dsmono .window .note textarea,
 .appearance .font .name.dsmono {
 	font-family: "DroidSansMonoRegular", monospace;
 }
 
-.fullwindow.font-sans .window .note textarea,
+.font-sans .window .note textarea,
 .appearance .font .name.sans  {
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-.fullwindow.font-lmsans .window .note textarea,
+.font-lmsans .window .note textarea,
 .appearance .font .name.lmsans {
 	font-family: "LatinModernSans10Regular", sans-serif;
 }
 
-.fullwindow.font-dssans .window .note textarea,
+.font-dssans .window .note textarea,
 .appearance .font .name.dssans {
 	font-family: "DroidSansRegular", sans-serif;
 }
 
-.fullwindow.font-museosans .window .note textarea,
+.font-museosans .window .note textarea,
 .appearance .font .name.museosans {
 	font-family: "MuseoSans-500", sans-serif;
 }
 
-.fullwindow.font-greyscale .window .note textarea,
+.font-greyscale .window .note textarea,
 .appearance .font .name.greyscale {
 	font-family: "GreyscaleBasicRegular", sans-serif;
 }
 
-.fullwindow.font-serif .window .note textarea,
+.font-serif .window .note textarea,
 .appearance .font .name.serif {
 	font-family: "Times New Roman", serif;
 }
 
-.fullwindow.font-architect .window .note textarea,
+.font-architect .window .note textarea,
 .appearance .font .name.architect {
 	font-family: "FluxRegular", sans-serif;
 }
 
-.fullwindow.font-arvo .window .note textarea,
+.font-arvo .window .note textarea,
 .appearance .font .name.arvo {
 	font-family: "ArvoRegular", sans-serif;
 }
 
-.fullwindow.font-colaborate .window .note textarea,
+.font-colaborate .window .note textarea,
 .appearance .font .name.colaborate {
 	font-family: "ColaborateLightRegular", sans-serif;
 }
@@ -636,220 +623,52 @@ a:hover {
 	color: white;
 }
 
-/* ########### AutoSuggest CSS - Version 1.2 ################ */
-
-ul.as-selections {
-	list-style-type: none;
-	border-top: 1px solid #888;
-	border-bottom: 1px solid #b6b6b6;
-	border-left: 1px solid #aaa;
-	border-right: 1px solid #aaa;
-	padding: 4px 0 4px 4px;
-	margin: 0;
+/* TAGIT PLUGIN */
+ul.tagit {
+	padding: 1px 5px;
 	overflow: auto;
-	background-color: #fff;
-	box-shadow:inset 0 1px 2px #888;
-	-webkit-box-shadow:inset 0 1px 2px #888;
-	-moz-box-shadow:inset 0 1px 2px #888;
+    margin-left: inherit; /* usually we don't want the regular ul margins. */
+    margin-right: inherit;
 }
-
-ul.as-selections.loading {
-	background-color: #eee;
-}
-
-ul.as-selections li {
+ul.tagit li {
+	display: block;
 	float: left;
-	margin: 1px 4px 1px 0;
+	margin: 2px 5px 2px 0;
+}
+ul.tagit li.tagit-choice {
+	padding: .2em 18px .2em .5em;
+    position: relative;
+    line-height: inherit;
+}
+ul.tagit li.tagit-new {
+	padding: .25em 4px .25em 0;
 }
 
-ul.as-selections li.as-selection-item {
-	color: #2b3840;
-	font-size: 13px;
-	font-family: "Lucida Grande", arial, sans-serif;
-	text-shadow: 0 1px 1px #fff;
-	background-color: #ddeefe;
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ddeefe), to(#bfe0f1));
-	border: 1px solid #acc3ec;
-	border-top-color: #c0d9e9;
-	padding: 2px 7px 2px 10px;
-	border-radius: 12px;
-	-webkit-border-radius: 12px;
-	-moz-border-radius: 12px;
-	box-shadow: 0 1px 1px #e4edf2;
-	-webkit-box-shadow: 0 1px 1px #e4edf2;
-	-moz-box-shadow: 0 1px 1px #e4edf2;
-}
-
-ul.as-selections li.as-selection-item:last-child {
-	margin-left: 30px;
-}
-
-ul.as-selections li.as-selection-item a.as-close {
-	float: right;
-	margin: 1px 0 0 7px;
-	padding: 0 2px;
+ul.tagit li.tagit-choice a.tagit-label {
 	cursor: pointer;
-	color: #5491be;
-	font-family: "Helvetica", helvetica, arial, sans-serif;
-	font-size: 14px;
-	font-weight: bold;
-	text-shadow: 0 1px 1px #fff;
-	-webkit-transition: color .1s ease-in;
+	text-decoration: none;
+}
+ul.tagit li.tagit-choice .close {
+	cursor: pointer;
+    position: absolute;
+    top: 50%;
+    margin-top: -8px;
 }
 
-ul.as-selections li.as-selection-item.blur {
-	color: #666666;
-	background-color: #f4f4f4;
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f4f4f4), to(#d5d5d5));
-	border-color: #bbb;
-	border-top-color: #ccc;
-	box-shadow: 0 1px 1px #e9e9e9;
-	-webkit-box-shadow: 0 1px 1px #e9e9e9;
-	-moz-box-shadow: 0 1px 1px #e9e9e9;
+ul.tagit li.tagit-choice input {
+	display: block;
+	float: left;
+	margin: 2px 5px 2px 0;
 }
+ul.tagit input[type="text"] {
+    -moz-box-sizing:    border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing:         border-box;
 
-ul.as-selections li.as-selection-item.blur a.as-close {
-	color: #999;
-}
-
-ul.as-selections li:hover.as-selection-item {
-	color: #2b3840;
-	background-color: #bbd4f1;
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#bbd4f1), to(#a3c2e5));
-	border-color: #6da0e0;
-	border-top-color: #8bb7ed;
-}
-
-ul.as-selections li:hover.as-selection-item a.as-close {
-	color: #4d70b0;
-}
-
-ul.as-selections li.as-selection-item.selected {
-	border-color: #1f30e4;
-}
-
-ul.as-selections li.as-selection-item a:hover.as-close {
-	color: #1b3c65;
-}
-
-ul.as-selections li.as-selection-item a:active.as-close {
-	color: #4d70b0;
-}
-
-ul.as-selections li.as-original {
-	margin-left: 0;
-}
-
-ul.as-selections li.as-original input {
-	border: none;
-	outline: none;
-	font-size: 13px;
-	width: 120px;
-	height: 18px;
-	padding-top: 3px;
-}
-
-ul.as-list {
-	position: absolute;
-	list-style-type: none;
-	margin: 2px 0 0 0;
+    border: none;
+	margin: 0;
 	padding: 0;
-	font-size: 14px;
-	color: #000;
-	font-family: "Lucida Grande", arial, sans-serif;
-	background-color: #fff;
-	background-color: rgba(255,255,255,0.95);
-	z-index: 2;
-	box-shadow: 0 2px 12px #222;
-	-webkit-box-shadow: 0 2px 12px #222;
-	-moz-box-shadow: 0 2px 12px #222;
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-}
-
-li.as-result-item, li.as-message {
-	margin: 0 0 0 0;
-	padding: 5px 12px;
-	background-color: transparent;
-	border: 1px solid #fff;
-	border-bottom: 1px solid #ddd;
-	cursor: pointer;
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-}
-
-li:first-child.as-result-item {
-	margin: 0;
-}
-
-li.as-message {
-	margin: 0;
-	cursor: default;
-}
-
-li.as-result-item.active {
-	background-color: #3668d9;
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 64%, from(rgb(110, 129, 245)), to(rgb(62, 82, 242)));
-	border-color: #3342e8;
-	color: #fff;
-	text-shadow: 0 1px 2px #122042;
-}
-
-li.as-result-item em { 
-	font-style: normal; 
-	background: #444;  
-	padding: 0 2px;
-	color: #fff;
-}
-
-li.as-result-item.active em { 
-	background: #253f7a;  
-	color: #fff;
-}
-
-/* Webkit Hacks  */
-@media screen and (-webkit-min-device-pixel-ratio:0) {	
-	ul.as-selections {
-		border-top-width: 2px;
-	}
-	ul.as-selections li.as-selection-item {
-		padding-top: 3px;
-		padding-bottom: 3px;
-	}
-	ul.as-selections li.as-selection-item a.as-close {
-		margin-top: -1px;
-	}
-	ul.as-selections li.as-original input {
-		height: 19px;
-	}
-}
-
-/* Opera Hacks  */
-@media all and (-webkit-min-device-pixel-ratio:10000), not all and (-webkit-min-device-pixel-ratio:0) {
-	ul.as-list {
-		border: 1px solid #888;
-	}
-	ul.as-selections li.as-selection-item a.as-close {
-		margin-left: 4px;
-		margin-top: 0;
-	}
-}
-
-/* IE Hacks  */
-ul.as-list {
-	border: 1px solid #888\9;
-}
-ul.as-selections li.as-selection-item a.as-close {
-	margin-left: 4px\9;
-	margin-top: 0\9;
-}
-
-/* Firefox 3.0 Hacks */
-ul.as-list,  x:-moz-any-link, x:default { 
-	border: 1px solid #888;
-}
-BODY:first-of-type ul.as-list, x:-moz-any-link, x:default { /* Target FF 3.5+ */
-	border: none;
+	width: inherit;
+	background-color: inherit;
+    outline: none;
 }
