@@ -102,39 +102,146 @@ a=a.replace(/>/g,"&gt;");return k(a,"*_{}[]\\",!1)},G=function(a){return a=a.rep
 ":")var d=Math.random(),a=d>0.9?c[2](a):d>0.45?c[1](a):c[0](a);return a});return a=('<a href="'+a+'">'+a+"</a>").replace(/">.+:/g,'">')},x=function(a){return a=a.replace(/~E(\d+)E/g,function(a,b){var d=parseInt(b);return String.fromCharCode(d)})},t=function(a){a=a.replace(/^(\t|[ ]{1,4})/gm,"~0");return a.replace(/~0/g,"")},v=function(a){if(!/\t/.test(a))return a;var c=["    ","   ","  "," "],b=0,d;return a.replace(/[\n\t]/g,function(a,g){if(a==="\n")return b=g+1,a;d=(g-b)%4;b=g+1;return c[d]})},
 k=function(a,c,b){c="(["+c.replace(/([\[\]\\])/g,"\\$1")+"])";b&&(c="\\\\"+c);return a.replace(RegExp(c,"g"),q)},q=function(a,c){return"~E"+c.charCodeAt(0)+"E"}};var Showdown=Attacklab.showdown;Attacklab.fileLoaded&&Attacklab.fileLoaded("showdown.js");
 
-// ################################################################ //
-// ################################################################ //
-// ################################################################ //
-// ################################################################ //
-// ################################################################ //
-
+// NOTESTACK CODE
+// Britt O'Halloran
+// britt.j.ohalloran@gmail.com
 
 var notestack = function() {
 
 	// JQUERY NO-CONFLICT
-	var $ = jQuery.noConflict(),
+	var $ = jQuery.noConflict();
+
+// =====================
+//    BASIC UTILITIES
+// =====================
+
+	// CLEAR OVERLAYS
+	var clearOverlays = function() {
+		$('.show:not(.settings_pane)').removeClass('show');
+		fullscreenMode("off")
+	};
+	
+	// FULLSCREEN MODE
+	var fullscreenMode = function(direction){
+		if(direction=="off"){
+			$('html body').removeClass('fullscreen-mode');
+			$('.overlay').removeClass('show');
+		}
+		else if(direction=="on"){
+			$('html body').addClass('fullscreen-mode');
+			$('.overlay').addClass('show');		
+		}
+		else{
+			$('html body').toggleClass('fullscreen-mode');
+			$('.overlay').toggleClass('show');
+		};
+	};
+	
+	// SEARCH
+	var refreshSearch = function() {
+		query = $('.search input').val().toLowerCase();
+		//console.log(query);
+		$('.listnote').each(function(){
+			if ($(this).data().content.toLowerCase().indexOf(query) > -1){
+				$(this).removeClass('search-hide');
+			}
+			else{
+				$(this).addClass('search-hide');
+			};
+		});
+		if($('.selected:not(.search-hide,.tag-hide)').length==0){
+			$('.selected').removeClass('selected');
+			$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
+		};
+		refreshCards();
+	};
 
 	// STORE/ACCESS DATA
-	getData = function(key) {
+	var getData = function(key) {
 		if (storage=='localStorage'){
 			return localStorage[key];
 		}
 		else{
 			return sessionStorage[key];
 		};
-	},
-	
-	setData = function(key, val) {
+	};
+	var setData = function(key, val) {
 		if (storage=='localStorage'){
 			localStorage[key] = val;
 		}
 		else{
 			sessionStorage[key] = val;
 		};
-	},
+	};
 	
+	// PROGRESS BAR
+	var progressBar = function(percent,callback){
+		if($('.status .progress .inner').length==0){
+			$('.status').html(
+				'<div class="progress"><div class="inner"></div></div>'
+			);
+		};
+		$('.status .progress .inner').animate({'width': percent + '%'},250,callback);
+	};
+	
+	// THROTTLED PROGRESS BAR
+	var throttledProgress = $.throttle(500, true, progressBar);
+	
+	// TIMEAGO
+	var bindTimeago = function() {
+		$(".timeago").timeago();
+	};
+	
+	// MAKE LINKS
+	var makeLinks = function() {
+		currentTextarea = $('.current .textarea textarea').val();
+		$('.current .textarea textarea').val(linkify(currentTextarea));
+	};
+	
+	// LINKIFY
+	var linkify = function(inputText) {
+		var replaceText, replacePattern1, replacePattern2, replacePattern3;
+		//URLs starting with http://, https://, or ftp://
+		replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+		replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+		//URLs starting with www. (without // before it, or it'd re-link the ones done above)
+		replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+		replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+		//Change email addresses to mailto:: links
+		replacePattern3 = /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim;
+		replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+		// Return linkified text
+		return replacedText
+	};
+	
+	// STACK TIME
+	var stackTime = function(epoch_seconds){
+		epoch_num = parseFloat(epoch_seconds);
+		time_dt = new Date(epoch_num*1000).toISOString();
+		return time_dt;
+	};
+	var padzero = function(n) {
+		return n < 10 ? '0' + n : n;
+	};
+	var pad2zeros = function(n) {
+		if (n < 100) {
+			n = '0' + n;
+		}
+		if (n < 10) {
+			n = '0' + n;
+		}
+		return n;     
+	};
+	var toISOString = function(d) {
+	  	return d.getUTCFullYear() + '-' +  padzero(d.getUTCMonth() + 1) + '-' + padzero(d.getUTCDate()) + 'T' + padzero(d.getUTCHours()) + ':' +  padzero(d.getUTCMinutes()) + ':' + padzero(d.getUTCSeconds()) + '.' + pad2zeros(d.getUTCMilliseconds()) + 'Z';
+	};
+
+// ===================
+//    NOTE HANDLING
+// ===================
+
 	// REFLOW CARDS
-	reflowCards = function() {
+	var reflowCards = function() {
 		if($('.current').length != 1){
 			if($('.selected').length != 1){
 				$('.selected').removeClass('selected');
@@ -152,10 +259,10 @@ var notestack = function() {
 		$('.current').prev('.note').addClass('prev1');
 		$('.current').next('.note').addClass('next1');
 		$('.current').next('.note').next('.note').addClass('next2');
-	},
+	};
 	
 	// REFRESH CARDS
-	refreshCards = function() {
+	var refreshCards = function() {
 		//console.log('refreshing cards');
 		if($('.selected').length != 1){
 			$('.selected').removeClass('selected');
@@ -191,10 +298,25 @@ var notestack = function() {
 		$('#' + $('.selected').data().key).addClass('current');
 		refreshNoteBinds('.note .textarea textarea');
 		reflowCards();
-	},
+	};
 	
-	// SORT NOTES: PINNED, THEN AGE
-	sortNotes = function() {
+	// KEY AND CLICK BINDINGS FOR NOTE CARDS
+	var refreshNoteBinds = function(note_tas){
+		//FROM WITHIN NOTE TEXT AREA
+		$(note_tas).bind('keydown','esc',function(){$('.note-directions').removeClass('show');$(this).blur();});
+		$(note_tas).tabby();
+		// MAXIMIZE BUTTON
+		$('.maximize').click(function(){
+			fullscreenMode();
+		});
+		// ON TAG CHANGE
+		$('.tagsinput div input').blur(function(){ 
+			updateTags($('.current').attr('id'));
+		});
+	};
+	
+	// SORT NOTES: PINNED, THEN MODIFIED
+	var sortNotes = function() {
 		//console.log('sorting notes');
 		$('.listnote').sortElements(function(a, b){
 			if ($(a).hasClass('pinned')){
@@ -205,27 +327,126 @@ var notestack = function() {
 			return parseFloat($(a).data('modifydate')) < parseFloat($(b).data('modifydate')) ? 1 : -1;
 		}); 
 		return "sorted";
-	},
+	};
+	
+	// NEXT NOTE
+	var nextNote = function() { 
+		//console.log('nextNote ' + $('.selected').nextAll('.listnote:not(.hide):first').length);
+		nextOne = $('.selected').nextAll('.listnote:not(.search-hide,.tag-hide):first');
+		if(nextOne.length > 0 ) {
+			$('.selected').removeClass('selected');
+			nextOne.addClass('selected');
+			$('.current').removeClass('current').next('.note').addClass('current');
+			reflowCards();
+			scrollto();
+		};
+	};
+	
+	// PREVIOUS NOTE
+	var prevNote = function() {
+		//console.log('prevNote');
+		prevOne = $('.selected').prevAll('.listnote:not(.search-hide,.tag-hide):first')
+		if(prevOne.length>0) {
+			$('.selected').removeClass('selected');
+			prevOne.addClass('selected');
+			$('.current').removeClass('current').prev('.note').addClass('current');
+			reflowCards();
+			scrollto();
+		};
+	};
+	
+	// TOGGLE PIN
+	var togglePin = function(listitem) {
+		if(listitem.data().systemtags.indexOf('pinned')>-1){
+			// already pinned, remove pin
+			listitem.data().systemtags.splice(listitem.data().systemtags.indexOf('pinned'),1);
+		}
+		else{
+			// not pinned, add pin
+			listitem.data().systemtags.push('pinned');
+		};
+		listitem.data().syncnum = listitem.data().syncnum + 1;
+		localStorage.setItem( listitem.data().key, JSON.stringify( listitem.data() ) );
+		localToDOM( listitem.data().key );
+		sortNotes();
+		refreshCards();
+	};
+	
+	// CREATE NEW NOTE
+	var createNote = function() {
+		createdate = (new Date()).getTime();
+		newid = 'notestack' + createdate;
+		newdata = {key: newid, createdate: createdate/1000, modifydate: createdate/1000, tags: [], systemtags: [], content: "new note"};
+		localStorage.setItem(newid, JSON.stringify(newdata));
+		index = $.parseJSON(localStorage.index);
+		index.data.push(newdata);
+		//console.log(index.data);
+		localStorage.index = JSON.stringify(index);
+		localToDOM( newid );
+		sortNotes();
+		$('.selected').removeClass('selected');
+		$('#list-' + newid).addClass('selected');
+		refreshCards();
+		$('.current .textarea textarea').select();
+	};
+	
+	// DELETE NOTE
+	var deleteNote = function(notekey) {
+		note = $('#list-' + notekey).data()
+		note.deleted = 1;
+		note.modifydate = (new Date()).getTime()/1000;
+		note.syncnum = note.syncnum + 1;
+		localStorage.setItem(note.key,JSON.stringify(note));
+		$('#list-' + notekey).remove();
+		$('#' + notekey).remove();
+		$('.listnote:first').addClass('.selected');
+		refreshCards();
+	};
+	
+	// SCROLL TO SELECTED NOTE
+	var scrollto = function(){
+		if($('.selected').position().top < 0){
+			$('.list').scrollTop($('.list').scrollTop() + $('.selected').position().top);
+		};
+		if($('.selected').position().top + $('.listnote').height() > $('.list').height()){
+			$('.list').scrollTop($('.list').scrollTop() + $('.selected').position().top - $('.list').height() + $('.listnote').height());
+		};
+	};
+	
+	// VIEW ALL NOTES (UNFILTER)
+	var viewAll = function(){
+		$('html body').removeClass('tag-filter');
+		$('.active-tag-filter').remove();
+		$('.listnote').removeClass('tag-hide');
+		$('.selected').removeClass('selected');
+		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
+		$('.search input').val('');
+		refreshSearch();
+	};
+
+// ==============
+//    VERSIONS
+// ==============
 	
 	// SORT VERSIONS
-	sortVersions = function() {
+	var sortVersions = function() {
 		$('.version-item').sortElements(function(a, b){
 			return parseFloat($(a).data('version')) < parseFloat($(b).data('version')) ? 1 : -1;
 		}); 
 		return "sorted";
-	},
+	};
 	
 	// DIFF VERSIONS
-	diffVersions = function(fromtext,totext){
+	var diffVersions = function(fromtext,totext){
 		var dmp = new diff_match_patch();
 	  	var d = dmp.diff_main(fromtext, totext);
 	  	dmp.diff_cleanupSemantic(d);
 	  	var ds = dmp.diff_prettyHtml(d);
 		return ds;
-	},
+	};
 	
 	// GET VERSION OF NOTE
-	getNoteVersion = function(notekey,version){
+	var getNoteVersion = function(notekey,version){
 		return $.Deferred(function(dfd){
 			$.ajax('/sn.php',{
 				type: 'POST',
@@ -245,10 +466,10 @@ var notestack = function() {
 				}
 			});
 		}).promise();
-	},
+	};
 	
 	// GET ALL VERSIONS OF NOTE
-	populateVersions = function(notekey){
+	var populateVersions = function(notekey){
 		$('.version-item').remove();
 		var verarray = [];
 		noteobj = $.parseJSON(localStorage.getItem(notekey));
@@ -271,10 +492,177 @@ var notestack = function() {
 			$('.versions-right .right-inner').html($('.version-item:first').data().diff);
 			$('.version-item:first').addClass('version-select');
 		});
-	},
+	};
 	
+	// TOGGLE SHOWING OF VERSIONS WINDOW
+	var toggleVersions = function(notekey){
+		if($('.versions').hasClass('show')){
+			clearOverlays();
+		}
+		else{
+			fullscreenMode('off');
+			$('.versions').addClass('show');
+			$('.overlay').addClass('show');
+			$('.versions-right .right-inner').html("");
+			populateVersions(notekey);
+		};
+	};
+
+// ===================
+//    TAGS / LABELS
+// ===================
+	
+	// GET TAG INDEX
+	var getTagIndex = function(){
+		return $.Deferred(function(dfd_tag){
+			postData = {
+				'action': 'tagIndex',
+				'email': localStorage.email,
+				'token': localStorage.token
+			};
+			//console.log('starting tagIndex pull');
+			$.ajax('/sn.php',{
+				type: 'POST',
+				data: postData,
+				timeout: 3000,
+				success: function(rawTagIndex){
+					if(rawTagIndex=='401'){
+						window.location = '/?login=expired';
+					};
+					localStorage['tagIndex'] = rawTagIndex;
+					//console.log('stored tagIndex')
+					dfd_tag.resolve();
+				},
+				error: function(msg){
+					$('.status').text('Working offline. Changes will sync when connected.');
+					$('.status-div').removeClass('loading');
+				}
+			});
+		});
+	};
+	
+	// SHOW LABELS OVERLAY
+	var showLabels = function(){
+		if($('.labels').hasClass('show')){
+			clearOverlays();
+		}
+		else{
+			fullscreenMode('off');
+			populateLabels();
+			$('.labels').addClass('show');
+			$('.overlay').addClass('show');
+			$('.labels input').val("").select();
+		};
+		return false;
+		e.preventDefault();
+	};
+	
+	// POPULATE LABELS INTO LABEL OVERLAY
+	var populateLabels = function(){
+		$('.labels .item').remove();
+		var tagIndex = $.parseJSON(localStorage.tagIndex);
+		var notecount=$('.listnote').length;
+		for (i=0;i<tagIndex.count;i++) {
+			tagname = tagIndex.tags[i].name;
+			tagid = tagname.replace('@', '').replace('.','');
+			j=0;
+			$('.listnote').each(function(){
+				if($.inArray(tagname,$(this).data().tags)>-1){
+					console.log(tagname + $(this).data().tags);
+					j++;
+				};
+			});
+			$('#label-template').clone().attr('id',tagid).addClass('item').appendTo('.labels .items');
+			$('#' + tagid).children('.name').html('<pre>' + tagname + '</pre>');
+			$('#' + tagid).children('.notecount').text(j + " notes");
+		};
+		$('.labels .item').sortElements(function(a, b){
+			return parseFloat($(a).children('.notecount').text()) < parseFloat($(b).children('.notecount').text()) ? 1 : -1;
+		}); 
+	};
+	
+	// SEARCH FOR LABELS
+	var labelSearch = function() {
+		query = $('.labels input').val().toLowerCase();
+		//console.log(query);
+		$('.labels .item').each(function(){
+			if ($(this).children('.name').text().toLowerCase().indexOf(query) > -1){
+				$(this).removeClass('hide');
+			}
+			else{
+				$(this).addClass('hide');
+			};
+		});
+		$('.label-select').removeClass('label-select');
+		$('.labels .item:not(.hide):first').addClass('label-select');
+	};
+	
+	// SELECT PREVIOUS LABEL
+	var prevLabel = function() {
+		prevOne = $('.label-select').prevAll('.item:not(.hide):first');
+		if( prevOne.length > 0 ) {
+			$('.label-select').removeClass('label-select');
+			prevOne.addClass('label-select');
+		};
+	};
+	
+	// SELECT NEXT LABEL
+	var nextLabel = function() {
+		nextOne = $('.label-select').nextAll('.item:not(.hide):first');
+		if( nextOne.length > 0 ) {
+			$('.label-select').removeClass('label-select');
+			nextOne.addClass('label-select');
+		};
+	};
+	
+	// UPDATE TAGS
+	var updateTags = function(notekey){
+		tags = $('#' + notekey + ' .tag-area input').val().split(' ');
+		//console.log(tags);
+		note = $.parseJSON(localStorage[notekey]);
+		if (note.tags != tags){
+			note.tags = tags;
+			note.syncnum = note.syncnum + 1;
+			localStorage[notekey] = JSON.stringify(note);
+			localToDOM(notekey);
+			manualSync();
+		};
+	};
+	
+	// FILTER BY LABEL
+	var filterByLabel = function(labelName) {
+		$('.labels input').val('').blur()
+		unfilterLabel();
+		clearOverlays();
+		$('html body').addClass('tag-filter');
+		$('#tag-filter-template').clone().attr('id','').addClass('active-tag-filter').insertBefore('.list');
+		$('.active-tag-filter .inner .tag-filter-label').text(labelName);
+		$('.listnote').each(function(){
+			if($.inArray(labelName,$(this).data().tags)){
+				$(this).addClass('tag-hide');
+			}; 
+		});
+		$('.selected').removeClass('selected');
+		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
+		refreshCards();
+	};
+	
+	// UNFILTER LABEL
+	var unfilterLabel = function() {
+		$('html body').removeClass('tag-filter');
+		$('.active-tag-filter').remove();
+		$('.listnote').removeClass('tag-hide');
+		$('.selected').removeClass('selected');
+		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
+		refreshCards();
+	};
+
+// =====================
+//    SIMPLENOTE SYNC
+// =====================
+
 	// DOWNLOAD ONE NOTE
-	getNote = function(notekey){
+	var getNote = function(notekey){
 		return $.Deferred(function(dfd_get){
 			//console.log('getting ' + notekey);
 			$.ajax('/sn.php',{
@@ -293,10 +681,10 @@ var notestack = function() {
 				}
 			});
 		}).promise();
-	},
+	};
 	
 	// UPLOAD/SEND ONE NOTE
-	sendNote = function(noteobject){
+	var sendNote = function(noteobject){
 		var dfd = $.Deferred();
 		var postData = {'action': 'sendnote', 'email': email,'token': token,'notekey': noteobject.key,'notebody': JSON.stringify(noteobject)},
 		newnote = 0;
@@ -341,23 +729,10 @@ var notestack = function() {
 			}
 		});
 		return dfd.promise();
-	},
-	
-	// PROGRESS BAR
-	progressBar = function(percent,callback){
-		if($('.status .progress .inner').length==0){
-			$('.status').html(
-				'<div class="progress"><div class="inner"></div></div>'
-			);
-		};
-		$('.status .progress .inner').animate({'width': percent + '%'},250,callback);
-	},
-	
-	// THROTTLED PROGRESS BAR
-	throttledProgress = $.throttle(500, true, progressBar),
+	};
 	
 	// CHECK ALL NOTES FOR UPDATES AGAINST INDEX
-	updateAllNotes = function() {
+	var updateAllNotes = function() {
 		return $.Deferred(function(dfd_uan){
 			//console.log('iterating through index, showing local, getting if needed');
 			index = $.parseJSON(localStorage.index);
@@ -431,10 +806,10 @@ var notestack = function() {
 			//$('.status').text('Syncing ' + snarray.length + ' notes');
 			//$('.status-div').addClass('loading');
 		}).promise();
-	},
+	};
 	
 	// SYNC INDEX
-	syncIndex = function(postData){
+	var syncIndex = function(postData){
 		return $.Deferred(function(dfd_syn){
 			$.ajax('/sn.php',{
 				type: 'POST',
@@ -486,90 +861,10 @@ var notestack = function() {
 			});
 			//console.log('outside index ajax()');
 		}).promise();
-	},
-	
-	// GET TAG INDEX
-	getTagIndex = function(){
-		return $.Deferred(function(dfd_tag){
-			postData = {
-				'action': 'tagIndex',
-				'email': localStorage.email,
-				'token': localStorage.token
-			};
-			//console.log('starting tagIndex pull');
-			$.ajax('/sn.php',{
-				type: 'POST',
-				data: postData,
-				timeout: 3000,
-				success: function(rawTagIndex){
-					if(rawTagIndex=='401'){
-						window.location = '/?login=expired';
-					};
-					localStorage['tagIndex'] = rawTagIndex;
-					//console.log('stored tagIndex')
-					dfd_tag.resolve();
-				},
-				error: function(msg){
-					$('.status').text('Working offline. Changes will sync when connected.');
-					$('.status-div').removeClass('loading');
-				}
-			});
-		});
-	},
-	
-	// UPDATE NOTE PREVIEW AND PIN
-	updateListnote = function(key){
-		thisnote = $('#list-' + key);
-		thisnote.removeClass('pinned');
-		if (thisnote.data().systemtags.indexOf('pinned')>-1){thisnote.addClass('pinned')};
-		titlebreak = thisnote.data().content.indexOf('\n');
-		if(titlebreak<0){
-			thisnote.children('.title').text(thisnote.data().content.substring(0,100));
-			thisnote.children('.preview').text('');
-		}
-		else{
-			thisnote.children('.title').text(thisnote.data().content.substring(0,titlebreak));
-			thisnote.children('.preview').text(thisnote.data().content.substr(titlebreak,100));
-		};
-	},
-	
-	// MOVE ONE NOTE FROM LOCAL STORAGE TO DOM
-	localToDOM = function(key){ // add to DOM from localStorage
-		return $.Deferred(function(dfd_ltd){
-			//console.log('local to DOM ' + key);
-			note = $.parseJSON(localStorage.getItem(key));
-			if(note.deleted!=1){
-				if($('#list-' + note.key).length>0){
-					$('#list-' + note.key).removeData().data(note);
-				}
-				else{
-					$('#listnote-template').clone().attr('id','list-'+note.key).addClass('listnote').appendTo('.list').data(note);
-				};
-				updateListnote(note.key);
-				dfd_ltd.resolve();
-			};
-		}).promise();
-	},
-	
-	// SHOW ALL LOCAL NOTES
-	allLocalToDOM = function(){
-		//$('.status').text('Loading notes from local storage');
-		//$('.status-div').addClass('loading');
-		progressBar(10);
-		if(localStorage.index){
-			index = $.parseJSON(localStorage.index);
-			//console.log( 'loading ' + index.data.length + ' local notes' );
-			for (i=0;i<=(index.data.length-1);i++){
-				if(!(localStorage.getItem(index.data[i].key)==null)){
-					localToDOM(index.data[i].key);
-				};
-			};
-		};
-		//console.log('local notes loaded');
-	},
+	};
 	
 	// MANUAL SYNC
-	manualSync = function(syncType){
+	var manualSync = function(syncType){
 		if(localStorage.token){
 			$.when(getTagIndex()).done(function(){
 				//console.log('done with tag index');
@@ -620,15 +915,70 @@ var notestack = function() {
 		else{
 			window.location = '/';
 		};
-	},
+	};
+
+// =========================
+//    LOADING LOCAL NOTES
+// =========================
+	
+	// UPDATE NOTE PREVIEW AND PIN
+	var updateListnote = function(key){
+		thisnote = $('#list-' + key);
+		thisnote.removeClass('pinned');
+		if (thisnote.data().systemtags.indexOf('pinned')>-1){thisnote.addClass('pinned')};
+		titlebreak = thisnote.data().content.indexOf('\n');
+		if(titlebreak<0){
+			thisnote.children('.title').text(thisnote.data().content.substring(0,100));
+			thisnote.children('.preview').text('');
+		}
+		else{
+			thisnote.children('.title').text(thisnote.data().content.substring(0,titlebreak));
+			thisnote.children('.preview').text(thisnote.data().content.substr(titlebreak,100));
+		};
+	};
+	
+	// MOVE ONE NOTE FROM LOCAL STORAGE TO DOM
+	var localToDOM = function(key){ // add to DOM from localStorage
+		return $.Deferred(function(dfd_ltd){
+			//console.log('local to DOM ' + key);
+			note = $.parseJSON(localStorage.getItem(key));
+			if(note.deleted!=1){
+				if($('#list-' + note.key).length>0){
+					$('#list-' + note.key).removeData().data(note);
+				}
+				else{
+					$('#listnote-template').clone().attr('id','list-'+note.key).addClass('listnote').appendTo('.list').data(note);
+				};
+				updateListnote(note.key);
+				dfd_ltd.resolve();
+			};
+		}).promise();
+	};
+	
+	// SHOW ALL LOCAL NOTES
+	var allLocalToDOM = function(){
+		//$('.status').text('Loading notes from local storage');
+		//$('.status-div').addClass('loading');
+		progressBar(10);
+		if(localStorage.index){
+			index = $.parseJSON(localStorage.index);
+			//console.log( 'loading ' + index.data.length + ' local notes' );
+			for (i=0;i<=(index.data.length-1);i++){
+				if(!(localStorage.getItem(index.data[i].key)==null)){
+					localToDOM(index.data[i].key);
+				};
+			};
+		};
+		//console.log('local notes loaded');
+	};
 	
 	// ON PAGE LOAD
-	storage = '',
+	var storage = '',
 	indexStart = '',
-	indexFinish = '',
+	indexFinish = '';
 	
 	// FIRST SYNC ON LOAD
-	notestackLoadSync = function() {
+	var notestackLoadSync = function() {
 		if(localStorage.email){
 			$('.username').text(localStorage.email);
 			if(localStorage.index){
@@ -644,351 +994,14 @@ var notestack = function() {
 		else{
 			window.location = '/';
 		};
-	},
-	
-	///////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////
-	// INTERACTIONS ///////////////////////////////////////////
-	///////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////
-	
-	// NEXT NOTE
-	nextNote = function() { 
-		//console.log('nextNote ' + $('.selected').nextAll('.listnote:not(.hide):first').length);
-		nextOne = $('.selected').nextAll('.listnote:not(.search-hide,.tag-hide):first');
-		if(nextOne.length > 0 ) {
-			$('.selected').removeClass('selected');
-			nextOne.addClass('selected');
-			$('.current').removeClass('current').next('.note').addClass('current');
-			reflowCards();
-			scrollto();
-		};
-	},
-	
-	// PREVIOUS NOTE
-	prevNote = function() {
-		//console.log('prevNote');
-		prevOne = $('.selected').prevAll('.listnote:not(.search-hide,.tag-hide):first')
-		if(prevOne.length>0) {
-			$('.selected').removeClass('selected');
-			prevOne.addClass('selected');
-			$('.current').removeClass('current').prev('.note').addClass('current');
-			reflowCards();
-			scrollto();
-		};
-	},
-	
-	// TOGGLE PIN
-	togglePin = function(listitem) {
-		if(listitem.data().systemtags.indexOf('pinned')>-1){
-			// already pinned, remove pin
-			listitem.data().systemtags.splice(listitem.data().systemtags.indexOf('pinned'),1);
-		}
-		else{
-			// not pinned, add pin
-			listitem.data().systemtags.push('pinned');
-		};
-		listitem.data().syncnum = listitem.data().syncnum + 1;
-		localStorage.setItem( listitem.data().key, JSON.stringify( listitem.data() ) );
-		localToDOM( listitem.data().key );
-		sortNotes();
-		refreshCards();
-	},
-	
-	// CREATE NEW NOTE
-	createNote = function() {
-		createdate = (new Date()).getTime();
-		newid = 'notestack' + createdate;
-		newdata = {key: newid, createdate: createdate/1000, modifydate: createdate/1000, tags: [], systemtags: [], content: "new note"};
-		localStorage.setItem(newid, JSON.stringify(newdata));
-		index = $.parseJSON(localStorage.index);
-		index.data.push(newdata);
-		//console.log(index.data);
-		localStorage.index = JSON.stringify(index);
-		localToDOM( newid );
-		sortNotes();
-		$('.selected').removeClass('selected');
-		$('#list-' + newid).addClass('selected');
-		refreshCards();
-		$('.current .textarea textarea').select();
-	},
-	
-	// SCROLL TO SELECTED
-	scrollto = function(){
-		if($('.selected').position().top < 0){
-			$('.list').scrollTop($('.list').scrollTop() + $('.selected').position().top);
-		};
-		if($('.selected').position().top + $('.listnote').height() > $('.list').height()){
-			$('.list').scrollTop($('.list').scrollTop() + $('.selected').position().top - $('.list').height() + $('.listnote').height());
-		};
-	},
-	
-	// TOGGLE SHOWING OF VERSIONS WINDOW
-	toggleVersions = function(notekey){
-		if($('.versions').hasClass('show')){
-			clearOverlays();
-		}
-		else{
-			fullscreenMode('off');
-			$('.versions').addClass('show');
-			$('.overlay').addClass('show');
-			$('.versions-right .right-inner').html("");
-			populateVersions(notekey);
-		};
-	},
-	
-	// UPDATE TAGS
-	updateTags = function(notekey){
-		tags = $('#' + notekey + ' .tag-area input').val().split(' ');
-		//console.log(tags);
-		note = $.parseJSON(localStorage[notekey]);
-		if (note.tags != tags){
-			note.tags = tags;
-			note.syncnum = note.syncnum + 1;
-			localStorage[notekey] = JSON.stringify(note);
-			localToDOM(notekey);
-			manualSync();
-		};
-	},
-	
-	// KEY AND CLICK BINDINGS FOR NOTE CARDS
-	refreshNoteBinds = function(note_tas){
-		//FROM WITHIN NOTE TEXT AREA
-		$(note_tas).bind('keydown','esc',function(){$('.note-directions').removeClass('show');$(this).blur();});
-		$(note_tas).tabby();
-		// MAXIMIZE BUTTON
-		$('.maximize').click(function(){
-			fullscreenMode();
-		});
-		// ON TAG CHANGE
-		$('.tagsinput div input').blur(function(){ 
-			updateTags($('.current').attr('id'));
-		});
-	},
-	
-	// VIEW ALL NOTES (UNFILTER)
-	viewAll = function(){
-		$('html body').removeClass('tag-filter');
-		$('.active-tag-filter').remove();
-		$('.listnote').removeClass('tag-hide');
-		$('.selected').removeClass('selected');
-		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
-		$('.search input').val('');
-		refreshSearch();
-	},
-	
-	// FILTER BY LABEL
-	filterByLabel = function(labelName) {
-		$('.labels input').val('').blur()
-		unfilterLabel();
-		clearOverlays();
-		$('html body').addClass('tag-filter');
-		$('#tag-filter-template').clone().attr('id','').addClass('active-tag-filter').insertBefore('.list');
-		$('.active-tag-filter .inner .tag-filter-label').text(labelName);
-		$('.listnote').each(function(){
-			if($.inArray(labelName,$(this).data().tags)){
-				$(this).addClass('tag-hide');
-			}; 
-		});
-		$('.selected').removeClass('selected');
-		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
-		refreshCards();
-	},
-	
-	// UNFILTER LABEL
-	unfilterLabel = function() {
-		$('html body').removeClass('tag-filter');
-		$('.active-tag-filter').remove();
-		$('.listnote').removeClass('tag-hide');
-		$('.selected').removeClass('selected');
-		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
-		refreshCards();
-	},
-	
-	// DELETE NOTE
-	deleteNote = function(notekey) {
-		note = $('#list-' + notekey).data()
-		note.deleted = 1;
-		note.modifydate = (new Date()).getTime()/1000;
-		note.syncnum = note.syncnum + 1;
-		localStorage.setItem(note.key,JSON.stringify(note));
-		$('#list-' + notekey).remove();
-		$('#' + notekey).remove();
-		$('.listnote:first').addClass('.selected');
-		refreshCards();
-	},
-	
-	// CLEAR OVERLAYS
-	clearOverlays = function() {
-		$('.show:not(.settings_pane)').removeClass('show');
-		fullscreenMode("off")
-	},
-	
-	// FULLSCREEN MODE
-	fullscreenMode = function(direction){
-		if(direction=="off"){
-			$('html body').removeClass('fullscreen-mode');
-			$('.overlay').removeClass('show');
-		}
-		else if(direction=="on"){
-			$('html body').addClass('fullscreen-mode');
-			$('.overlay').addClass('show');		
-		}
-		else{
-			$('html body').toggleClass('fullscreen-mode');
-			$('.overlay').toggleClass('show');
-		};
-	},
-	
-	// SHOW LABELS OVERLAY
-	showLabels = function(){
-		if($('.labels').hasClass('show')){
-			clearOverlays();
-		}
-		else{
-			fullscreenMode('off');
-			populateLabels();
-			$('.labels').addClass('show');
-			$('.overlay').addClass('show');
-			$('.labels input').val("").select();
-		};
-		return false;
-		e.preventDefault();
-	},
-	
-	// POPULATE LABELS INTO LABEL OVERLAY
-	populateLabels = function(){
-		$('.labels .item').remove();
-		var tagIndex = $.parseJSON(localStorage.tagIndex);
-		var notecount=$('.listnote').length;
-		for (i=0;i<tagIndex.count;i++) {
-			tagname = tagIndex.tags[i].name;
-			tagid = tagname.replace('@', '').replace('.','');
-			j=0;
-			$('.listnote').each(function(){
-				if($.inArray(tagname,$(this).data().tags)>-1){
-					console.log(tagname + $(this).data().tags);
-					j++;
-				};
-			});
-			$('#label-template').clone().attr('id',tagid).addClass('item').appendTo('.labels .items');
-			$('#' + tagid).children('.name').html('<pre>' + tagname + '</pre>');
-			$('#' + tagid).children('.notecount').text(j + " notes");
-		};
-		$('.labels .item').sortElements(function(a, b){
-			return parseFloat($(a).children('.notecount').text()) < parseFloat($(b).children('.notecount').text()) ? 1 : -1;
-		}); 
-	},
-	
-	// SEARCH FOR LABELS
-	labelSearch = function() {
-		query = $('.labels input').val().toLowerCase();
-		//console.log(query);
-		$('.labels .item').each(function(){
-			if ($(this).children('.name').text().toLowerCase().indexOf(query) > -1){
-				$(this).removeClass('hide');
-			}
-			else{
-				$(this).addClass('hide');
-			};
-		});
-		$('.label-select').removeClass('label-select');
-		$('.labels .item:not(.hide):first').addClass('label-select');
-	},
-	
-	// SELECT PREVIOUS LABEL
-	prevLabel = function() {
-		prevOne = $('.label-select').prevAll('.item:not(.hide):first');
-		if( prevOne.length > 0 ) {
-			$('.label-select').removeClass('label-select');
-			prevOne.addClass('label-select');
-		};
-	},
-	
-	// SELECT NEXT LABEL
-	nextLabel = function() {
-		nextOne = $('.label-select').nextAll('.item:not(.hide):first');
-		if( nextOne.length > 0 ) {
-			$('.label-select').removeClass('label-select');
-			nextOne.addClass('label-select');
-		};
-	},
-	
-	// SEARCH
-	refreshSearch = function() {
-		query = $('.search input').val().toLowerCase();
-		//console.log(query);
-		$('.listnote').each(function(){
-			if ($(this).data().content.toLowerCase().indexOf(query) > -1){
-				$(this).removeClass('search-hide');
-			}
-			else{
-				$(this).addClass('search-hide');
-			};
-		});
-		if($('.selected:not(.search-hide,.tag-hide)').length==0){
-			$('.selected').removeClass('selected');
-			$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
-		};
-		refreshCards();
-	},
-	
-	// TIMEAGO
-	bindTimeago = function() {
-		$(".timeago").timeago();
-	},
-	
-	// MAKE LINKS
-	makeLinks = function() {
-		currentTextarea = $('.current .textarea textarea').val();
-		$('.current .textarea textarea').val(linkify(currentTextarea));
 	};
-	
-	// LINKIFY
-	linkify = function(inputText) {
-		var replaceText, replacePattern1, replacePattern2, replacePattern3;
-		//URLs starting with http://, https://, or ftp://
-		replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-		replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
-		//URLs starting with www. (without // before it, or it'd re-link the ones done above)
-		replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-		replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
-		//Change email addresses to mailto:: links
-		replacePattern3 = /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim;
-		replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
-		// Return linkified text
-		return replacedText
-	},
-	
-	// STACK TIME
-	stackTime = function(epoch_seconds){
-		epoch_num = parseFloat(epoch_seconds);
-		time_dt = new Date(epoch_num*1000).toISOString();
-		return time_dt;
-	},
-	
-	padzero = function(n) {
-		return n < 10 ? '0' + n : n;
-	},
-	
-	pad2zeros = function(n) {
-		if (n < 100) {
-			n = '0' + n;
-		}
-		if (n < 10) {
-			n = '0' + n;
-		}
-		return n;     
-	},
-	
-	toISOString = function(d) {
-	  	return d.getUTCFullYear() + '-' +  padzero(d.getUTCMonth() + 1) + '-' + padzero(d.getUTCDate()) + 'T' + padzero(d.getUTCHours()) + ':' +  padzero(d.getUTCMinutes()) + ':' + padzero(d.getUTCSeconds()) + '.' + pad2zeros(d.getUTCMilliseconds()) + 'Z';
-	},
-	
+
+// =================================
+//    CHANGE APPEARANCE FUNCTIONS
+// =================================
+
 	// CHANGE OVERALL THEME
-	changeTheme = function(themename) {
+	var changeTheme = function(themename) {
 		var classes = $('html body').attr('class').split(" ");
 		for (i=0, len=classes.length ; i<len; i++){
 			if (classes[i].substr(0,6)=="theme-"){
@@ -1000,10 +1013,10 @@ var notestack = function() {
 		$('html body').attr('class',classes.join(" "));
 		$('html body').addClass(themename);
 		localStorage['theme'] = themename;
-	},
+	};
 	
 	// CHANGE FONT
-	changeFont = function(fontname){
+	var changeFont = function(fontname){
 		var classes = $('html body').attr('class').split(" ");
 		for (i=0, len=classes.length ; i<len; i++){
 			if (classes[i].substr(0,5)=="font-"){
@@ -1015,9 +1028,10 @@ var notestack = function() {
 		$('html body').attr('class',classes.join(" "));
 		$('html body').addClass(fontname);
 		localStorage['font'] = fontname;
-	},
+	};
 	
-	changeFontsize = function(fontsize){
+	// CHANGE FONTSIZE
+	var changeFontsize = function(fontsize){
 		var classes = $('html body').attr('class').split(" ");
 		for (i=0, len=classes.length ; i<len; i++){
 			if (classes[i].substr(0,9)=="fontsize-"){
@@ -1029,33 +1043,13 @@ var notestack = function() {
 		$('html body').attr('class',classes.join(" "));
 		$('html body').addClass(fontsize);
 		localStorage['fontsize'] = fontsize;
-	},
+	};
 	
-	notestackLoadInteractions = function() {
-		// ON NOTE FOCUS
-		$('.note .textarea textarea').live('focus',function(){
-			$('.current .note-directions').addClass('show');
-			$('div.current').addClass('highlight');
-		});
-	
-		// ON NOTE BLUR
-		$('.note .textarea textarea').live('blur',function(){
-			blurkey = $(this).parent().parent().attr('id');
-			if ($(this).val() != $('#list-' + blurkey).data().content){
-				blurnote = $.parseJSON(localStorage.getItem(blurkey));
-				blurnote.content = $(this).val();
-				blurnote.modifydate = (new Date()).getTime()/1000;
-				blurnote.syncnum = blurnote.syncnum + 1;
-				localStorage.setItem(blurkey,JSON.stringify(blurnote));
-				localToDOM(blurnote.key);
-				manualSync();
-			};
-			$('.current .note-directions').removeClass('show');
-			$('.current').removeClass('highlight');
-		});
+	var notestackLoadInteractions = function() {
 		
-		// APPEARANCE SETTINGS
-		// ======================
+		// =========================
+		//    APPEARANCE SETTINGS
+		// =========================
 	
 		// LOAD THEME
 		if(localStorage.theme){
@@ -1121,10 +1115,31 @@ var notestack = function() {
 			};
 		});
 	
+		// ON NOTE FOCUS
+		$('.note .textarea textarea').live('focus',function(){
+			$('.current .note-directions').addClass('show');
+			$('div.current').addClass('highlight');
+		});
 	
+		// ON NOTE BLUR
+		$('.note .textarea textarea').live('blur',function(){
+			blurkey = $(this).parent().parent().attr('id');
+			if ($(this).val() != $('#list-' + blurkey).data().content){
+				blurnote = $.parseJSON(localStorage.getItem(blurkey));
+				blurnote.content = $(this).val();
+				blurnote.modifydate = (new Date()).getTime()/1000;
+				blurnote.syncnum = blurnote.syncnum + 1;
+				localStorage.setItem(blurkey,JSON.stringify(blurnote));
+				localToDOM(blurnote.key);
+				manualSync();
+			};
+			$('.current .note-directions').removeClass('show');
+			$('.current').removeClass('highlight');
+		});
 	
-		// BUTTONS
-		// ======================
+		// =============
+		//    BUTTONS
+		// =============
 	
 		// NEW NOTE BUTTON
 		$('.addnote').click(function(){createNote();});
@@ -1245,8 +1260,9 @@ var notestack = function() {
 			localStorage.clear();
 		});
 		
-		// KEYBOARD SHORTCUTS
-		// ======================
+		// ========================
+		//    KEYBOARD SHORTCUTS
+		// ========================
 	
 		//GENERAL SHORTCUTS
 		$(document).bind('keydown','esc',function(){clearOverlays();});
@@ -1292,8 +1308,8 @@ var notestack = function() {
 	
 	// LOAD EVERYTHING
 	$(function(){
-		notestackLoadSync();
 		notestackLoadInteractions();
+		notestackLoadSync();
 	});
 
-}(); // CLOSE NOTESTACK NAMESPACE
+}(); // CLOSE 'NOTESTACK' NAMESPACE
