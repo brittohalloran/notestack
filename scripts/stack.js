@@ -289,9 +289,15 @@ var notestack = function() {
 			tagfield.val(tagStr);
 			tagfield.tagit({
 				"singleFieldDelimiter": " ",
-				"availableTags": allTagsArr,
-				"onTagClick": function(event, tag){
-					filterByLabel(tag);
+				"availableTags": allTagsArr
+			}).tagit({
+				"onTagAdded": function(event, tag) {
+					//tagName = tag.children('.tagit-label').text();
+					updateTags($('.current').attr('id'));
+				},
+				"onTagRemoved": function(event, tag) {
+					tagName = tag.children('.tagit-label').text();
+					updateTags($('.current').attr('id'), tagName);					
 				}
 			});
 		});
@@ -616,8 +622,10 @@ var notestack = function() {
 	};
 	
 	// UPDATE TAGS
-	var updateTags = function(notekey){
-		tags = $('#' + notekey + ' .tag-area input').val().split(' ');
+	var updateTags = function(notekey, deletetag){
+		var tags = $('#' + notekey + ' .tag-area input').val().split(' ');
+		var indx = tags.indexOf(deletetag);
+		if (indx != -1) tags.splice(indx, 1);
 		//console.log(tags);
 		note = $.parseJSON(localStorage[notekey]);
 		if (note.tags != tags){

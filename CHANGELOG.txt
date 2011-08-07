@@ -3,7 +3,10 @@ Britt O'Halloran
 britt.j.ohalloran@gmail.com
 
 // CHANGE HISTORY
-2011-08-03 - v0.7.5
+2011-08-06 - v0.8.1
+- tags are now working
+
+2011-08-03 - v0.8.0
 - added option for disabling tags
 - changed sync method to be more robust to disconnection mid-sync
 - added sync progress bar (only shows up during large load)
