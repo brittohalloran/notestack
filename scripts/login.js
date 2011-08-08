@@ -1,13 +1,9 @@
-// JQUERY NO CONFLICT
-var $ = jQuery.noConflict();
-
-
 // GET URL VARS PLUGIN
+// http://jquery-howto.blogspot.com/2009/09/get-url-parameters-values-with-jquery.html
 $.extend({getUrlVars:function(){for(var a=[],b,d=window.location.href.slice(window.location.href.indexOf("?")+1).split("&"),c=0;c<d.length;c++)b=d[c].split("="),a.push(b[0]),a[b[0]]=b[1];return a},getUrlVar:function(a){return $.getUrlVars()[a]}});
 
 // NOTESTACK HOMEPAGE CODE
 // BRITT O'HALLORAN (britt.j.ohalloran@gmail.com)
-
 var notestack = function() {
 	
 	// ATTEMPT LOGIN
