@@ -189,6 +189,30 @@ var notestack = function() {
 		$(".timeago").timeago();
 	};
 	
+	// TOGGLE MARKDOWN
+	var toggleMarkdown = function(notekey, direction) {
+		notekey = notekey ? notekey : $('.current').attr('id');
+		if(direction == undefined){
+			if($('#' + notekey).hasClass('markdown-on')){
+				direction = 'off';
+			}
+			else{
+				direction = 'on';
+			};
+		};
+		if(direction == 'on'){
+			$('#' + notekey).removeClass('markdown-off').addClass('markdown-on');
+			var converter = new Markdown.Converter();
+			var markhtml = converter.makeHtml('# ' + $('#' + notekey + ' .textarea textarea').val());
+			$('#' + notekey + ' .textarea textarea').replaceWith('<div class="inner">' + markhtml + '</div>');
+		}
+		else if(direction == 'off'){
+			$('#' + notekey).removeClass('markdown-on').addClass('markdown-off');
+			var notecontent = $('#list-' + notekey).data().content;
+			$('#' + notekey + ' .textarea').children('.inner').replaceWith('<textarea>' + notecontent + '</textarea>');
+		};
+	};
+	
 	// MAKE LINKS
 	var makeLinks = function() {
 		currentTextarea = $('.current .textarea textarea').val();
@@ -1183,6 +1207,10 @@ var notestack = function() {
 			$('#list-' + $(this).attr('id')).addClass('selected');
 			reflowCards();
 		});
+		// CLICK NOTE .TEXTAREA (UN-MARKDOWN)
+		$('.textarea').live('click',function(){
+			toggleMarkdown($(this).parent().attr('id'),'off');
+		});
 		// CLICK SETTINGS
 		$('.settings_icon').click(function() {
 			$('.settings').toggleClass('show');
@@ -1289,6 +1317,7 @@ var notestack = function() {
 		$(document).bind('keydown','t',function(){showLabels();return false;});
 		$(document).bind('keydown','v',function(){toggleVersions($('.current').attr('id'));return false;});
 		$(document).bind('keydown','a',function(){viewAll();return false;});
+		$(document).bind('keydown','m',function(){toggleMarkdown();return false;});
 		
 		//FROM WITHIN SEARCH BAR
 		$('.search input').keyup($.debounce(250,refreshSearch));
