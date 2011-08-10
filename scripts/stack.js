@@ -189,50 +189,9 @@ var notestack = function() {
 		$(".timeago").timeago();
 	};
 	
-	// TOGGLE MARKDOWN
-	var toggleMarkdown = function(notekey, direction) {
-		notekey = notekey ? notekey : $('.current').attr('id');
-		if(direction == undefined){
-			if($('#' + notekey).hasClass('markdown-on')){
-				direction = 'off';
-			}
-			else{
-				direction = 'on';
-			};
-		};
-		if(direction == 'on'){
-			$('#' + notekey).removeClass('markdown-off').addClass('markdown-on');
-			var converter = new Markdown.Converter();
-			var markhtml = converter.makeHtml('# ' + $('#' + notekey + ' .textarea textarea').val());
-			$('#' + notekey + ' .textarea textarea').replaceWith('<div class="inner">' + markhtml + '</div>');
-		}
-		else if(direction == 'off'){
-			$('#' + notekey).removeClass('markdown-on').addClass('markdown-off');
-			var notecontent = $('#list-' + notekey).data().content;
-			$('#' + notekey + ' .textarea').children('.inner').replaceWith('<textarea>' + notecontent + '</textarea>');
-		};
-	};
-	
-	// MAKE LINKS
-	var makeLinks = function() {
-		currentTextarea = $('.current .textarea textarea').val();
-		$('.current .textarea textarea').val(linkify(currentTextarea));
-	};
-	
-	// LINKIFY
-	var linkify = function(inputText) {
-		var replaceText, replacePattern1, replacePattern2, replacePattern3;
-		//URLs starting with http://, https://, or ftp://
-		replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-		replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
-		//URLs starting with www. (without // before it, or it'd re-link the ones done above)
-		replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-		replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
-		//Change email addresses to mailto:: links
-		replacePattern3 = /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim;
-		replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
-		// Return linkified text
-		return replacedText
+	// NEWLINE TO BR
+	var nl2br = function(str) {     
+		return str.replace(/\n/g,"<br>").replace(/\r/g,"");
 	};
 	
 	// STACK TIME
@@ -298,22 +257,20 @@ var notestack = function() {
 		//console.log(allTagsArr);
 		$('.listnote:not(.search-hide,.tag-hide)').each(function(){
 			// clone template into note card
-			$('#note-template').clone().attr('id', $(this).data().key).addClass('note').appendTo('.window')
-			var notecard = $('#' + $(this).data().key);
+			var thisdata = $(this).data();
+			$('#note-template').clone().attr('id', thisdata.key).addClass('note').appendTo('.window');
+			var notecard = $('#' + thisdata.key);
 			// add content to textarea
-			notecard.children('.textarea').children('textarea').val($(this).data().content);
+			notecard.children('.textarea').children('textarea').val(thisdata.content);
 			// populate tags
-			var tagStr = $(this).data().tags.join(' ');
+			var tagStr = thisdata.tags.join(' ');
 			tagfield = notecard.children('.textarea').children('.tag-area').children('input');
-			//tagfield.attr('id','tag' + $(this).data().key);
-			//console.log(tagStr);
 			tagfield.val(tagStr);
 			tagfield.tagit({
 				"singleFieldDelimiter": " ",
 				"availableTags": allTagsArr
 			}).tagit({
 				"onTagAdded": function(event, tag) {
-					//tagName = tag.children('.tagit-label').text();
 					updateTags($('.current').attr('id'));
 				},
 				"onTagRemoved": function(event, tag) {
@@ -321,6 +278,9 @@ var notestack = function() {
 					updateTags($('.current').attr('id'), tagName);					
 				}
 			});
+			if($.inArray("markdown",thisdata.systemtags)>-1){
+				toggleMarkdown(thisdata.key,'on');
+			};
 		});
 		$('#' + $('.selected').data().key).addClass('current');
 		refreshNoteBinds('.note .textarea textarea');
@@ -382,8 +342,63 @@ var notestack = function() {
 		};
 	};
 	
+	// TOGGLE MARKDOWN
+	var toggleMarkdown = function(notekey, direction, temp) {
+		notekey = notekey ? notekey : $('.current').attr('id');
+		if(direction == undefined){
+			if($('#' + notekey).hasClass('markdown-on')){
+				direction = 'off';
+			}
+			else{
+				direction = 'on';
+			};
+		};
+		if(temp != 'temp') temp = 'stick';
+		var notecard = $('#' + notekey);
+		var listnote = $('#list-' + notekey);
+		var listnotedata = listnote.data();
+		var ta_div = notecard.children('.textarea');
+		if(direction == 'on'){
+			notecard.removeClass('markdown-off').addClass('markdown-on');
+			var converter = new Markdown.Converter();
+			var markhtml = converter.makeHtml('# ' + ta_div.children('textarea').val());
+			//markhtml = nl2br(markhtml);
+			ta_div.children('textarea').replaceWith('<div class="markdown">' + markhtml + '</div>');
+			ta_div.children('.markdown').children('h1:first').addClass('first-h1');
+			ta_div.children('.markdown').children('p').each(function(){
+				$(this).html(nl2br($(this).html()));
+			});
+			if($.inArray('markdown',listnotedata.systemtags)<0){
+				listnotedata.systemtags.push('markdown');
+				listnotedata.syncnum++;
+				localStorage.setItem(listnotedata.key,JSON.stringify(listnote.data()));
+				localToDOM(listnotedata.key);
+				manualSync();
+			};
+		}
+		else if(direction == 'off'){
+			notecard.removeClass('markdown-on').addClass('markdown-off');
+			var notecontent = listnotedata.content;
+			ta_div.children('.markdown').replaceWith('<textarea>' + notecontent + '</textarea>');
+			refreshNoteBinds(ta_div.children('textarea'));
+			if(temp == 'stick'){
+				var mk = indexOf('markdown',listnote.data().systemtags);
+				if(mk>-1) listnotedata.systemtags.splice(mk,1);
+				listnotedata.syncnum++;
+				localStorage.setItem(listnotedata.key,JSON.stringify(listnote.data()));
+				localToDOM(listnotedata.key);
+				manualSync();
+			};
+		};
+	};
+	
 	// TOGGLE PIN
 	var togglePin = function(listitem) {
+		if(listitem == undefined){
+			if($('.selected').length>-1){
+				listitem = $('.selected');
+			};
+		};
 		if(listitem.data().systemtags.indexOf('pinned')>-1){
 			// already pinned, remove pin
 			listitem.data().systemtags.splice(listitem.data().systemtags.indexOf('pinned'),1);
@@ -894,6 +909,7 @@ var notestack = function() {
 	
 	// MANUAL SYNC
 	var manualSync = function(syncType){
+		progressBar(5);
 		if(localStorage.token){
 			$.when(getTagIndex()).done(function(){
 				//console.log('done with tag index');
@@ -1152,8 +1168,12 @@ var notestack = function() {
 	
 		// ON NOTE BLUR
 		$('.note .textarea textarea').live('blur',function(){
-			blurkey = $(this).parent().parent().attr('id');
-			if ($(this).val() != $('#list-' + blurkey).data().content){
+			var blurkey = $(this).parent().parent().attr('id');
+			var listnotedata = $('#list-' + blurkey).data();
+			if ($.inArray('markdown',listnotedata.systemtags)>-1){
+				toggleMarkdown(blurkey,'on');
+			};
+			if ($(this).val() != listnotedata.content){
 				blurnote = $.parseJSON(localStorage.getItem(blurkey));
 				blurnote.content = $(this).val();
 				blurnote.modifydate = (new Date()).getTime()/1000;
@@ -1208,8 +1228,13 @@ var notestack = function() {
 			reflowCards();
 		});
 		// CLICK NOTE .TEXTAREA (UN-MARKDOWN)
-		$('.textarea').live('click',function(){
-			toggleMarkdown($(this).parent().attr('id'),'off');
+		$('.textarea:not(a)').live('click',function(){
+			toggleMarkdown($(this).parent().attr('id'),'off','temp');
+			$(this).children('textarea').focus();
+		});
+		// CLICK LINK IN MARKDOWN
+		$('.markdown a').live('click',function(e){
+			$(this).attr('target',"_blank");
 		});
 		// CLICK SETTINGS
 		$('.settings_icon').click(function() {
@@ -1221,7 +1246,7 @@ var notestack = function() {
 			$('.settings_pane.data').addClass('show');
 		});
 		// CLICK SETTINGS TAB
-		$('.settings .tabs a').click(function(){
+		$('.settings .tabs a').click(function(e){
 			$('.settings_pane').removeClass('show');
 			$('.settings_pane.' + $(this).text().replace(" ","_")).addClass('show');
 			e.preventDefault();
@@ -1288,6 +1313,14 @@ var notestack = function() {
 		$('.tagit-label').live('mouseup',function(){
 			filterByLabel($(this).text());
 		});
+		// CLICK MARKDOWN BUTTON
+		$('.markdown-button').live('mouseup',function(){
+			toggleMarkdown($(this).parent().attr('id'));
+		});
+		// CLICK PIN BUTTON
+		$('.pin-button').live('mouseup',function(){
+			togglePin();
+		});
 		// CLICK LOGOUT AND CLEAR DATA
 		$('.cleardata').click(function(){
 			localStorage.clear();
@@ -1305,7 +1338,7 @@ var notestack = function() {
 		$(document).bind('keydown','k',function(){prevNote();});
 		$(document).bind('keydown','left',function(){prevNote();});
 		$(document).bind('keydown','up',function(){prevNote();});
-		$(document).bind('keydown','return',function(){$('.note.current .textarea textarea').focus(); return false;});
+		$(document).bind('keydown','return',function(){if($('.current').hasClass('markdown-on')){toggleMarkdown($('.current').attr('id'),'off','temp');$('.note.current .textarea textarea').focus()}else{$('.note.current .textarea textarea').focus()}; return false;});
 		$(document).bind('keydown','tab',function(){$('.note.current .textarea textarea').focus(); return false;});
 		$(document).bind('keydown','shift+/',function(){$('.settings').toggleClass('show');});
 		$(document).bind('keydown','/',function(){$('.search input').select();return false;});

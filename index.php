@@ -1,4 +1,4 @@
-<!DOCTYPE html><?php	$subdomain = preg_replace('/^(?:([^\.]+)\.)?notestack\.me$/', '\1', $_SERVER['SERVER_NAME']);	error_log($subdomain,0);	if ($subdomain == "dev"){?><html><?php	}	else{?><html manifest="/cache.manifest"><?php	};?>
+<!DOCTYPE html><?php	$subdomain = preg_replace('/^(?:([^\.]+)\.)?notestack\.me$/', '\1', $_SERVER['SERVER_NAME']);	if ($subdomain == "dev"){?><html><?php	}	else{?><html manifest="/cache.manifest"><?php	};?>
 <head>	<!-- NOTESTACK HOMEPAGE -->	<!-- META -->	<title>Notestack</title>
 	<link rel="icon" href="/favicon.ico" type="image/x-icon"> 
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> 	<!-- STYLESHEETS -->	<link href='/styles/960-grid.css' rel='stylesheet' type='text/css'>	<link href='/styles/home.css' rel='stylesheet' type='text/css'>	<!-- GOOGLE FONTS -->	<link href='http://fonts.googleapis.com/css?family=Vollkorn&v1' rel='stylesheet' type='text/css'>
