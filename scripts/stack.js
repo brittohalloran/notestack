@@ -525,10 +525,11 @@ var notestack = function() {
 			$('.version-item').each(function(){
 				if ($(this).data().version > minversion){
 					prev = $(this).data().version - 1;
-					//console.log($(this).data().version);
-					//console.log('prev=' + prev);
 					ds = diffVersions($('#' + notekey + "version" + prev ).data().content,$(this).data().content);
 					$(this).data('diff',ds);
+				}
+				else if ($(this).data().version == minversion){
+					$(this).data('diff',$(this).data().content);
 				};
 			});
 			$('.versions-right .right-inner').html($('.version-item:first').data().diff);
