@@ -683,7 +683,7 @@ var notestack = function() {
 		$('#tag-filter-template').clone().attr('id','').addClass('active-tag-filter').insertBefore('.list');
 		$('.active-tag-filter .inner .tag-filter-label').text(labelName);
 		$('.listnote').each(function(){
-			if($.inArray(labelName,$(this).data().tags)){
+			if(!($.inArray(labelName,$(this).data().tags) > -1)){
 				$(this).addClass('tag-hide');
 			}; 
 		});
@@ -696,7 +696,7 @@ var notestack = function() {
 	var unfilterLabel = function() {
 		$('html body').removeClass('tag-filter');
 		$('.active-tag-filter').remove();
-		$('.listnote').removeClass('tag-hide');
+		$('.tag-hide').removeClass('tag-hide');
 		$('.selected').removeClass('selected');
 		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
 		refreshCards();
@@ -1229,7 +1229,8 @@ var notestack = function() {
 			reflowCards();
 		});
 		// CLICK NOTE .TEXTAREA (UN-MARKDOWN)
-		$('.textarea:not(a)').live('click',function(){
+		$('.textarea:not(a)').live('click',function(e){
+			if($(e.target).parents('.tag-area').length > 0){return;}; 
 			toggleMarkdown($(this).parent().attr('id'),'off','temp');
 			$(this).children('textarea').focus();
 		});
