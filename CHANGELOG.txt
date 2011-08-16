@@ -4,6 +4,12 @@ britt.j.ohalloran@gmail.com
 
 // CHANGE HISTORY
 
+2011-08-15 - v0.8.2
+- enabled markdown support
+- added pin and markdown buttons to each note
+- switched to github issue tracking (from getsatisfaction because their free plan is restricted)
+- minor speed improvements
+
 2011-08-06 - v0.8.1
 - enabled tag support
 

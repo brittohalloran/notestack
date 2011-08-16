@@ -95,6 +95,10 @@ a:hover {
 			'note-textarea-bg' 		=> 'white',
 			'textarea-box-shadow'	=> 'inset 0px 0px 10px rgba(0,0,0,0.5)',
 			'default-font' 			=> '"courier new", monospace',
+			'markdown-header-style'	=> 'font-family: "Museo500";
+										text-transform: uppercase;
+										font-weight: normal;',
+			'markdown-body-style'	=>	'font-family: "MuseoSans-500";',
 			'tag-area-bg' 			=> 'white',
 			'tag-bg' 				=> '#CCC',
 			'tag-border' 			=> 'rgba(0,0,0,0.2)',
@@ -129,6 +133,10 @@ a:hover {
 			'note-textarea-bg' 		=> 'url(../images/moleskine.jpg)',
 			'textarea-box-shadow'	=> 'inset 0px 0px 10px rgba(0,0,0,0.6)',
 			'default-font' 			=> '"courier new", monospace',
+			'markdown-header-style'	=> 'font-family: "Museo500";
+										text-transform: uppercase;
+										font-weight: normal;',
+			'markdown-body-style'	=>	'font-family: "MuseoSans-500";',
 			'tag-area-bg' 			=> 'url(../images/moleskine.jpg)',
 			'tag-bg' 				=> 'rgba(255,255,255,0.8)',
 			'tag-border' 			=> '1px solid rgba(0,0,0,0.5)',
@@ -161,6 +169,10 @@ a:hover {
 			'note-textarea-bg' 		=> 'white',
 			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.2)',
 			'default-font' 			=> '"courier new", monospace',
+			'markdown-header-style'	=> 'font-family: "Museo500";
+										text-transform: uppercase;
+										font-weight: normal;',
+			'markdown-body-style'	=>	'font-family: "MuseoSans-500";',
 			'tag-area-bg' 			=> 'white',
 			'tag-bg' 				=> 'rgba(100,100,100,0.2)',
 			'tag-border' 			=> '1px solid rgba(0,0,0,0.1)',
@@ -192,11 +204,15 @@ a:hover {
 			'note-edit-border'		=> '1px solid #A94D2D',
 			'note-border-rad-px' 	=> '10',
 			'note-border' 			=> '1px solid rgba(168, 122, 44, 0.8)',
-			'note-buttons-color' 	=> 'rgba(168, 122, 44, 0.8)',
+			'note-buttons-color' 	=> 'rgba(0, 0, 0, 0.4)',
 			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
 			'note-textarea-bg' 		=> '#FFFFD9',
 			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.4)',
 			'default-font' 			=> '"MuseoSans-500", sans-serif',
+			'markdown-header-style'	=> 'font-family: "Museo300";
+										text-transform: uppercase;
+										font-weight: normal;',
+			'markdown-body-style'	=>	'font-family: "MuseoSans-500";',
 			'tag-area-bg' 			=> '#FFFFD9',
 			'tag-bg' 				=> 'rgba(100,100,100,0.2)',
 			'tag-border' 			=> '1px solid rgba(0,0,0,0.1)',
@@ -317,24 +333,76 @@ a:hover {
 			outline: none;
 			border: none;
 		}
+		
+		/* NOTE HEADERS DURING MARKDOWN */
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown h1,
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown h2,
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown h3,
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown h4,
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown h5,
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown h6 {
+			<?php echo $options['markdown-header-style']; ?>
+		}
+		
+		/* NOTE BODY DURING MARKDOWN */
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown p,
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown li,
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown ul,
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown ol,
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown a,
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown strong,
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown em {
+			<?php echo $options['markdown-body-style']; ?>
+		}
+			.theme-<?php echo $theme; ?> .window .note .textarea .markdown strong {
+				background: rgba(0,0,0,0.1);
+				padding: 0px 3px;
+			}
+			.theme-<?php echo $theme; ?> .window .note .textarea .markdown em {
+				background: rgba(0,0,0,0.1);
+				padding: 0px 3px;
+			}
+		
+		/* MARKDOWN LISTS */
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown ul li {
+			list-style: none;
+		}
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown ul li:before {
+			content: "\00BB" "\0020";
+		}
+		
 	
 	/*MAXIMIZE AND HISTORY BUTTON*/
 	.theme-<?php echo $theme; ?> .window .note .maximize,
 	.theme-<?php echo $theme; ?> .window .note .versions-button,
-	.theme-<?php echo $theme; ?> .window .note .delete {
-		border-bottom: 1px solid <?php echo $options['note-buttons-color']; ?>;
-		border-right: 1px solid <?php echo $options['note-buttons-color']; ?>;
-		border-left: 1px solid <?php echo $options['note-buttons-color']; ?>;
+	.theme-<?php echo $theme; ?> .window .note .delete,
+	.theme-<?php echo $theme; ?> .window .note .pin-button,
+	.theme-<?php echo $theme; ?> .window .note .markdown-button {
+		border: 1px solid <?php echo $options['note-buttons-color']; ?>;
 		color: black;
-		background: linear-gradient(bottom, #DDDDDD, #E6E6E6);
-		background: -webkit-gradient(linear, left bottom, left top, from(#DDDDDD), to(#E6E6E6));
-		background: -moz-linear-gradient(bottom, #DDDDD, #E6E6E6);
+		background: linear-gradient(bottom, #BFBFBF, #D9D9D9);
+		background: -webkit-gradient(linear, left bottom, left top, from(#BFBFBF), to(#D9D9D9));
+		background: -moz-linear-gradient(bottom, #BFBFBF, #D9D9D9);
 	}
+		.theme-<?php echo $theme; ?> .window .note.pinned .pin-button,
+		.theme-<?php echo $theme; ?> .window .note.markdown-on .markdown-button {
+			/*color: <?php echo $options['highlight-text-color']; ?>;
+			background: <?php echo $options['highlight-bg']; ?>;*/
+			background: linear-gradient(bottom, #BFBFBF, #A9A9A9);
+			background: -webkit-gradient(linear, left bottom, left top, from(#BFBFBF), to(#A9A9A9));
+			background: -moz-linear-gradient(bottom, #BFBFBF, #A9A9A9);
+			box-shadow: inset 0px 0px 3px rgba(0,0,0,0.3);
+			-webkit-box-shadow: inset 0px 0px 3px rgba(0,0,0,0.3);
+			-moz-box-shadow: inset 0px 0px 3px rgba(0,0,0,0.3);
+		}
 		.theme-<?php echo $theme; ?> .window .note .maximize:hover,
 		.theme-<?php echo $theme; ?> .window .note .versions-button:hover,
-		.theme-<?php echo $theme; ?> .window .note .delete:hover {
+		.theme-<?php echo $theme; ?> .window .note .delete:hover,
+		.theme-<?php echo $theme; ?> .window .note .pin-button:hover,
+		.theme-<?php echo $theme; ?> .window .note .markdown-button:hover {
 			color: <?php echo $options['highlight-text-color']; ?>;
 			background: <?php echo $options['highlight-bg']; ?>;
+			
 		}
 	
 	/*NOTE MESSAGE*/
