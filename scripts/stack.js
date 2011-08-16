@@ -243,7 +243,7 @@ var notestack = function() {
 	
 	// REFRESH CARDS
 	var refreshCards = function() {
-		//console.log('refreshing cards');
+		console.log('start refresh cards');
 		if($('.selected').length != 1){
 			$('.selected').removeClass('selected');
 			$('.listnote:first').addClass('selected');
@@ -255,7 +255,7 @@ var notestack = function() {
 			allTagsArr.push(allTagsObj[i].name);
 		};
 		//console.log(allTagsArr);
-		$('.listnote:not(.search-hide,.tag-hide)').each(function(){
+		$('.listnote').not('.search-hide,.tag-hide').each(function(){
 			// clone template into note card
 			var thisdata = $(this).data();
 			$('#note-template').clone().attr('id', thisdata.key).addClass('note').appendTo('.window');
@@ -281,10 +281,14 @@ var notestack = function() {
 			if($.inArray("markdown",thisdata.systemtags)>-1){
 				toggleMarkdown(thisdata.key,'on');
 			};
+			if($.inArray("pinned",thisdata.systemtags)>-1){
+				notecard.addClass('pinned');
+			};
 		});
 		$('#' + $('.selected').data().key).addClass('current');
 		refreshNoteBinds('.note .textarea textarea');
 		reflowCards();
+		console.log('finish refresh cards');
 	};
 	
 	// KEY AND CLICK BINDINGS FOR NOTE CARDS
@@ -611,7 +615,7 @@ var notestack = function() {
 			j=0;
 			$('.listnote').each(function(){
 				if($.inArray(tagname,$(this).data().tags)>-1){
-					console.log(tagname + $(this).data().tags);
+					//console.log(tagname + $(this).data().tags);
 					j++;
 				};
 			});
@@ -694,12 +698,15 @@ var notestack = function() {
 	
 	// UNFILTER LABEL
 	var unfilterLabel = function() {
+		console.log('start unfilter label');
 		$('html body').removeClass('tag-filter');
 		$('.active-tag-filter').remove();
 		$('.tag-hide').removeClass('tag-hide');
 		$('.selected').removeClass('selected');
 		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
+		console.log('midpoint');
 		refreshCards();
+		console.log('finish unfilter labels');
 	};
 
 // =====================

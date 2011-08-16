@@ -204,7 +204,7 @@ a:hover {
 			'note-edit-border'		=> '1px solid #A94D2D',
 			'note-border-rad-px' 	=> '10',
 			'note-border' 			=> '1px solid rgba(168, 122, 44, 0.8)',
-			'note-buttons-color' 	=> 'rgba(168, 122, 44, 0.8)',
+			'note-buttons-color' 	=> 'rgba(0, 0, 0, 0.4)',
 			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
 			'note-textarea-bg' 		=> '#FFFFD9',
 			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.4)',
@@ -378,18 +378,22 @@ a:hover {
 	.theme-<?php echo $theme; ?> .window .note .delete,
 	.theme-<?php echo $theme; ?> .window .note .pin-button,
 	.theme-<?php echo $theme; ?> .window .note .markdown-button {
-		border-bottom: 1px solid <?php echo $options['note-buttons-color']; ?>;
-		border-right: 1px solid <?php echo $options['note-buttons-color']; ?>;
-		border-left: 1px solid <?php echo $options['note-buttons-color']; ?>;
+		border: 1px solid <?php echo $options['note-buttons-color']; ?>;
 		color: black;
-		background: linear-gradient(bottom, #DDDDDD, #E6E6E6);
-		background: -webkit-gradient(linear, left bottom, left top, from(#DDDDDD), to(#E6E6E6));
-		background: -moz-linear-gradient(bottom, #DDDDD, #E6E6E6);
+		background: linear-gradient(bottom, #BFBFBF, #D9D9D9);
+		background: -webkit-gradient(linear, left bottom, left top, from(#BFBFBF), to(#D9D9D9));
+		background: -moz-linear-gradient(bottom, #BFBFBF, #D9D9D9);
 	}
 		.theme-<?php echo $theme; ?> .window .note.pinned .pin-button,
 		.theme-<?php echo $theme; ?> .window .note.markdown-on .markdown-button {
-			color: <?php echo $options['highlight-text-color']; ?>;
-			background: <?php echo $options['highlight-bg']; ?>;
+			/*color: <?php echo $options['highlight-text-color']; ?>;
+			background: <?php echo $options['highlight-bg']; ?>;*/
+			background: linear-gradient(bottom, #BFBFBF, #A9A9A9);
+			background: -webkit-gradient(linear, left bottom, left top, from(#BFBFBF), to(#A9A9A9));
+			background: -moz-linear-gradient(bottom, #BFBFBF, #A9A9A9);
+			box-shadow: inset 0px 0px 3px rgba(0,0,0,0.3);
+			-webkit-box-shadow: inset 0px 0px 3px rgba(0,0,0,0.3);
+			-moz-box-shadow: inset 0px 0px 3px rgba(0,0,0,0.3);
 		}
 		.theme-<?php echo $theme; ?> .window .note .maximize:hover,
 		.theme-<?php echo $theme; ?> .window .note .versions-button:hover,
@@ -398,6 +402,7 @@ a:hover {
 		.theme-<?php echo $theme; ?> .window .note .markdown-button:hover {
 			color: <?php echo $options['highlight-text-color']; ?>;
 			background: <?php echo $options['highlight-bg']; ?>;
+			
 		}
 	
 	/*NOTE MESSAGE*/
