@@ -235,49 +235,40 @@ var notestack = function() {
 
 	// REFLOW CARDS
 	var reflowCards = function() {
-		if($('.current').length != 1){
-			if($('.selected').length != 1){
-				$('.selected').removeClass('selected');
-				$('.listnote:first').addClass('selected');
-			}
-			else{
-				$('#' + $('.selected').data().key).addClass('current');
-			};
-		};
-		$('.prev2').removeClass('prev2');
-		$('.prev1').removeClass('prev1');
-		$('.next1').removeClass('next1');
-		$('.next2').removeClass('next2');
-		$('.current').prev('.note').prev('.note').addClass('prev2');
-		$('.current').prev('.note').addClass('prev1');
-		$('.current').next('.note').addClass('next1');
-		$('.current').next('.note').next('.note').addClass('next2');
+		var current = $('#' + $('.selected').data().key);
+		var prev2 = current.prevAll('.on').eq(1);
+		var prev1 = current.prevAll('.on').eq(0);
+		var next1 = current.nextAll('.on').eq(0);
+		var next2 = current.nextAll('.on').eq(1);
+		if(!current.hasClass('current')){$('.current').removeClass('current'); current.addClass('current')};
+		if(!prev2.hasClass('prev2')){$('.prev2').removeClass('prev2'); prev2.addClass('prev2')};
+		if(!prev1.hasClass('prev1')){$('.prev1').removeClass('prev1'); prev1.addClass('prev1')};
+		if(!next1.hasClass('next1')){$('.next1').removeClass('next1'); next1.addClass('next1')};
+		if(!next2.hasClass('next2')){$('.next2').removeClass('next2'); next2.addClass('next2')};
 	};
 	
 	// REFRESH CARDS
 	var refreshCards = function() {
-		//console.log('start refresh cards');
-		if($('.selected').length != 1){
+		if($('.selected').length !== 1){
 			$('.selected').removeClass('selected');
-			$('.listnote:first').addClass('selected');
+			$('.listnote:visible:first').addClass('selected');
 		};
-		$('.note').remove();
 		var allTagsObj = $.parseJSON(localStorage.tagIndex).tags;
 		var allTagsArr = [];
 		for (var i in allTagsObj){
 			allTagsArr.push(allTagsObj[i].name);
 		};
-		//console.log(allTagsArr);
-		$('.listnote').not('.search-hide,.tag-hide').each(function(){
+		var createCard = function(noteObj){
 			// clone template into note card
-			var thisdata = $(this).data();
-			$('#note-template').clone().attr('id', thisdata.key).addClass('note').appendTo('.window');
-			var notecard = $('#' + thisdata.key);
+			$('#note-template').clone().attr('id', noteObj.key).addClass('note').insertAfter(bookmark);
+			var card = $('#' + noteObj.key);
+			// add syncnum to data for comparison later
+			card.data('syncnum', noteObj.syncnum);
 			// add content to textarea
-			notecard.children('.textarea').children('textarea').val(thisdata.content);
+			card.children('.textarea').children('textarea').val(noteObj.content);
 			// populate tags
-			var tagStr = thisdata.tags.join(' ');
-			tagfield = notecard.children('.textarea').children('.tag-area').children('input');
+			var tagStr = noteObj.tags.join(' ');
+			tagfield = card.children('.textarea').children('.tag-area').children('input');
 			tagfield.val(tagStr);
 			tagfield.tagit({
 				"singleFieldDelimiter": " ",
@@ -291,17 +282,51 @@ var notestack = function() {
 					updateTags($('.current').attr('id'), tagName);					
 				}
 			});
-			if($.inArray("markdown",thisdata.systemtags)>-1){
-				toggleMarkdown(thisdata.key,'on');
+			card.addClass('on');
+			if($.inArray("markdown",noteObj.systemtags)>-1){
+				toggleMarkdown(noteObj.key,'on');
 			};
-			if($.inArray("pinned",thisdata.systemtags)>-1){
-				notecard.addClass('pinned');
+			if($.inArray("pinned",noteObj.systemtags)>-1){
+				card.addClass('pinned');
 			};
-		});
-		$('#' + $('.selected').data().key).addClass('current');
-		refreshNoteBinds('.note .textarea textarea');
+			refreshNoteBinds('#' + noteObj.key + ' .textarea textarea');
+		};
+		var bookmark = $('.notes-placeholder');
+		$('.listnote').each(function(){
+			var thisdata = $(this).data();
+			var cardExists = $('#' + thisdata.key).length > 0;
+			var card = cardExists ? $('#' + thisdata.key) : false;
+			// console.log('card for ' + thisdata.key + ' exists? ' + cardExists);
+			if($(this).css('display') == 'none'){ // card shouldn't be shown
+				if(cardExists){ 
+					card.removeClass('on')
+						.removeClass('current')
+						.removeClass('prev1')
+						.removeClass('prev2')
+						.removeClass('next1')
+						.removeClass('next2');
+				};
+			}
+			else{ // card should be shown
+				if(cardExists){ // already exists, just update it
+					if(thisdata.syncnum > card.data().syncnum){ // card is out of date, delete it and update
+						card.remove();
+						createCard(thisdata);
+						card = $('#' + thisdata.key);
+					}
+					else{ // card is current, just turn .on
+						card.addClass('on');
+					};
+					card.insertAfter(bookmark);
+				}
+				else{ // doesn't exist, create it
+					createCard(thisdata);
+					card = $('#' + thisdata.key);
+				};
+			};
+			bookmark = card;
+		}); // end each .listnote loop
 		reflowCards();
-		//console.log('finish refresh cards');
 	};
 	
 	// KEY AND CLICK BINDINGS FOR NOTE CARDS
@@ -336,12 +361,16 @@ var notestack = function() {
 	// NEXT NOTE
 	var nextNote = function() { 
 		//console.log('nextNote ' + $('.selected').nextAll('.listnote:not(.hide):first').length);
-		nextOne = $('.selected').nextAll('.listnote:not(.search-hide,.tag-hide):first');
+		nextOne = $('.selected').nextAll('.listnote:visible:first');
 		if(nextOne.length > 0 ) {
 			$('.selected').removeClass('selected');
 			nextOne.addClass('selected');
-			$('.current').removeClass('current').next('.note').addClass('current');
-			reflowCards();
+			$('.prev2').removeClass('prev2');
+			$('.prev1').addClass('prev2').removeClass('prev1');
+			$('.current').addClass('prev1').removeClass('current');
+			$('.next1').addClass('current').removeClass('next1');
+			$('.next2').addClass('next1').removeClass('next2');
+			$('.next1').nextAll('.on').eq(0).addClass('next2');			
 			scrollto();
 		};
 	};
@@ -349,12 +378,17 @@ var notestack = function() {
 	// PREVIOUS NOTE
 	var prevNote = function() {
 		//console.log('prevNote');
-		prevOne = $('.selected').prevAll('.listnote:not(.search-hide,.tag-hide):first')
+		prevOne = $('.selected').prevAll('.listnote:visible:first')
 		if(prevOne.length>0) {
 			$('.selected').removeClass('selected');
 			prevOne.addClass('selected');
-			$('.current').removeClass('current').prev('.note').addClass('current');
-			reflowCards();
+			$('.next2').removeClass('next2');
+			$('.next1').removeClass('next1').addClass('next2');
+			$('.current').removeClass('current').addClass('next1');
+			$('.prev1').removeClass('prev1').addClass('current');
+			$('.prev2').removeClass('prev2').addClass('prev1');
+			$('.prev1').prevAll('.on').eq(0).addClass('prev2');
+			
 			scrollto();
 		};
 	};

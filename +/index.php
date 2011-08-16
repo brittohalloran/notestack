@@ -73,7 +73,7 @@
 					Notestack <a href="/CHANGELOG.txt" target="_blank">v0.8.2 beta</a> | <a href="http://github.com/brittohalloran/notestack/issues" target="_blank">Report bug / Request feature</a>
 				</div>
 			</div>
-			
+			<div class="notes-placeholder"></div>
 			<!-- notes will be inserted here -->
 		</div><!-- notes window -->
 		<div class="settings">
