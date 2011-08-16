@@ -114,7 +114,7 @@ var notestack = function() {
 
 	// CLEAR OVERLAYS
 	var clearOverlays = function() {
-		$('.show:not(.settings_pane)').removeClass('show');
+		$('.show').not('.settings_pane,.msg').removeClass('show');
 		fullscreenMode("off")
 	};
 	
@@ -184,6 +184,19 @@ var notestack = function() {
 	// THROTTLED PROGRESS BAR
 	var throttledProgress = $.throttle(500, true, progressBar);
 	
+	// WINDOW MESSAGE
+	var winMsg = function(message){
+		console.log(message);
+		if(message == 'clear'){
+			$('.msg .inner').text('');
+			$('.msg').removeClass('show');
+		}
+		else{
+			$('.msg .inner').text(message);
+			$('.msg').addClass('show');
+		};
+	};
+	
 	// TIMEAGO
 	var bindTimeago = function() {
 		$(".timeago").timeago();
@@ -243,7 +256,7 @@ var notestack = function() {
 	
 	// REFRESH CARDS
 	var refreshCards = function() {
-		console.log('start refresh cards');
+		//console.log('start refresh cards');
 		if($('.selected').length != 1){
 			$('.selected').removeClass('selected');
 			$('.listnote:first').addClass('selected');
@@ -288,7 +301,7 @@ var notestack = function() {
 		$('#' + $('.selected').data().key).addClass('current');
 		refreshNoteBinds('.note .textarea textarea');
 		reflowCards();
-		console.log('finish refresh cards');
+		//console.log('finish refresh cards');
 	};
 	
 	// KEY AND CLICK BINDINGS FOR NOTE CARDS
@@ -398,6 +411,7 @@ var notestack = function() {
 	
 	// TOGGLE PIN
 	var togglePin = function(listitem) {
+		winMsg('Working...');
 		if(listitem == undefined){
 			if($('.selected').length>-1){
 				listitem = $('.selected');
@@ -416,6 +430,7 @@ var notestack = function() {
 		localToDOM( listitem.data().key );
 		sortNotes();
 		refreshCards();
+		winMsg('clear');
 	};
 	
 	// CREATE NEW NOTE
@@ -680,9 +695,10 @@ var notestack = function() {
 	
 	// FILTER BY LABEL
 	var filterByLabel = function(labelName) {
+		winMsg('Working...');
 		$('.labels input').val('').blur()
-		unfilterLabel();
 		clearOverlays();
+		unfilterLabel('partial');
 		$('html body').addClass('tag-filter');
 		$('#tag-filter-template').clone().attr('id','').addClass('active-tag-filter').insertBefore('.list');
 		$('.active-tag-filter .inner .tag-filter-label').text(labelName);
@@ -694,19 +710,19 @@ var notestack = function() {
 		$('.selected').removeClass('selected');
 		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
 		refreshCards();
+		winMsg('clear');
 	};
 	
 	// UNFILTER LABEL
-	var unfilterLabel = function() {
-		console.log('start unfilter label');
-		$('html body').removeClass('tag-filter');
-		$('.active-tag-filter').remove();
+	var unfilterLabel = function(partial) {
 		$('.tag-hide').removeClass('tag-hide');
-		$('.selected').removeClass('selected');
-		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
-		console.log('midpoint');
-		refreshCards();
-		console.log('finish unfilter labels');
+		$('.active-tag-filter').remove();
+		if(partial !== 'partial'){
+			$('html body').removeClass('tag-filter');
+			$('.selected').removeClass('selected');
+			$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
+			refreshCards();
+		};
 	};
 
 // =====================

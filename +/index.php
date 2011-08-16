@@ -45,9 +45,9 @@
 		<div id='sidebar' class='sidebar'>
 			<div id="searchbar" class='search'>
 				<input type="text" name="q" />
-				<div class='tags button' title="Tags"><div class='inner'></div></div>
-				<div class='addnote button' title="New Note"><div class='inner'></div></div>
-				<div class='reload button' title="Sync"><div class='inner'></div></div>
+				<div class='tags button' title="Tags (t) or (l)"><div class='inner'></div></div>
+				<div class='addnote button' title="New Note (c)"><div class='inner'></div></div>
+				<div class='reload button' title="Sync (s)"><div class='inner'></div></div>
 			</div>
 			<div id="note-list" class="list">
 				<div class="filter-status"></div>
@@ -57,6 +57,9 @@
 			</div>
 		</div>
 		<div id="note-window" class="window ">
+			<div class="msg">
+				<div class='inner'>Working...</div>
+			</div>
 			<div class='toolbar'>
 				<div class='status-div'>
 					<div class='status-icon'></div>
@@ -234,11 +237,11 @@
 				</div>
 			</div>
 			<div class='note-directions'><p>esc to save</p></div>
-			<div class='pin-button' title='toggle pin'>pin</div>
-			<div class='markdown-button' title='toggle markdown'># #</div>
-			<div class='versions-button' title='view old versions'>history</div>
-			<div class='maximize' title='fullscreen mode'>focus</div>
-			<div class='delete' title='delete note'>x</div> 
+			<div class='pin-button' title='Toggle pin (p)'>pin</div>
+			<div class='markdown-button' title='Toggle markdown (m)'># #</div>
+			<div class='versions-button' title='View old versions (v)'>history</div>
+			<div class='maximize' title='Fullscreen mode (f)'>focus</div>
+			<div class='delete' title='Delete note'>x</div> 
 			
 			<div class='message'></div>
 		</div>
@@ -259,7 +262,7 @@
 				<span>filtered by tag: </span>
 				<span class="tag-filter-label"></span>
 			</div>
-			<div class="clear-tag-filter">x</div>
+			<div class="clear-tag-filter" title="clear filter (a)">x</div>
 		</div>
 	</div>
 	<!-- SCRIPTS -->
