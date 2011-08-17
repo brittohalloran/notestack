@@ -1466,7 +1466,20 @@ var notestack = function() {
 		$('.labels input').bind('keydown','esc',function(){$(this).val('');$(this).blur();clearOverlays();return false;});
 		$('.labels input').bind('keydown','down',function(){nextLabel();return false;});
 		$('.labels input').bind('keydown','up',function(){prevLabel();return false;});
-		$('.labels input').bind('keydown','return',function(){filterByLabel($('.label-select .name').text());return false});
+		$('.labels input').bind('keydown','return',function(){
+			if($('.label-select').length == 1){
+				filterByLabel($('.label-select .name').text());
+				return false;
+			}
+			else{
+				// you hit enter with no label selected
+				$('.labels').effect('shake',{times:3},100,function(){
+					$('.labels input').val('').select();
+					labelSearch();
+				});
+				return false;
+			};
+		});
 		refreshNoteBinds('.note .textarea textarea');
 	};
 	
