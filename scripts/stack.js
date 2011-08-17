@@ -1271,11 +1271,49 @@ var notestack = function() {
 		});
 		// CLICK NOTE IN LIST
 		$('.listnote').live('click',function(){
-			$('.selected').removeClass('selected');
-			$(this).addClass('selected');
-			$('.current').removeClass('current');
-			$('#' + $(this).attr('id').split('list-').pop()).addClass('current');
-			reflowCards();
+			var selected = $('.selected');
+			var fromIndex = $('.listnote:visible').index(selected);
+			var toIndex = $('.listnote:visible').index(this);
+			var distance = Math.abs(toIndex - fromIndex);
+			var direction = fromIndex < toIndex ? 'next' : 'prev';
+			//$('.selected').removeClass('selected');
+			//$(this).addClass('selected');
+			if(distance <= 6){
+				// clicked note is close by, 
+				// just hit next or prev a couple of times
+				if(direction == 'next'){
+					for (var i=1; i<=distance; i++){
+						nextNote();
+					};
+				}
+				else if (direction == 'prev'){
+					for (var i=1; i<=distance; i++){
+						prevNote();
+					};
+				};
+			}
+			else{
+				// clicked note is far away
+				// zoom to 2 away from it, then slide in
+				if(direction == 'next'){
+					$('.selected').removeClass('selected');
+					$('.listnote:visible').eq(toIndex - 4).addClass('selected');
+					reflowCards();
+					nextNote();
+					nextNote();
+					nextNote();
+					nextNote();
+				}
+				else if(direction == 'prev'){
+					$('.selected').removeClass('selected');
+					$('.listnote:visible').eq(toIndex + 4).addClass('selected');
+					reflowCards();
+					prevNote();
+					prevNote();
+					prevNote();
+					prevNote();
+				};
+			};
 		});
 		// CLICK NON-CURRENT NOTE
 		$('.note').live('click',function(){
