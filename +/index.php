@@ -70,7 +70,7 @@
 			</div>
 			<div class='bottom-toolbar'>
 				<div class='notestack-info'>
-					Notestack <a href="/CHANGELOG.txt" target="_blank">v0.8.2 beta</a> | <a href="http://github.com/brittohalloran/notestack/issues" target="_blank">Report bug / Request feature</a>
+					Notestack <a href="/CHANGELOG.txt" target="_blank">v0.8.3 beta</a> | <a href="http://github.com/brittohalloran/notestack/issues" target="_blank">Report bug / Request feature</a>
 				</div>
 			</div>
 			<div class="notes-placeholder"></div>

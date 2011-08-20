@@ -4,10 +4,16 @@ britt.j.ohalloran@gmail.com
 
 // CHANGE HISTORY
 
+2011-08-20 - v0.8.3
+- major speed improvements, especially in label filter / unfilter
+- make animations smoother and use less memory
+- fixed: not being able to turn markdown off
+- fixed: filtering with no tag selected 
+
 2011-08-15 - v0.8.2
 - enabled markdown support
 - added pin and markdown buttons to each note
-- switched to github issue tracking (from getsatisfaction because their free plan is restricted)
+- switched to github issue tracking (from getsatisfaction because their free plan is too restricted)
 - minor speed improvements
 
 2011-08-06 - v0.8.1
