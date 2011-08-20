@@ -433,9 +433,9 @@ var notestack = function() {
 			ta_div.children('.markdown').replaceWith('<textarea>' + notecontent + '</textarea>');
 			refreshNoteBinds(ta_div.children('textarea'));
 			if(temp == 'stick'){
-				var mk = indexOf('markdown',listnote.data().systemtags);
+				var mk = listnote.data().systemtags.indexOf('markdown');
 				if(mk>-1) listnotedata.systemtags.splice(mk,1);
-				listnotedata.syncnum++;
+				listnotedata.syncnum = listnotedata.syncnum + 1;
 				localStorage.setItem(listnotedata.key,JSON.stringify(listnote.data()));
 				localToDOM(listnotedata.key);
 				manualSync();
@@ -1447,6 +1447,7 @@ var notestack = function() {
 		$(document).bind('keydown','t',function(){showLabels();return false;});
 		$(document).bind('keydown','v',function(){toggleVersions($('.current').attr('id'));return false;});
 		$(document).bind('keydown','a',function(){viewAll();return false;});
+		$(document).bind('keydown','i',function(){viewAll();return false;});
 		$(document).bind('keydown','m',function(){toggleMarkdown();return false;});
 		
 		//FROM WITHIN SEARCH BAR

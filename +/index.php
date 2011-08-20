@@ -19,9 +19,9 @@
 	<link rel="icon" href="../favicon.ico" type="image/x-icon"> 
 	<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"> 
 	<!-- STYLESHEETS -->
-	<link href="../scripts/keyboard/shortcuts.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="../styles/themes.php" type="text/css" media="screen" />
-	<link rel="stylesheet" href="../styles/structure.css" type="text/css" media="screen" />
+	<link href="../js/keyboard/shortcuts.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="../css/themes.php" type="text/css" media="screen" />
+	<link rel="stylesheet" href="../css/structure.css" type="text/css" media="screen" />
 	<!-- FONTS -->
 	<link href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold&v1" rel='stylesheet' type='text/css' />
 	<link href="../fonts/fonts.css" rel='stylesheet' type='text/css' />
@@ -271,12 +271,12 @@
 	<?php
 		if ($subdomain == "dev"){
 	?>
-	<script src="../scripts/stack.js" type="text/javascript"></script>
+	<script src="../js/stack.js" type="text/javascript"></script>
 	<?php
 		}
 		else{
 	?>
-	<script src="../scripts/stack.min.js" type="text/javascript"></script>
+	<script src="../js/stack.min.js" type="text/javascript"></script>
 	<?php
 		};
 	?>
