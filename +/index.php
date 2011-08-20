@@ -19,9 +19,9 @@
 	<link rel="icon" href="../favicon.ico" type="image/x-icon"> 
 	<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"> 
 	<!-- STYLESHEETS -->
-	<link href="../scripts/keyboard/shortcuts.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="../styles/themes.php" type="text/css" media="screen" />
-	<link rel="stylesheet" href="../styles/structure.css" type="text/css" media="screen" />
+	<link href="../js/keyboard/shortcuts.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="../css/themes.php" type="text/css" media="screen" />
+	<link rel="stylesheet" href="../css/structure.css" type="text/css" media="screen" />
 	<!-- FONTS -->
 	<link href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold&v1" rel='stylesheet' type='text/css' />
 	<link href="../fonts/fonts.css" rel='stylesheet' type='text/css' />
@@ -45,9 +45,9 @@
 		<div id='sidebar' class='sidebar'>
 			<div id="searchbar" class='search'>
 				<input type="text" name="q" />
-				<div class='tags button' title="Tags"><div class='inner'></div></div>
-				<div class='addnote button' title="New Note"><div class='inner'></div></div>
-				<div class='reload button' title="Sync"><div class='inner'></div></div>
+				<div class='tags button' title="Tags (t) or (l)"><div class='inner'></div></div>
+				<div class='addnote button' title="New Note (c)"><div class='inner'></div></div>
+				<div class='reload button' title="Sync (s)"><div class='inner'></div></div>
 			</div>
 			<div id="note-list" class="list">
 				<div class="filter-status"></div>
@@ -57,6 +57,9 @@
 			</div>
 		</div>
 		<div id="note-window" class="window ">
+			<div class="msg">
+				<div class='inner'>Working...</div>
+			</div>
 			<div class='toolbar'>
 				<div class='status-div'>
 					<div class='status-icon'></div>
@@ -67,10 +70,10 @@
 			</div>
 			<div class='bottom-toolbar'>
 				<div class='notestack-info'>
-					Notestack <a href="/CHANGELOG.txt" target="_blank">v0.8.2 beta</a> | <a href="http://github.com/brittohalloran/notestack/issues" target="_blank">Report bug / Request feature</a>
+					Notestack <a href="/CHANGELOG.txt" target="_blank">v0.8.3 beta</a> | <a href="http://github.com/brittohalloran/notestack/issues" target="_blank">Report bug / Request feature</a>
 				</div>
 			</div>
-			
+			<div class="notes-placeholder"></div>
 			<!-- notes will be inserted here -->
 		</div><!-- notes window -->
 		<div class="settings">
@@ -234,11 +237,11 @@
 				</div>
 			</div>
 			<div class='note-directions'><p>esc to save</p></div>
-			<div class='pin-button' title='toggle pin'>pin</div>
-			<div class='markdown-button' title='toggle markdown'># #</div>
-			<div class='versions-button' title='view old versions'>history</div>
-			<div class='maximize' title='fullscreen mode'>focus</div>
-			<div class='delete' title='delete note'>x</div> 
+			<div class='pin-button' title='Toggle pin (p)'>pin</div>
+			<div class='markdown-button' title='Toggle markdown (m)'># #</div>
+			<div class='versions-button' title='View old versions (v)'>history</div>
+			<div class='maximize' title='Fullscreen mode (f)'>focus</div>
+			<div class='delete' title='Delete note'>x</div> 
 			
 			<div class='message'></div>
 		</div>
@@ -259,7 +262,7 @@
 				<span>filtered by tag: </span>
 				<span class="tag-filter-label"></span>
 			</div>
-			<div class="clear-tag-filter">x</div>
+			<div class="clear-tag-filter" title="clear filter (a)">x</div>
 		</div>
 	</div>
 	<!-- SCRIPTS -->
@@ -268,12 +271,12 @@
 	<?php
 		if ($subdomain == "dev"){
 	?>
-	<script src="../scripts/stack.js" type="text/javascript"></script>
+	<script src="../js/stack.js" type="text/javascript"></script>
 	<?php
 		}
 		else{
 	?>
-	<script src="../scripts/stack.min.js" type="text/javascript"></script>
+	<script src="../js/stack.min.js" type="text/javascript"></script>
 	<?php
 		};
 	?>

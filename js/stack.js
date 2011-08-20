@@ -114,7 +114,7 @@ var notestack = function() {
 
 	// CLEAR OVERLAYS
 	var clearOverlays = function() {
-		$('.show:not(.settings_pane)').removeClass('show');
+		$('.show').not('.settings_pane,.msg').removeClass('show');
 		fullscreenMode("off")
 	};
 	
@@ -184,6 +184,19 @@ var notestack = function() {
 	// THROTTLED PROGRESS BAR
 	var throttledProgress = $.throttle(500, true, progressBar);
 	
+	// WINDOW MESSAGE
+	var winMsg = function(message){
+		console.log(message);
+		if(message == 'clear'){
+			$('.msg .inner').text('');
+			$('.msg').removeClass('show');
+		}
+		else{
+			$('.msg .inner').text(message);
+			$('.msg').addClass('show');
+		};
+	};
+	
 	// TIMEAGO
 	var bindTimeago = function() {
 		$(".timeago").timeago();
@@ -222,49 +235,40 @@ var notestack = function() {
 
 	// REFLOW CARDS
 	var reflowCards = function() {
-		if($('.current').length != 1){
-			if($('.selected').length != 1){
-				$('.selected').removeClass('selected');
-				$('.listnote:first').addClass('selected');
-			}
-			else{
-				$('#' + $('.selected').data().key).addClass('current');
-			};
-		};
-		$('.prev2').removeClass('prev2');
-		$('.prev1').removeClass('prev1');
-		$('.next1').removeClass('next1');
-		$('.next2').removeClass('next2');
-		$('.current').prev('.note').prev('.note').addClass('prev2');
-		$('.current').prev('.note').addClass('prev1');
-		$('.current').next('.note').addClass('next1');
-		$('.current').next('.note').next('.note').addClass('next2');
+		var current = $('#' + $('.selected').data().key);
+		var prev2 = current.prevAll('.on').eq(1);
+		var prev1 = current.prevAll('.on').eq(0);
+		var next1 = current.nextAll('.on').eq(0);
+		var next2 = current.nextAll('.on').eq(1);
+		if(!current.hasClass('current')){$('.current').removeClass('current'); current.addClass('current')};
+		if(!prev2.hasClass('prev2')){$('.prev2').removeClass('prev2'); prev2.addClass('prev2')};
+		if(!prev1.hasClass('prev1')){$('.prev1').removeClass('prev1'); prev1.addClass('prev1')};
+		if(!next1.hasClass('next1')){$('.next1').removeClass('next1'); next1.addClass('next1')};
+		if(!next2.hasClass('next2')){$('.next2').removeClass('next2'); next2.addClass('next2')};
 	};
 	
 	// REFRESH CARDS
 	var refreshCards = function() {
-		console.log('start refresh cards');
-		if($('.selected').length != 1){
+		if($('.selected').length !== 1){
 			$('.selected').removeClass('selected');
-			$('.listnote:first').addClass('selected');
+			$('.listnote:visible:first').addClass('selected');
 		};
-		$('.note').remove();
 		var allTagsObj = $.parseJSON(localStorage.tagIndex).tags;
 		var allTagsArr = [];
 		for (var i in allTagsObj){
 			allTagsArr.push(allTagsObj[i].name);
 		};
-		//console.log(allTagsArr);
-		$('.listnote').not('.search-hide,.tag-hide').each(function(){
+		var createCard = function(noteObj){
 			// clone template into note card
-			var thisdata = $(this).data();
-			$('#note-template').clone().attr('id', thisdata.key).addClass('note').appendTo('.window');
-			var notecard = $('#' + thisdata.key);
+			$('#note-template').clone().attr('id', noteObj.key).addClass('note').insertAfter(bookmark);
+			var card = $('#' + noteObj.key);
+			// add syncnum to data for comparison later
+			card.data('syncnum', noteObj.syncnum);
 			// add content to textarea
-			notecard.children('.textarea').children('textarea').val(thisdata.content);
+			card.children('.textarea').children('textarea').val(noteObj.content);
 			// populate tags
-			var tagStr = thisdata.tags.join(' ');
-			tagfield = notecard.children('.textarea').children('.tag-area').children('input');
+			var tagStr = noteObj.tags.join(' ');
+			tagfield = card.children('.textarea').children('.tag-area').children('input');
 			tagfield.val(tagStr);
 			tagfield.tagit({
 				"singleFieldDelimiter": " ",
@@ -278,17 +282,51 @@ var notestack = function() {
 					updateTags($('.current').attr('id'), tagName);					
 				}
 			});
-			if($.inArray("markdown",thisdata.systemtags)>-1){
-				toggleMarkdown(thisdata.key,'on');
+			card.addClass('on');
+			if($.inArray("markdown",noteObj.systemtags)>-1){
+				toggleMarkdown(noteObj.key,'on');
 			};
-			if($.inArray("pinned",thisdata.systemtags)>-1){
-				notecard.addClass('pinned');
+			if($.inArray("pinned",noteObj.systemtags)>-1){
+				card.addClass('pinned');
 			};
-		});
-		$('#' + $('.selected').data().key).addClass('current');
-		refreshNoteBinds('.note .textarea textarea');
+			refreshNoteBinds('#' + noteObj.key + ' .textarea textarea');
+		};
+		var bookmark = $('.notes-placeholder');
+		$('.listnote').each(function(){
+			var thisdata = $(this).data();
+			var cardExists = $('#' + thisdata.key).length > 0;
+			var card = cardExists ? $('#' + thisdata.key) : false;
+			// console.log('card for ' + thisdata.key + ' exists? ' + cardExists);
+			if($(this).css('display') == 'none'){ // card shouldn't be shown
+				if(cardExists){ 
+					card.removeClass('on')
+						.removeClass('current')
+						.removeClass('prev1')
+						.removeClass('prev2')
+						.removeClass('next1')
+						.removeClass('next2');
+				};
+			}
+			else{ // card should be shown
+				if(cardExists){ // already exists, just update it
+					if(thisdata.syncnum > card.data().syncnum){ // card is out of date, delete it and update
+						card.remove();
+						createCard(thisdata);
+						card = $('#' + thisdata.key);
+					}
+					else{ // card is current, just turn .on
+						card.addClass('on');
+					};
+					card.insertAfter(bookmark);
+				}
+				else{ // doesn't exist, create it
+					createCard(thisdata);
+					card = $('#' + thisdata.key);
+				};
+			};
+			bookmark = card;
+		}); // end each .listnote loop
 		reflowCards();
-		console.log('finish refresh cards');
 	};
 	
 	// KEY AND CLICK BINDINGS FOR NOTE CARDS
@@ -323,12 +361,16 @@ var notestack = function() {
 	// NEXT NOTE
 	var nextNote = function() { 
 		//console.log('nextNote ' + $('.selected').nextAll('.listnote:not(.hide):first').length);
-		nextOne = $('.selected').nextAll('.listnote:not(.search-hide,.tag-hide):first');
+		nextOne = $('.selected').nextAll('.listnote:visible:first');
 		if(nextOne.length > 0 ) {
 			$('.selected').removeClass('selected');
 			nextOne.addClass('selected');
-			$('.current').removeClass('current').next('.note').addClass('current');
-			reflowCards();
+			$('.prev2').removeClass('prev2');
+			$('.prev1').addClass('prev2').removeClass('prev1');
+			$('.current').addClass('prev1').removeClass('current');
+			$('.next1').addClass('current').removeClass('next1');
+			$('.next2').addClass('next1').removeClass('next2');
+			$('.next1').nextAll('.on').eq(0).addClass('next2');			
 			scrollto();
 		};
 	};
@@ -336,12 +378,17 @@ var notestack = function() {
 	// PREVIOUS NOTE
 	var prevNote = function() {
 		//console.log('prevNote');
-		prevOne = $('.selected').prevAll('.listnote:not(.search-hide,.tag-hide):first')
+		prevOne = $('.selected').prevAll('.listnote:visible:first')
 		if(prevOne.length>0) {
 			$('.selected').removeClass('selected');
 			prevOne.addClass('selected');
-			$('.current').removeClass('current').prev('.note').addClass('current');
-			reflowCards();
+			$('.next2').removeClass('next2');
+			$('.next1').removeClass('next1').addClass('next2');
+			$('.current').removeClass('current').addClass('next1');
+			$('.prev1').removeClass('prev1').addClass('current');
+			$('.prev2').removeClass('prev2').addClass('prev1');
+			$('.prev1').prevAll('.on').eq(0).addClass('prev2');
+			
 			scrollto();
 		};
 	};
@@ -386,9 +433,9 @@ var notestack = function() {
 			ta_div.children('.markdown').replaceWith('<textarea>' + notecontent + '</textarea>');
 			refreshNoteBinds(ta_div.children('textarea'));
 			if(temp == 'stick'){
-				var mk = indexOf('markdown',listnote.data().systemtags);
+				var mk = listnote.data().systemtags.indexOf('markdown');
 				if(mk>-1) listnotedata.systemtags.splice(mk,1);
-				listnotedata.syncnum++;
+				listnotedata.syncnum = listnotedata.syncnum + 1;
 				localStorage.setItem(listnotedata.key,JSON.stringify(listnote.data()));
 				localToDOM(listnotedata.key);
 				manualSync();
@@ -398,6 +445,7 @@ var notestack = function() {
 	
 	// TOGGLE PIN
 	var togglePin = function(listitem) {
+		winMsg('Working...');
 		if(listitem == undefined){
 			if($('.selected').length>-1){
 				listitem = $('.selected');
@@ -416,6 +464,7 @@ var notestack = function() {
 		localToDOM( listitem.data().key );
 		sortNotes();
 		refreshCards();
+		winMsg('clear');
 	};
 	
 	// CREATE NEW NOTE
@@ -680,9 +729,10 @@ var notestack = function() {
 	
 	// FILTER BY LABEL
 	var filterByLabel = function(labelName) {
+		winMsg('Working...');
 		$('.labels input').val('').blur()
-		unfilterLabel();
 		clearOverlays();
+		unfilterLabel('partial');
 		$('html body').addClass('tag-filter');
 		$('#tag-filter-template').clone().attr('id','').addClass('active-tag-filter').insertBefore('.list');
 		$('.active-tag-filter .inner .tag-filter-label').text(labelName);
@@ -694,19 +744,19 @@ var notestack = function() {
 		$('.selected').removeClass('selected');
 		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
 		refreshCards();
+		winMsg('clear');
 	};
 	
 	// UNFILTER LABEL
-	var unfilterLabel = function() {
-		console.log('start unfilter label');
-		$('html body').removeClass('tag-filter');
-		$('.active-tag-filter').remove();
+	var unfilterLabel = function(partial) {
 		$('.tag-hide').removeClass('tag-hide');
-		$('.selected').removeClass('selected');
-		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
-		console.log('midpoint');
-		refreshCards();
-		console.log('finish unfilter labels');
+		$('.active-tag-filter').remove();
+		if(partial !== 'partial'){
+			$('html body').removeClass('tag-filter');
+			$('.selected').removeClass('selected');
+			$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
+			refreshCards();
+		};
 	};
 
 // =====================
@@ -1221,11 +1271,49 @@ var notestack = function() {
 		});
 		// CLICK NOTE IN LIST
 		$('.listnote').live('click',function(){
-			$('.selected').removeClass('selected');
-			$(this).addClass('selected');
-			$('.current').removeClass('current');
-			$('#' + $(this).attr('id').split('list-').pop()).addClass('current');
-			reflowCards();
+			var selected = $('.selected');
+			var fromIndex = $('.listnote:visible').index(selected);
+			var toIndex = $('.listnote:visible').index(this);
+			var distance = Math.abs(toIndex - fromIndex);
+			var direction = fromIndex < toIndex ? 'next' : 'prev';
+			//$('.selected').removeClass('selected');
+			//$(this).addClass('selected');
+			if(distance <= 6){
+				// clicked note is close by, 
+				// just hit next or prev a couple of times
+				if(direction == 'next'){
+					for (var i=1; i<=distance; i++){
+						nextNote();
+					};
+				}
+				else if (direction == 'prev'){
+					for (var i=1; i<=distance; i++){
+						prevNote();
+					};
+				};
+			}
+			else{
+				// clicked note is far away
+				// zoom to 2 away from it, then slide in
+				if(direction == 'next'){
+					$('.selected').removeClass('selected');
+					$('.listnote:visible').eq(toIndex - 4).addClass('selected');
+					reflowCards();
+					nextNote();
+					nextNote();
+					nextNote();
+					nextNote();
+				}
+				else if(direction == 'prev'){
+					$('.selected').removeClass('selected');
+					$('.listnote:visible').eq(toIndex + 4).addClass('selected');
+					reflowCards();
+					prevNote();
+					prevNote();
+					prevNote();
+					prevNote();
+				};
+			};
 		});
 		// CLICK NON-CURRENT NOTE
 		$('.note').live('click',function(){
@@ -1359,6 +1447,7 @@ var notestack = function() {
 		$(document).bind('keydown','t',function(){showLabels();return false;});
 		$(document).bind('keydown','v',function(){toggleVersions($('.current').attr('id'));return false;});
 		$(document).bind('keydown','a',function(){viewAll();return false;});
+		$(document).bind('keydown','i',function(){viewAll();return false;});
 		$(document).bind('keydown','m',function(){toggleMarkdown();return false;});
 		
 		//FROM WITHIN SEARCH BAR
@@ -1378,7 +1467,20 @@ var notestack = function() {
 		$('.labels input').bind('keydown','esc',function(){$(this).val('');$(this).blur();clearOverlays();return false;});
 		$('.labels input').bind('keydown','down',function(){nextLabel();return false;});
 		$('.labels input').bind('keydown','up',function(){prevLabel();return false;});
-		$('.labels input').bind('keydown','return',function(){filterByLabel($('.label-select .name').text());return false});
+		$('.labels input').bind('keydown','return',function(){
+			if($('.label-select').length == 1){
+				filterByLabel($('.label-select .name').text());
+				return false;
+			}
+			else{
+				// you hit enter with no label selected
+				$('.labels').effect('shake',{times:3},100,function(){
+					$('.labels input').val('').select();
+					labelSearch();
+				});
+				return false;
+			};
+		});
 		refreshNoteBinds('.note .textarea textarea');
 	};
 	
