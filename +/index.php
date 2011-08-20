@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+	$version = 'v0.8.3';
 	$subdomain = preg_replace('/^(?:([^\.]+)\.)?notestack\.me$/', '\1', $_SERVER['SERVER_NAME']);
 	if ($subdomain == "dev"){
 ?>
@@ -19,12 +20,12 @@
 	<link rel="icon" href="../favicon.ico" type="image/x-icon"> 
 	<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"> 
 	<!-- STYLESHEETS -->
-	<link href="../js/keyboard/shortcuts.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="../css/themes.php" type="text/css" media="screen" />
-	<link rel="stylesheet" href="../css/structure.css" type="text/css" media="screen" />
+	<link href="../js/keyboard/shortcuts.css?<?php echo $version; ?>" type="text/css" media="screen" />
+	<link rel="stylesheet" href="../css/themes.php?<?php echo $version; ?>" type="text/css" media="screen" />
+	<link rel="stylesheet" href="../css/structure.css?<?php echo $version; ?>" type="text/css" media="screen" />
 	<!-- FONTS -->
 	<link href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold&v1" rel='stylesheet' type='text/css' />
-	<link href="../fonts/fonts.css" rel='stylesheet' type='text/css' />
+	<link href="../fonts/fonts.css?<?php echo $version; ?>" rel='stylesheet' type='text/css' />
 	<!-- GOOGLE ANALYTICS -->
 	<script type="text/javascript">
 	  if(localStorage.email){useremail = localStorage.email}else{useremail = 'not set'};
@@ -70,7 +71,7 @@
 			</div>
 			<div class='bottom-toolbar'>
 				<div class='notestack-info'>
-					Notestack <a href="/CHANGELOG.txt" target="_blank">v0.8.3 beta</a> | <a href="http://github.com/brittohalloran/notestack/issues" target="_blank">Report bug / Request feature</a>
+					Notestack <a href="/CHANGELOG.txt?<?php echo $version; ?>" target="_blank"><?php echo $version; ?> beta</a> | <a href="http://github.com/brittohalloran/notestack/issues" target="_blank">Report bug / Request feature</a>
 				</div>
 			</div>
 			<div class="notes-placeholder"></div>
@@ -181,13 +182,14 @@
 							<tr><td class="l">tab, enter</td><td>edit note</td></tr>
 							<tr><td class="l">esc</td><td>exit and save note</td></tr>
 							<tr><td class="l">l or t</td><td>open tag (label) selection</td></tr>
+							<tr><td class="l">a or i</td><td>view all (unfilter / unsearch)</td></tr>
 							<tr><td class="l">v</td><td>view versions</td></tr>
 							<tr><td class="l">s</td><td>sync with simplenote</td></tr>
 							<tr><td class="l">c</td><td>create new note</td></tr>
 							<tr><td class="l">f</td><td>fullscreen mode</td></tr>
 							<tr><td class="l">m</td><td>toggle <a href="http://daringfireball.net/projects/markdown/">markdown</a></td></tr>
 							<tr><td class="l">p</td><td>toggle note pin</td></tr>
-							<tr><td class="l">?</td><td>view keyboard shortcuts</td></tr>
+							<tr><td class="l">?</td><td>open settings</td></tr>
 						</table>
 					</div><!--keyboard shortcuts-->
 				</div><!--content-->
@@ -271,12 +273,12 @@
 	<?php
 		if ($subdomain == "dev"){
 	?>
-	<script src="../js/stack.js" type="text/javascript"></script>
+	<script src="../js/stack.js?<?php echo $version; ?>" type="text/javascript"></script>
 	<?php
 		}
 		else{
 	?>
-	<script src="../js/stack.min.js" type="text/javascript"></script>
+	<script src="../js/stack.min.js?<?php echo $version; ?>" type="text/javascript"></script>
 	<?php
 		};
 	?>
