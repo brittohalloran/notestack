@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="../css/themes.php" type="text/css" media="screen" />
 	<link rel="stylesheet" href="../css/structure.css" type="text/css" media="screen" />
 	<!-- FONTS -->
-	<link href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold&v1" rel='stylesheet' type='text/css' />
+	<link href="https://fonts.googleapis.com/css?family=Droid+Sans:regular,bold&v1" rel='stylesheet' type='text/css' />
 	<link href="../fonts/fonts.css" rel='stylesheet' type='text/css' />
 	<!-- GOOGLE ANALYTICS -->
 	<script type="text/javascript">
