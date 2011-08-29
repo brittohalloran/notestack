@@ -233,7 +233,9 @@
 	<div class='templates'>
 		<div id='note-template'>
 			<div class="textarea">
-				<textarea></textarea>
+				<div class="ta-inner">
+					<textarea></textarea>
+				</div>
 				<div class="tag-area">
 					<input type="text"></input>
 				</div>

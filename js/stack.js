@@ -270,7 +270,7 @@ var notestack = function() {
 			// add syncnum to data for comparison later
 			card.data('syncnum', noteObj.syncnum);
 			// add content to textarea
-			card.children('.textarea').children('textarea').val(noteObj.content);
+			card.children('.textarea').children('.ta-inner').children('textarea').val(noteObj.content);
 			// populate tags
 			var tagStr = noteObj.tags.join(' ');
 			tagfield = card.children('.textarea').children('.tag-area').children('input');
@@ -416,9 +416,9 @@ var notestack = function() {
 		if(direction == 'on'){
 			notecard.removeClass('markdown-off').addClass('markdown-on');
 			var converter = new Markdown.Converter();
-			var markhtml = converter.makeHtml('# ' + ta_div.children('textarea').val());
+			var markhtml = converter.makeHtml('# ' + ta_div.children('.ta-inner').children('textarea').val());
 			//markhtml = nl2br(markhtml);
-			ta_div.children('textarea').replaceWith('<div class="markdown">' + markhtml + '</div>');
+			ta_div.children('.ta-inner').replaceWith('<div class="markdown">' + markhtml + '</div>');
 			ta_div.children('.markdown').children('h1:first').addClass('first-h1');
 			ta_div.children('.markdown').children('p').each(function(){
 				$(this).html(nl2br($(this).html()));
@@ -434,8 +434,8 @@ var notestack = function() {
 		else if(direction == 'off'){
 			notecard.removeClass('markdown-on').addClass('markdown-off');
 			var notecontent = listnotedata.content;
-			ta_div.children('.markdown').replaceWith('<textarea>' + notecontent + '</textarea>');
-			refreshNoteBinds(ta_div.children('textarea'));
+			ta_div.children('.markdown').replaceWith('<div class="ta-inner"><textarea>' + notecontent + '</textarea></div>');
+			refreshNoteBinds(ta_div.children('.ta-inner').children('textarea'));
 			if(temp == 'stick'){
 				var mk = listnote.data().systemtags.indexOf('markdown');
 				if(mk>-1) listnotedata.systemtags.splice(mk,1);
@@ -1224,7 +1224,7 @@ var notestack = function() {
 	
 		// ON NOTE BLUR
 		$('.note .textarea textarea').live('blur',function(){
-			var blurkey = $(this).parent().parent().attr('id');
+			var blurkey = $(this).parent().parent().parent().attr('id');
 			var listnotedata = $('#list-' + blurkey).data();
 			if ($.inArray('markdown',listnotedata.systemtags)>-1){
 				toggleMarkdown(blurkey,'on');
@@ -1325,7 +1325,7 @@ var notestack = function() {
 		$('.textarea:not(a)').live('click',function(e){
 			if($(e.target).parents('.tag-area').length > 0){return;}; 
 			toggleMarkdown($(this).parent().attr('id'),'off','temp');
-			$(this).children('textarea').focus();
+			$(this).children('.ta-inner').children('textarea').focus();
 		});
 		// CLICK LINK IN MARKDOWN
 		$('.markdown a').live('click',function(e){
