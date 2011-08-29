@@ -112,6 +112,11 @@ var notestack = function() {
 //    BASIC UTILITIES
 // =====================
 
+	// CONSOLE LOG (DEV MODE)
+	var consoleLog = function(msg) {
+		console.log(msg);
+	};
+
 	// CLEAR OVERLAYS
 	var clearOverlays = function() {
 		$('.show').not('.settings_pane,.msg').removeClass('show');
@@ -137,7 +142,7 @@ var notestack = function() {
 	// SEARCH
 	var refreshSearch = function() {
 		query = $('.search input').val().toLowerCase();
-		//console.log(query);
+		consoleLog(query);
 		$('.listnote').each(function(){
 			if ($(this).data().content.toLowerCase().indexOf(query) > -1){
 				$(this).removeClass('search-hide');
@@ -186,7 +191,7 @@ var notestack = function() {
 	
 	// WINDOW MESSAGE
 	var winMsg = function(message){
-		console.log(message);
+		consoleLog(message);
 		if(message == 'clear'){
 			$('.msg .inner').text('');
 			$('.msg').removeClass('show');
@@ -296,7 +301,6 @@ var notestack = function() {
 			var thisdata = $(this).data();
 			var cardExists = $('#' + thisdata.key).length > 0;
 			var card = cardExists ? $('#' + thisdata.key) : false;
-			// console.log('card for ' + thisdata.key + ' exists? ' + cardExists);
 			if($(this).css('display') == 'none'){ // card shouldn't be shown
 				if(cardExists){ 
 					card.removeClass('on')
@@ -346,7 +350,7 @@ var notestack = function() {
 	
 	// SORT NOTES: PINNED, THEN MODIFIED
 	var sortNotes = function() {
-		//console.log('sorting notes');
+		consoleLog('sorting notes');
 		$('.listnote').sortElements(function(a, b){
 			if ($(a).hasClass('pinned')){
 				if (!$(b).hasClass('pinned')){return -1};
@@ -360,7 +364,7 @@ var notestack = function() {
 	
 	// NEXT NOTE
 	var nextNote = function() { 
-		//console.log('nextNote ' + $('.selected').nextAll('.listnote:not(.hide):first').length);
+		consoleLog('nextNote ' + $('.selected').nextAll('.listnote:not(.hide):first').length);
 		nextOne = $('.selected').nextAll('.listnote:visible:first');
 		if(nextOne.length > 0 ) {
 			$('.selected').removeClass('selected');
@@ -377,7 +381,7 @@ var notestack = function() {
 	
 	// PREVIOUS NOTE
 	var prevNote = function() {
-		//console.log('prevNote');
+		consoleLog('prevNote');
 		prevOne = $('.selected').prevAll('.listnote:visible:first')
 		if(prevOne.length>0) {
 			$('.selected').removeClass('selected');
@@ -475,7 +479,7 @@ var notestack = function() {
 		localStorage.setItem(newid, JSON.stringify(newdata));
 		index = $.parseJSON(localStorage.index);
 		index.data.push(newdata);
-		//console.log(index.data);
+		consoleLog(index.data);
 		localStorage.index = JSON.stringify(index);
 		localToDOM( newid );
 		sortNotes();
@@ -574,7 +578,7 @@ var notestack = function() {
 			verarray.push(getNoteVersion(notekey,i));
 		};
 		$.when.apply(null, verarray).done(function(){
-			//console.log('done with all versions');
+			consoleLog('done with all versions');
 			$('.version-item').each(function(){
 				if ($(this).data().version > minversion){
 					prev = $(this).data().version - 1;
@@ -616,7 +620,7 @@ var notestack = function() {
 				'email': localStorage.email,
 				'token': localStorage.token
 			};
-			//console.log('starting tagIndex pull');
+			consoleLog('starting tagIndex pull');
 			$.ajax('/sn.php',{
 				type: 'POST',
 				data: postData,
@@ -626,7 +630,7 @@ var notestack = function() {
 						window.location = '/?login=expired';
 					};
 					localStorage['tagIndex'] = rawTagIndex;
-					//console.log('stored tagIndex')
+					consoleLog('stored tagIndex')
 					dfd_tag.resolve();
 				},
 				error: function(msg){
@@ -664,7 +668,7 @@ var notestack = function() {
 			j=0;
 			$('.listnote').each(function(){
 				if($.inArray(tagname,$(this).data().tags)>-1){
-					//console.log(tagname + $(this).data().tags);
+					consoleLog(tagname + $(this).data().tags);
 					j++;
 				};
 			});
@@ -680,7 +684,7 @@ var notestack = function() {
 	// SEARCH FOR LABELS
 	var labelSearch = function() {
 		query = $('.labels input').val().toLowerCase();
-		//console.log(query);
+		consoleLog(query);
 		$('.labels .item').each(function(){
 			if ($(this).children('.name').text().toLowerCase().indexOf(query) > -1){
 				$(this).removeClass('hide');
@@ -716,7 +720,7 @@ var notestack = function() {
 		var tags = $('#' + notekey + ' .tag-area input').val().split(' ');
 		var indx = tags.indexOf(deletetag);
 		if (indx != -1) tags.splice(indx, 1);
-		//console.log(tags);
+		consoleLog(tags);
 		note = $.parseJSON(localStorage[notekey]);
 		if (note.tags != tags){
 			note.tags = tags;
@@ -766,20 +770,20 @@ var notestack = function() {
 	// DOWNLOAD ONE NOTE
 	var getNote = function(notekey){
 		return $.Deferred(function(dfd_get){
-			//console.log('getting ' + notekey);
+			consoleLog('getNote(' + notekey + ')');
 			$.ajax('/sn.php',{
 				type: 'POST',
 				data: {'action': 'note', 'email': email,'token': token,'notekey': notekey},
 				success: function(data){
-					//console.log('inside get success');
+					consoleLog('getNote() success');
 					note = $.parseJSON(data);
-					//console.log(note);
+					consoleLog(note);
 					localStorage.setItem(note.key,data);
 					localToDOM(note.key);
 					dfd_get.resolve();
 				},
 				error: function(msg){
-					//console.log('error getting note ' + notekey + ' error:' + msg);
+					consoleLog('error getting note ' + notekey + ' error:' + msg);
 				}
 			});
 		}).promise();
@@ -800,9 +804,9 @@ var notestack = function() {
 			type: 'POST',
 			data: postData,
 			success: function(data){
-				//console.log('note updated');
+				consoleLog('note updated');
 				note = $.parseJSON(data);
-				//console.log(note);
+				consoleLog(note);
 				if(!("content" in note)){
 					note['content'] = noteobject.content;
 				};
@@ -810,7 +814,7 @@ var notestack = function() {
 					index = $.parseJSON(localStorage.index);
 					for (i=0; i<=index.data.length-1; i++){
 						if (index.data[i].key.substr(0,9)=='notestack'){
-							//console.log('deleting from index: ' + index.data[i].key);
+							consoleLog('deleting from index: ' + index.data[i].key);
 							$('#list-' + index.data[i].key).remove();
 							localStorage.removeItem(index.data[i].key);
 							index.data.splice(i,1);
@@ -827,7 +831,7 @@ var notestack = function() {
 				dfd.resolve();
 			},
 			error: function(msg){
-				//console.log('error getting note ' + notekey + ' error:' + msg);
+				consoleLog('error getting note ' + notekey + ' error:' + msg);
 			}
 		});
 		return dfd.promise();
@@ -836,14 +840,14 @@ var notestack = function() {
 	// CHECK ALL NOTES FOR UPDATES AGAINST INDEX
 	var updateAllNotes = function() {
 		return $.Deferred(function(dfd_uan){
-			//console.log('iterating through index, showing local, getting if needed');
+			consoleLog('iterating through index, showing local, getting if needed');
 			index = $.parseJSON(localStorage.index);
 			var i=0, set=0, snarray=[], notecount=0, deletedcount=0;
 			function updateSome(num){
 				for (i=set;i<=set+num;i++){
 					throttledProgress(50 + Math.round(50*(i/index.data.length))); 
 					if (!index.data[i]){
-						//console.log('broke at ' + i);
+						consoleLog('broke at ' + i);
 						dfd_uan.resolve();
 						var breaker = true;
 						break;
@@ -875,20 +879,16 @@ var notestack = function() {
 					};
 					if (index.data[i].deleted==0){
 						notecount++;
-						//console.log('notecount=' + notecount);
 					}
 					else if (index.data[i].deleted==1){
 						deletedcount++;
 					};
 				};
 				if(breaker == true){return false};
-				//console.log('i='+i+' index='+index.data.length);
-				//progressBar(50+Math.round(50*(i/index.length)));
 				if(snarray.length>0){
 					$.when.apply(null, snarray).done(function(){
 						set = set + num + 1;
 						snarray = [];
-						//console.log('set=' + set);
 						sortNotes();
 						refreshCards();
 						updateSome(num);
@@ -897,7 +897,6 @@ var notestack = function() {
 				else{
 					set = set + num + 1;
 					snarray = [];
-					//console.log('set=' + set);
 					updateSome(num);
 				};
 			};
@@ -922,7 +921,7 @@ var notestack = function() {
 						window.location = '/?login=expired';
 					};
 					newIndex = $.parseJSON(rawNewIndex);
-					//console.log('recieved new index with ' + newIndex.count + ' new notes');
+					consoleLog('recieved new index with ' + newIndex.count + ' new notes');
 					if(localStorage.index){
 						existingIndex = $.parseJSON(localStorage.index);
 						for (i=0;i<=newIndex.data.length-1;i++){
@@ -940,12 +939,12 @@ var notestack = function() {
 						existingIndex = newIndex;
 					};
 					localStorage.setItem('mark',newIndex.mark ? newIndex.mark : "DONE");
-					//console.log(localStorage.mark);
+					consoleLog(localStorage.mark);
 					localStorage.setItem('index',JSON.stringify(existingIndex));
 					localStorage.setItem('indexDate',newIndex.time);
 					if (localStorage.mark == "DONE"){ 
 						localStorage.removeItem('mark');
-						//console.log('done syncing index');
+						consoleLog('done syncing index');
 						dfd_syn.resolve();
 					}
 					else{ 
@@ -961,7 +960,7 @@ var notestack = function() {
 					$('.status-div').removeClass('loading');
 				}
 			});
-			//console.log('outside index ajax()');
+			consoleLog('outside index ajax()');
 		}).promise();
 	};
 	
@@ -970,7 +969,7 @@ var notestack = function() {
 		progressBar(5);
 		if(localStorage.token){
 			$.when(getTagIndex()).done(function(){
-				//console.log('done with tag index');
+				consoleLog('done with tag index');
 				//$('.status').text('Syncing with Simplenote');
 				//$('.status-div').addClass('loading');
 				progressBar(25);
@@ -1000,10 +999,10 @@ var notestack = function() {
 				})).done(function(){
 					progressBar(50);
 					indexFinish = new Date().getTime();
-					//console.log('indexTime = ' + (indexFinish - indexStart));
+					consoleLog('indexTime = ' + (indexFinish - indexStart));
 					$.when(updateAllNotes()).done(function(){
 						progressBar(100,function(){
-							//console.log('inside progressBar done');
+							consoleLog('inside progressBar done');
 							indexDate = stackTime(localStorage.indexDate);
 							$('.status').html('synced <abbr class="timeago" title="' + indexDate + '"></abbr>');
 							bindTimeago();
@@ -1043,7 +1042,6 @@ var notestack = function() {
 	// MOVE ONE NOTE FROM LOCAL STORAGE TO DOM
 	var localToDOM = function(key){ // add to DOM from localStorage
 		return $.Deferred(function(dfd_ltd){
-			//console.log('local to DOM ' + key);
 			note = $.parseJSON(localStorage.getItem(key));
 			if(note.deleted!=1){
 				if($('#list-' + note.key).length>0){
@@ -1065,14 +1063,14 @@ var notestack = function() {
 		progressBar(10);
 		if(localStorage.index){
 			index = $.parseJSON(localStorage.index);
-			//console.log( 'loading ' + index.data.length + ' local notes' );
+			consoleLog( 'loading ' + index.data.length + ' local notes' );
 			for (i=0;i<=(index.data.length-1);i++){
 				if(!(localStorage.getItem(index.data[i].key)==null)){
 					localToDOM(index.data[i].key);
 				};
 			};
 		};
-		//console.log('local notes loaded');
+		consoleLog('local notes loaded');
 	};
 	
 	// ON PAGE LOAD
