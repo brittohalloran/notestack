@@ -4,6 +4,9 @@ britt.j.ohalloran@gmail.com
 
 // CHANGE HISTORY
 
+2011-08-30 - v0.8.4
+- minor performance improvements
+
 2011-08-20 - v0.8.3
 - major speed improvements, especially in label filter / unfilter
 - make animations smoother and use less memory
