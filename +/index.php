@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-	$version = 'v0.8.3';
+	$version = 'v0.8.4';
 	$subdomain = preg_replace('/^(?:([^\.]+)\.)?notestack\.me$/', '\1', $_SERVER['SERVER_NAME']);
 	if ($subdomain == "dev"){
 ?>
@@ -24,7 +24,7 @@
 	<link rel="stylesheet" href="../css/themes.php?<?php echo $version; ?>" type="text/css" media="screen" />
 	<link rel="stylesheet" href="../css/structure.css?<?php echo $version; ?>" type="text/css" media="screen" />
 	<!-- FONTS -->
-	<link href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold&v1" rel='stylesheet' type='text/css' />
+	<link href="https://fonts.googleapis.com/css?family=Droid+Sans:regular,bold&v1" rel='stylesheet' type='text/css' />
 	<link href="../fonts/fonts.css?<?php echo $version; ?>" rel='stylesheet' type='text/css' />
 	<!-- GOOGLE ANALYTICS -->
 	<script type="text/javascript">
@@ -233,7 +233,9 @@
 	<div class='templates'>
 		<div id='note-template'>
 			<div class="textarea">
-				<textarea></textarea>
+				<div class="ta-inner">
+					<textarea></textarea>
+				</div>
 				<div class="tag-area">
 					<input type="text"></input>
 				</div>

@@ -63,13 +63,13 @@
 			.listnote:hover {
 				background: rgba(0,0,0,0.1);
 			}					.listnote .title,			.listnote .preview {				white-space: nowrap;				overflow: hidden;				text-overflow: ellipsis;				position: absolute;				left: 35px;				right: 10px;				cursor: inherit;			}					.listnote .title {				top: 5px;			}						.listnote .preview {				bottom: 5px;			}						.listnote .pinboard {				position: absolute;				top: 0px;				height: 100%;				left: 0px;				width: 35px;				cursor: pointer;			}						.listnote .contents,			.listnote .contents textarea {				display: none;				visibility: hidden;			}.window {	overflow: hidden;	position: absolute;	left: 350px;	right: 0;	top: 0;	height: 100%;	display: block;}	.note {		display: none;		width: 600px;		position: absolute;		left: 50%;		top: 40px;		bottom: 30px;		min-height: 200px;		-webkit-transition: all 0.25s ease-out;		-moz-transition: all 0.25s ease-out;		-o-transition: all 0.25s ease-out;		transition: all 0.25s ease-out;	}		.no-animation .note {			-webkit-transition: none;			-moz-transition: none;			-o-transition: none;			transition: none;		}				.textarea {			position: absolute;			top: 20px;			bottom: 20px;			left: 20px;			right: 20px;
-			padding: 5px 5px 5px 10px;		}					.textarea textarea,			.markdown {
+			padding: 5px 5px 5px 10px;		}					.textarea .ta-inner,			.markdown {
 				position: absolute;				left: 10px;				right: 5px;				top: 5px;				bottom: 42px;
 				border: none;
 				outline: none;
 				font-family: inherit;
 				background: transparent;				resize: none;
-			}							.no-tags .textarea textarea {					bottom: 5px;				}								/*MARKDOWN SUPPORT*/				.markdown {					overflow-y: auto;					font-size: 80%;				}								.markdown h1, .markdown h2, .markdown h3,				.markdown h4, .markdown h5, .markdown h6 {					margin: 10px 0px 3px 0px;				}								.markdown h1 {font-size: 180%;}				.markdown h2 {font-size: 135%;}				.markdown h3 {font-size: 110%;}				.markdown h4 {font-size: 95%;}				.markdown h5 {font-size: 80%;}				.markdown h6 {font-size: 65%;}								.markdown h1.first-h1 {					margin-top: 5px;
+			}							.no-tags .textarea .ta-inner,				.no-tags .markdown {					bottom: 5px;				}								.ta-inner textarea {					height: 100%;					width: 100%;					border: none;					outline: none;					font-family: inherit;					background: transparent;				}								/*MARKDOWN SUPPORT*/				.markdown {					overflow-y: auto;					font-size: 80%;				}								.markdown h1, .markdown h2, .markdown h3,				.markdown h4, .markdown h5, .markdown h6 {					margin: 10px 0px 3px 0px;				}								.markdown h1 {font-size: 180%;}				.markdown h2 {font-size: 135%;}				.markdown h3 {font-size: 110%;}				.markdown h4 {font-size: 95%;}				.markdown h5 {font-size: 80%;}				.markdown h6 {font-size: 65%;}								.markdown h1.first-h1 {					margin-top: 5px;
 					text-align: center;					/*background: rgba(0,0,0,0.1);					border: 1px solid rgba(0,0,0,0.2);					border-radius: 2px;*/				}								.markdown ul,				.markdown ol {					margin: 3px 0px 5px 50px;				}
 				
 				.markdown ul {
