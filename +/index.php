@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-	$version = 'v0.8.4';
+	include("../version.php");
 	$subdomain = preg_replace('/^(?:([^\.]+)\.)?notestack\.me$/', '\1', $_SERVER['SERVER_NAME']);
 	if ($subdomain == "dev"){
 ?>
