@@ -114,7 +114,7 @@ var notestack = function() {
 
 	// CONSOLE LOG (DEV MODE)
 	var consoleLog = function(msg) {
-		console.log(msg);
+		//console.log(msg);
 	};
 
 	// CLEAR OVERLAYS
@@ -141,14 +141,20 @@ var notestack = function() {
 	
 	// SEARCH
 	var refreshSearch = function() {
-		query = $('.search input').val().toLowerCase();
+		var query = $('.search input').val().toLowerCase();
 		consoleLog(query);
+		var queryArr = query.split(' ');
 		$('.listnote').each(function(){
-			if ($(this).data().content.toLowerCase().indexOf(query) > -1){
-				$(this).removeClass('search-hide');
-			}
-			else{
-				$(this).addClass('search-hide');
+			var content = $(this).data().content.toLowerCase();
+			for(i=0, len=queryArr.length; i < len; i++){
+				consoleLog(queryArr[i]);
+				if (content.indexOf(queryArr[i]) > -1){
+					$(this).removeClass('search-hide');
+				}
+				else{
+					$(this).addClass('search-hide');
+					break;
+				};
 			};
 		});
 		if($('.selected:not(.search-hide,.tag-hide)').length==0){
