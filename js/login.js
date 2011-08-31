@@ -66,6 +66,11 @@ var notestack = function() {
 			$('.login_inner form').hide();
 		};
 		
+		// ON PASSWORD FOCUS
+		$('.password').focus(function(){
+			$('.login_message').text('press enter to login').slideDown('fast');
+		});
+		
 		// ON PASSWORD - ENTER
 		$('.password').keypress(function(e){
 			if(e.which == 13){
