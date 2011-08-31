@@ -88,5 +88,4 @@ var notestack = function() {
 		
 	});
 
-}();
-	
+}(); // CLOSE NOTESTACK NAMESPACE

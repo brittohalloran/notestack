@@ -114,7 +114,7 @@ var notestack = function() {
 
 	// CONSOLE LOG (DEV MODE)
 	var consoleLog = function(msg) {
-		console.log(msg);
+		//console.log(msg);
 	};
 
 	// CLEAR OVERLAYS

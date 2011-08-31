@@ -4,6 +4,10 @@ britt.j.ohalloran@gmail.com
 
 // CHANGE HISTORY
 
+2011-08-31 - v0.8.5
+- improved search method to find multiple words (any order)
+- made login and 'create simplenote account' more intuitive
+
 2011-08-30 - v0.8.4
 - minor performance improvements
 
