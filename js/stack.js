@@ -79,7 +79,7 @@ this.Match_MaxBits,c=0;c<a.length;c++)if(a[c].length1>b){var d=a[c];a.splice(c--
 e+=j.length,i=!1,h.diffs.push([g,j]),d.diffs.shift()):(j=j.substring(0,b-h.length1-this.Patch_Margin),h.length1+=j.length,e+=j.length,g===0?(h.length2+=j.length,f+=j.length):i=!1,h.diffs.push([g,j]),j==d.diffs[0][1]?d.diffs.shift():d.diffs[0][1]=d.diffs[0][1].substring(j.length))}g=this.diff_text2(h.diffs);g=g.substring(g.length-this.Patch_Margin);j=this.diff_text1(d.diffs).substring(0,this.Patch_Margin);j!==""&&(h.length1+=j.length,h.length2+=j.length,h.diffs.length!==0&&h.diffs[h.diffs.length-1][0]===
 0?h.diffs[h.diffs.length-1][1]+=j:h.diffs.push([0,j]));i||a.splice(++c,0,h)}}};i.prototype.patch_toText=function(a){for(var b=[],c=0;c<a.length;c++)b[c]=a[c];return b.join("")};i.prototype.patch_fromText=function(a){var b=[];if(!a)return b;for(var a=a.split("\n"),c=0,d=/^@@ -(\d+),?(\d*) \+(\d+),?(\d*) @@$/;c<a.length;){var e=a[c].match(d);if(!e)throw Error("Invalid patch string: "+a[c]);var f=new w;b.push(f);f.start1=parseInt(e[1],10);e[2]===""?(f.start1--,f.length1=1):e[2]=="0"?f.length1=0:(f.start1--,
 f.length1=parseInt(e[2],10));f.start2=parseInt(e[3],10);e[4]===""?(f.start2--,f.length2=1):e[4]=="0"?f.length2=0:(f.start2--,f.length2=parseInt(e[4],10));for(c++;c<a.length;){e=a[c].charAt(0);try{var g=decodeURI(a[c].substring(1))}catch(h){throw Error("Illegal escape in patch_fromText: "+g);}if(e=="-")f.diffs.push([-1,g]);else if(e=="+")f.diffs.push([1,g]);else if(e==" ")f.diffs.push([0,g]);else if(e=="@")break;else if(e!=="")throw Error('Invalid patch mode "'+e+'" in: '+g);c++}}return b};w.prototype.toString=
-function(){var a,b;a=this.length1===0?this.start1+",0":this.length1==1?this.start1+1:this.start1+1+","+this.length1;b=this.length2===0?this.start2+",0":this.length2==1?this.start2+1:this.start2+1+","+this.length2;a=["@@ -"+a+" +"+b+" @@\n"];var c;for(b=0;b<this.diffs.length;b++){switch(this.diffs[b][0]){case 1:c="+";break;case -1:c="-";break;case 0:c=" "}a[b+1]=c+encodeURI(this.diffs[b][1])+"\n"}return a.join("").replace(/%20/g," ")};window.diff_match_patch=i;window.patch_obj=w;window.DIFF_DELETE=
+function(){var a,b;a=this.length1===0?this.start1+",0":this.length1==1?this.start1+1:this.start1+1+","+this.length1;b=this.length2===0?this.start2+",0":this.length2==1?this.start2+1:this.start2+1+","+this.length2;a=["@@ -"+a+" +"+b+" @@\n"];var c;for(b=0;b<this.diffs.length;b++){switch(this.diffs[b][0]){case 1:c="+";break;case -1:c="-";break;case 0:c=" "}a[b+1]=c+encodeURI(this.diffs[b][1])+"\n"}return a.join("").replace(/%20/g," ")};window.Diff_Match_Patch=i;window.patch_obj=w;window.DIFF_DELETE=
 -1;window.DIFF_INSERT=1;window.DIFF_EQUAL=0})();
 
 // PAGEDOWN (Markdown handler)
@@ -101,545 +101,100 @@ function(a,b){return'<a href="'+b+'">'+n.plainLinkText(b)+"</a>"})}function N(a)
 c){if(b=="~D")return"%24";if(b==":"&&(c==d-1||/[0-9\/]/.test(a.charAt(c+1))))return":";return"%"+b.charCodeAt(0).toString(16)})}function m(a,d,b){d="(["+d.replace(/([\[\]\\])/g,"\\$1")+"])";b&&(d="\\\\"+d);return a=a.replace(RegExp(d,"g"),w)}function w(a,d){return"~E"+d.charCodeAt(0)+"E"}var n=this.hooks=new t;n.addNoop("plainLinkText");n.addNoop("preConversion");n.addNoop("postConversion");var k,l,o,r;this.makeHtml=function(a){if(k)throw Error("Recursive call to converter.makeHtml");k=new u;l=new u;
 o=[];r=0;a=n.preConversion(a);a=a.replace(/~/g,"~T");a=a.replace(/\$/g,"~D");a=a.replace(/\r\n/g,"\n");a=a.replace(/\r/g,"\n");a=E("\n\n"+a+"\n\n");a=a.replace(/^[ \t]+$/mg,"");a=h(a);a=d(a);a=v(a);a=N(a);a=a.replace(/~D/g,"$$");a=a.replace(/~T/g,"~");a=n.postConversion(a);o=l=k=null;return a};var L={ol:"\\d+[.]",ul:"[*+-]"},O=/(?:["'*()[\]:]|~D)/g}})();
 
+/*jslint vars: true*/
+/*global jQuery: false, localStorage: false, sessionStorage: false, 
+window: false, Markdown: false, Diff_Match_Patch: false, document: false*/
+
 // NOTESTACK CODE
-// http://notestack.me
-var notestack = function() {
+// http://notestack.me 
+var notestack = (function () {
 
-	// JQUERY NO-CONFLICT
-	$ = jQuery.noConflict();
+	// Use strict mode
+	// http://www.jslint.com/
+	"use strict";
 
+	// Set up jQuery no conflict mode
+	var $ = jQuery.noConflict();
+
+	// Set Notestack global variables
+	var email, token, storage, indexStart, indexFinish;
+	
 // =====================
-//    BASIC UTILITIES
+//    FUNCTIONS
 // =====================
 
 	// CONSOLE LOG (DEV MODE)
-	var consoleLog = function(msg) {
+	var consoleLog = function (msg) {
 		//console.log(msg);
-	};
-
-	// CLEAR OVERLAYS
-	var clearOverlays = function() {
-		$('.show').not('.settings_pane,.msg').removeClass('show');
-		fullscreenMode("off")
 	};
 	
 	// FULLSCREEN MODE
-	var fullscreenMode = function(direction){
-		if(direction=="off"){
+	var fullscreenMode = function (direction) {
+		if (direction === "off") {
 			$('html body').removeClass('fullscreen-mode');
 			$('.overlay').removeClass('show');
-		}
-		else if(direction=="on"){
+		} else if (direction === "on") {
 			$('html body').addClass('fullscreen-mode');
 			$('.overlay').addClass('show');		
-		}
-		else{
+		} else {
 			$('html body').toggleClass('fullscreen-mode');
 			$('.overlay').toggleClass('show');
-		};
+		}
 	};
 	
-	// SEARCH
-	var refreshSearch = function() {
-		var query = $('.search input').val().toLowerCase();
-		consoleLog(query);
-		var queryArr = query.split(' ');
-		$('.listnote').each(function(){
-			var content = $(this).data().content.toLowerCase();
-			for(i=0, len=queryArr.length; i < len; i++){
-				consoleLog(queryArr[i]);
-				if (content.indexOf(queryArr[i]) > -1){
-					$(this).removeClass('search-hide');
-				}
-				else{
-					$(this).addClass('search-hide');
-					break;
-				};
-			};
-		});
-		if($('.selected:not(.search-hide,.tag-hide)').length==0){
-			$('.selected').removeClass('selected');
-			$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
-		};
-		refreshCards();
-	};
-
-	// STORE/ACCESS DATA
-	var getData = function(key) {
-		if (storage=='localStorage'){
-			return localStorage[key];
-		}
-		else{
-			return sessionStorage[key];
-		};
-	};
-	var setData = function(key, val) {
-		if (storage=='localStorage'){
-			localStorage[key] = val;
-		}
-		else{
-			sessionStorage[key] = val;
-		};
+	// CLEAR OVERLAYS
+	var clearOverlays = function () {
+		$('.show').not('.settings_pane,.msg').removeClass('show');
+		fullscreenMode("off");
 	};
 	
 	// PROGRESS BAR
-	var progressBar = function(percent,callback){
-		if($('.status .progress .inner').length==0){
+	var progressBar = function (percent, callback) {
+		if ($('.status .progress .inner').length === 0) {
 			$('.status').html(
 				'<div class="progress"><div class="inner"></div></div>'
 			);
-		};
-		$('.status .progress .inner').animate({'width': percent + '%'},250,callback);
+		}
+		$('.status .progress .inner').animate({'width': percent + '%'}, 250, callback);
 	};
 	
 	// THROTTLED PROGRESS BAR
 	var throttledProgress = $.throttle(500, true, progressBar);
 	
 	// WINDOW MESSAGE
-	var winMsg = function(message){
+	var winMsg = function (message) {
 		consoleLog(message);
-		if(message == 'clear'){
+		if (message === 'clear') {
 			$('.msg .inner').text('');
 			$('.msg').removeClass('show');
-		}
-		else{
+		} else {
 			$('.msg .inner').text(message);
 			$('.msg').addClass('show');
-		};
-	};
-	
-	// TIMEAGO
-	var bindTimeago = function() {
-		$(".timeago").timeago();
-	};
-	
-	// NEWLINE TO BR
-	var nl2br = function(str) {     
-		return str.replace(/\n/g,"<br>").replace(/\r/g,"");
-	};
-	
-	// STACK TIME
-	var stackTime = function(epoch_seconds){
-		epoch_num = parseFloat(epoch_seconds);
-		time_dt = new Date(epoch_num*1000).toISOString();
-		return time_dt;
-	};
-	var padzero = function(n) {
-		return n < 10 ? '0' + n : n;
-	};
-	var pad2zeros = function(n) {
-		if (n < 100) {
-			n = '0' + n;
 		}
-		if (n < 10) {
-			n = '0' + n;
-		}
-		return n;     
 	};
-	var toISOString = function(d) {
-	  	return d.getUTCFullYear() + '-' +  padzero(d.getUTCMonth() + 1) + '-' + padzero(d.getUTCDate()) + 'T' + padzero(d.getUTCHours()) + ':' +  padzero(d.getUTCMinutes()) + ':' + padzero(d.getUTCSeconds()) + '.' + pad2zeros(d.getUTCMilliseconds()) + 'Z';
-	};
-
-// ===================
-//    NOTE HANDLING
-// ===================
-
-	// REFLOW CARDS
-	var reflowCards = function() {
-		var current = $('#' + $('.selected').data().key);
-		var prev2 = current.prevAll('.on').eq(1);
-		var prev1 = current.prevAll('.on').eq(0);
-		var next1 = current.nextAll('.on').eq(0);
-		var next2 = current.nextAll('.on').eq(1);
-		if(!current.hasClass('current')){$('.current').removeClass('current'); current.addClass('current')};
-		if(!prev2.hasClass('prev2')){$('.prev2').removeClass('prev2'); prev2.addClass('prev2')};
-		if(!prev1.hasClass('prev1')){$('.prev1').removeClass('prev1'); prev1.addClass('prev1')};
-		if(!next1.hasClass('next1')){$('.next1').removeClass('next1'); next1.addClass('next1')};
-		if(!next2.hasClass('next2')){$('.next2').removeClass('next2'); next2.addClass('next2')};
-	};
-	
-	// REFRESH CARDS
-	var refreshCards = function() {
-		if($('.selected').length !== 1){
-			$('.selected').removeClass('selected');
-			$('.listnote:visible:first').addClass('selected');
-		};
-		var allTagsObj = $.parseJSON(localStorage.tagIndex).tags;
-		var allTagsArr = [];
-		for (var i in allTagsObj){
-			allTagsArr.push(allTagsObj[i].name);
-		};
-		var createCard = function(noteObj){
-			// clone template into note card
-			$('#note-template').clone().attr('id', noteObj.key).addClass('note').insertAfter(bookmark);
-			var card = $('#' + noteObj.key);
-			// add syncnum to data for comparison later
-			card.data('syncnum', noteObj.syncnum);
-			// add content to textarea
-			card.children('.textarea').children('.ta-inner').children('textarea').val(noteObj.content);
-			// populate tags
-			var tagStr = noteObj.tags.join(' ');
-			tagfield = card.children('.textarea').children('.tag-area').children('input');
-			tagfield.val(tagStr);
-			tagfield.tagit({
-				"singleFieldDelimiter": " ",
-				"availableTags": allTagsArr
-			}).tagit({
-				"onTagAdded": function(event, tag) {
-					updateTags($('.current').attr('id'));
-				},
-				"onTagRemoved": function(event, tag) {
-					tagName = tag.children('.tagit-label').text();
-					updateTags($('.current').attr('id'), tagName);					
-				}
-			});
-			card.addClass('on');
-			if($.inArray("markdown",noteObj.systemtags)>-1){
-				toggleMarkdown(noteObj.key,'on');
-			};
-			if($.inArray("pinned",noteObj.systemtags)>-1){
-				card.addClass('pinned');
-			};
-			refreshNoteBinds('#' + noteObj.key + ' .textarea textarea');
-		};
-		var bookmark = $('.notes-placeholder');
-		$('.listnote').each(function(){
-			var thisdata = $(this).data();
-			var cardExists = $('#' + thisdata.key).length > 0;
-			var card = cardExists ? $('#' + thisdata.key) : false;
-			if($(this).css('display') == 'none'){ // card shouldn't be shown
-				if(cardExists){ 
-					card.removeClass('on')
-						.removeClass('current')
-						.removeClass('prev1')
-						.removeClass('prev2')
-						.removeClass('next1')
-						.removeClass('next2');
-				};
-			}
-			else{ // card should be shown
-				if(cardExists){ // already exists, just update it
-					if(thisdata.syncnum > card.data().syncnum){ // card is out of date, delete it and update
-						card.remove();
-						createCard(thisdata);
-						card = $('#' + thisdata.key);
-					}
-					else{ // card is current, just turn .on
-						card.addClass('on');
-					};
-					card.insertAfter(bookmark);
-				}
-				else{ // doesn't exist, create it
-					createCard(thisdata);
-					card = $('#' + thisdata.key);
-				};
-			};
-			bookmark = card;
-		}); // end each .listnote loop
-		reflowCards();
-	};
-	
-	// KEY AND CLICK BINDINGS FOR NOTE CARDS
-	var refreshNoteBinds = function(note_tas){
-		//FROM WITHIN NOTE TEXT AREA
-		$(note_tas).bind('keydown','esc',function(){$('.note-directions').removeClass('show');$(this).blur();});
-		$(note_tas).tabby();
-		// MAXIMIZE BUTTON
-		$('.maximize').click(function(){
-			fullscreenMode();
-		});
-		// ON TAG CHANGE
-		$('.tagsinput div input').blur(function(){ 
-			updateTags($('.current').attr('id'));
-		});
-	};
-	
-	// SORT NOTES: PINNED, THEN MODIFIED
-	var sortNotes = function() {
-		consoleLog('sorting notes');
-		$('.listnote').sortElements(function(a, b){
-			if ($(a).hasClass('pinned')){
-				if (!$(b).hasClass('pinned')){return -1};
-			}else if($(b).hasClass('pinned')){
-				if (!$(a).hasClass('pinned')){return 1};
-			};
-			return parseFloat($(a).data('modifydate')) < parseFloat($(b).data('modifydate')) ? 1 : -1;
-		}); 
-		return "sorted";
-	};
-	
-	// NEXT NOTE
-	var nextNote = function() { 
-		consoleLog('nextNote ' + $('.selected').nextAll('.listnote:not(.hide):first').length);
-		nextOne = $('.selected').nextAll('.listnote:visible:first');
-		if(nextOne.length > 0 ) {
-			$('.selected').removeClass('selected');
-			nextOne.addClass('selected');
-			$('.prev2').removeClass('prev2');
-			$('.prev1').addClass('prev2').removeClass('prev1');
-			$('.current').addClass('prev1').removeClass('current');
-			$('.next1').addClass('current').removeClass('next1');
-			$('.next2').addClass('next1').removeClass('next2');
-			$('.next1').nextAll('.on').eq(0).addClass('next2');			
-			scrollto();
-		};
-	};
-	
-	// PREVIOUS NOTE
-	var prevNote = function() {
-		consoleLog('prevNote');
-		prevOne = $('.selected').prevAll('.listnote:visible:first')
-		if(prevOne.length>0) {
-			$('.selected').removeClass('selected');
-			prevOne.addClass('selected');
-			$('.next2').removeClass('next2');
-			$('.next1').removeClass('next1').addClass('next2');
-			$('.current').removeClass('current').addClass('next1');
-			$('.prev1').removeClass('prev1').addClass('current');
-			$('.prev2').removeClass('prev2').addClass('prev1');
-			$('.prev1').prevAll('.on').eq(0).addClass('prev2');
-			
-			scrollto();
-		};
-	};
-	
-	// TOGGLE MARKDOWN
-	var toggleMarkdown = function(notekey, direction, temp) {
-		notekey = notekey ? notekey : $('.current').attr('id');
-		if(direction == undefined){
-			if($('#' + notekey).hasClass('markdown-on')){
-				direction = 'off';
-			}
-			else{
-				direction = 'on';
-			};
-		};
-		if(temp != 'temp') temp = 'stick';
-		var notecard = $('#' + notekey);
-		var listnote = $('#list-' + notekey);
-		var listnotedata = listnote.data();
-		var ta_div = notecard.children('.textarea');
-		if(direction == 'on'){
-			notecard.removeClass('markdown-off').addClass('markdown-on');
-			var converter = new Markdown.Converter();
-			var markhtml = converter.makeHtml('# ' + ta_div.children('.ta-inner').children('textarea').val());
-			//markhtml = nl2br(markhtml);
-			ta_div.children('.ta-inner').replaceWith('<div class="markdown">' + markhtml + '</div>');
-			ta_div.children('.markdown').children('h1:first').addClass('first-h1');
-			ta_div.children('.markdown').children('p').each(function(){
-				$(this).html(nl2br($(this).html()));
-			});
-			if($.inArray('markdown',listnotedata.systemtags)<0){
-				listnotedata.systemtags.push('markdown');
-				listnotedata.syncnum++;
-				localStorage.setItem(listnotedata.key,JSON.stringify(listnote.data()));
-				localToDOM(listnotedata.key);
-				manualSync();
-			};
-		}
-		else if(direction == 'off'){
-			notecard.removeClass('markdown-on').addClass('markdown-off');
-			var notecontent = listnotedata.content;
-			ta_div.children('.markdown').replaceWith('<div class="ta-inner"><textarea>' + notecontent + '</textarea></div>');
-			refreshNoteBinds(ta_div.children('.ta-inner').children('textarea'));
-			if(temp == 'stick'){
-				var mk = listnote.data().systemtags.indexOf('markdown');
-				if(mk>-1) listnotedata.systemtags.splice(mk,1);
-				listnotedata.syncnum = listnotedata.syncnum + 1;
-				localStorage.setItem(listnotedata.key,JSON.stringify(listnote.data()));
-				localToDOM(listnotedata.key);
-				manualSync();
-			};
-		};
-	};
-	
-	// TOGGLE PIN
-	var togglePin = function(listitem) {
-		winMsg('Working...');
-		if(listitem == undefined){
-			if($('.selected').length>-1){
-				listitem = $('.selected');
-			};
-		};
-		if(listitem.data().systemtags.indexOf('pinned')>-1){
-			// already pinned, remove pin
-			listitem.data().systemtags.splice(listitem.data().systemtags.indexOf('pinned'),1);
-		}
-		else{
-			// not pinned, add pin
-			listitem.data().systemtags.push('pinned');
-		};
-		listitem.data().syncnum = listitem.data().syncnum + 1;
-		localStorage.setItem( listitem.data().key, JSON.stringify( listitem.data() ) );
-		localToDOM( listitem.data().key );
-		sortNotes();
-		refreshCards();
-		winMsg('clear');
-	};
-	
-	// CREATE NEW NOTE
-	var createNote = function() {
-		createdate = (new Date()).getTime();
-		newid = 'notestack' + createdate;
-		newdata = {key: newid, createdate: createdate/1000, modifydate: createdate/1000, tags: [], systemtags: [], content: "new note"};
-		localStorage.setItem(newid, JSON.stringify(newdata));
-		index = $.parseJSON(localStorage.index);
-		index.data.push(newdata);
-		consoleLog(index.data);
-		localStorage.index = JSON.stringify(index);
-		localToDOM( newid );
-		sortNotes();
-		$('.selected').removeClass('selected');
-		$('#list-' + newid).addClass('selected');
-		refreshCards();
-		$('.current .textarea textarea').select();
-	};
-	
-	// DELETE NOTE
-	var deleteNote = function(notekey) {
-		note = $('#list-' + notekey).data()
-		note.deleted = 1;
-		note.modifydate = (new Date()).getTime()/1000;
-		note.syncnum = note.syncnum + 1;
-		localStorage.setItem(note.key,JSON.stringify(note));
-		$('#list-' + notekey).remove();
-		$('#' + notekey).remove();
-		$('.listnote:first').addClass('.selected');
-		refreshCards();
-	};
-	
-	// SCROLL TO SELECTED NOTE
-	var scrollto = function(){
-		if($('.selected').position().top < 0){
-			$('.list').scrollTop($('.list').scrollTop() + $('.selected').position().top);
-		};
-		if($('.selected').position().top + $('.listnote').height() > $('.list').height()){
-			$('.list').scrollTop($('.list').scrollTop() + $('.selected').position().top - $('.list').height() + $('.listnote').height());
-		};
-	};
-	
-	// VIEW ALL NOTES (UNFILTER)
-	var viewAll = function(){
-		$('html body').removeClass('tag-filter');
-		$('.active-tag-filter').remove();
-		$('.listnote').removeClass('tag-hide');
-		$('.selected').removeClass('selected');
-		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
-		$('.search input').val('');
-		refreshSearch();
-	};
-
-// ==============
-//    VERSIONS
-// ==============
-	
-	// SORT VERSIONS
-	var sortVersions = function() {
-		$('.version-item').sortElements(function(a, b){
-			return parseFloat($(a).data('version')) < parseFloat($(b).data('version')) ? 1 : -1;
-		}); 
-		return "sorted";
-	};
-	
-	// DIFF VERSIONS
-	var diffVersions = function(fromtext,totext){
-		var dmp = new diff_match_patch();
-	  	var d = dmp.diff_main(fromtext, totext);
-	  	dmp.diff_cleanupSemantic(d);
-	  	var ds = dmp.diff_prettyHtml(d);
-		return ds;
-	};
-	
-	// GET VERSION OF NOTE
-	var getNoteVersion = function(notekey,version){
-		return $.Deferred(function(dfd){
-			$.ajax('/sn.php',{
-				type: 'POST',
-				data: {'action': 'noteversion', 'email': email,'token': token,'notekey': notekey, 'noteversion': version},
-				success: function(data){
-					note = $.parseJSON(data);
-					$('#version-template').clone().attr('id',notekey + "version" + note.version).addClass('version-item').appendTo('.versions .versions-left').data(note);
-					thisversion = $('#' + notekey + 'version' + note.version);
-					//thisversion.children('.version-num').text(note.version);
-					thisversion.children('.version-date').html('<abbr class="timeago" title="' + stackTime(note.versiondate) + '"></abbr>');
-					bindTimeago();
-					sortVersions();
-					dfd.resolve();
-				},
-				error: function(msg){
-					return 'false';
-				}
-			});
-		}).promise();
-	};
-	
-	// GET ALL VERSIONS OF NOTE
-	var populateVersions = function(notekey){
-		$('.version-item').remove();
-		var verarray = [];
-		noteobj = $.parseJSON(localStorage.getItem(notekey));
-		curversion = noteobj.version;
-		minversion = noteobj.minversion;
-		for (i=minversion;i<=curversion;i++){
-			verarray.push(getNoteVersion(notekey,i));
-		};
-		$.when.apply(null, verarray).done(function(){
-			consoleLog('done with all versions');
-			$('.version-item').each(function(){
-				if ($(this).data().version > minversion){
-					prev = $(this).data().version - 1;
-					ds = diffVersions($('#' + notekey + "version" + prev ).data().content,$(this).data().content);
-					$(this).data('diff',ds);
-				}
-				else if ($(this).data().version == minversion){
-					$(this).data('diff',$(this).data().content);
-				};
-			});
-			$('.versions-right .right-inner').html($('.version-item:first').data().diff);
-			$('.version-item:first').addClass('version-select');
-		});
-	};
-	
-	// TOGGLE SHOWING OF VERSIONS WINDOW
-	var toggleVersions = function(notekey){
-		if($('.versions').hasClass('show')){
-			clearOverlays();
-		}
-		else{
-			fullscreenMode('off');
-			$('.versions').addClass('show');
-			$('.overlay').addClass('show');
-			$('.versions-right .right-inner').html("");
-			populateVersions(notekey);
-		};
-	};
-
-// ===================
-//    TAGS / LABELS
-// ===================
 	
 	// GET TAG INDEX
-	var getTagIndex = function(){
-		return $.Deferred(function(dfd_tag){
-			postData = {
+	var getTagIndex = function () {
+		return $.Deferred(function (dfd_tag) {
+			var postData = {
 				'action': 'tagIndex',
 				'email': localStorage.email,
 				'token': localStorage.token
 			};
 			consoleLog('starting tagIndex pull');
-			$.ajax('/sn.php',{
+			$.ajax('/sn.php', {
 				type: 'POST',
 				data: postData,
 				timeout: 3000,
-				success: function(rawTagIndex){
-					if(rawTagIndex=='401'){
+				success: function (rawTagIndex) {
+					if (rawTagIndex === '401') {
 						window.location = '/?login=expired';
-					};
-					localStorage['tagIndex'] = rawTagIndex;
-					consoleLog('stored tagIndex')
+					}
+					localStorage.tagIndex = rawTagIndex;
+					consoleLog('stored tagIndex');
 					dfd_tag.resolve();
 				},
-				error: function(msg){
+				error: function (msg) {
 					$('.status').text('Working offline. Changes will sync when connected.');
 					$('.status-div').removeClass('loading');
 				}
@@ -647,321 +202,52 @@ var notestack = function() {
 		});
 	};
 	
-	// SHOW LABELS OVERLAY
-	var showLabels = function(){
-		if($('.labels').hasClass('show')){
-			clearOverlays();
-		}
-		else{
-			fullscreenMode('off');
-			populateLabels();
-			$('.labels').addClass('show');
-			$('.overlay').addClass('show');
-			$('.labels input').val("").select();
-		};
-		return false;
-		e.preventDefault();
-	};
-	
-	// POPULATE LABELS INTO LABEL OVERLAY
-	var populateLabels = function(){
-		$('.labels .item').remove();
-		var tagIndex = $.parseJSON(localStorage.tagIndex);
-		var notecount=$('.listnote').length;
-		for (i=0;i<tagIndex.count;i++) {
-			tagname = tagIndex.tags[i].name;
-			tagid = tagname.replace('@', '').replace('.','');
-			j=0;
-			$('.listnote').each(function(){
-				if($.inArray(tagname,$(this).data().tags)>-1){
-					consoleLog(tagname + $(this).data().tags);
-					j++;
-				};
-			});
-			$('#label-template').clone().attr('id',tagid).addClass('item').appendTo('.labels .items');
-			$('#' + tagid).children('.name').html('<pre>' + tagname + '</pre>');
-			$('#' + tagid).children('.notecount').text(j + " notes");
-		};
-		$('.labels .item').sortElements(function(a, b){
-			return parseFloat($(a).children('.notecount').text()) < parseFloat($(b).children('.notecount').text()) ? 1 : -1;
-		}); 
-	};
-	
-	// SEARCH FOR LABELS
-	var labelSearch = function() {
-		query = $('.labels input').val().toLowerCase();
-		consoleLog(query);
-		$('.labels .item').each(function(){
-			if ($(this).children('.name').text().toLowerCase().indexOf(query) > -1){
-				$(this).removeClass('hide');
-			}
-			else{
-				$(this).addClass('hide');
-			};
-		});
-		$('.label-select').removeClass('label-select');
-		$('.labels .item:not(.hide):first').addClass('label-select');
-	};
-	
-	// SELECT PREVIOUS LABEL
-	var prevLabel = function() {
-		prevOne = $('.label-select').prevAll('.item:not(.hide):first');
-		if( prevOne.length > 0 ) {
-			$('.label-select').removeClass('label-select');
-			prevOne.addClass('label-select');
-		};
-	};
-	
-	// SELECT NEXT LABEL
-	var nextLabel = function() {
-		nextOne = $('.label-select').nextAll('.item:not(.hide):first');
-		if( nextOne.length > 0 ) {
-			$('.label-select').removeClass('label-select');
-			nextOne.addClass('label-select');
-		};
-	};
-	
-	// UPDATE TAGS
-	var updateTags = function(notekey, deletetag){
-		var tags = $('#' + notekey + ' .tag-area input').val().split(' ');
-		var indx = tags.indexOf(deletetag);
-		if (indx != -1) tags.splice(indx, 1);
-		consoleLog(tags);
-		note = $.parseJSON(localStorage[notekey]);
-		if (note.tags != tags){
-			note.tags = tags;
-			note.syncnum = note.syncnum + 1;
-			localStorage[notekey] = JSON.stringify(note);
-			localToDOM(notekey);
-			manualSync();
-		};
-	};
-	
-	// FILTER BY LABEL
-	var filterByLabel = function(labelName) {
-		winMsg('Working...');
-		$('.labels input').val('').blur()
-		clearOverlays();
-		unfilterLabel('partial');
-		$('html body').addClass('tag-filter');
-		$('#tag-filter-template').clone().attr('id','').addClass('active-tag-filter').insertBefore('.list');
-		$('.active-tag-filter .inner .tag-filter-label').text(labelName);
-		$('.listnote').each(function(){
-			if(!($.inArray(labelName,$(this).data().tags) > -1)){
-				$(this).addClass('tag-hide');
-			}; 
-		});
-		$('.selected').removeClass('selected');
-		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
-		refreshCards();
-		winMsg('clear');
-	};
-	
-	// UNFILTER LABEL
-	var unfilterLabel = function(partial) {
-		$('.tag-hide').removeClass('tag-hide');
-		$('.active-tag-filter').remove();
-		if(partial !== 'partial'){
-			$('html body').removeClass('tag-filter');
-			$('.selected').removeClass('selected');
-			$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
-			refreshCards();
-		};
-	};
-
-// =====================
-//    SIMPLENOTE SYNC
-// =====================
-
-	// DOWNLOAD ONE NOTE
-	var getNote = function(notekey){
-		return $.Deferred(function(dfd_get){
-			consoleLog('getNote(' + notekey + ')');
-			$.ajax('/sn.php',{
-				type: 'POST',
-				data: {'action': 'note', 'email': email,'token': token,'notekey': notekey},
-				success: function(data){
-					consoleLog('getNote() success');
-					note = $.parseJSON(data);
-					consoleLog(note);
-					localStorage.setItem(note.key,data);
-					localToDOM(note.key);
-					dfd_get.resolve();
-				},
-				error: function(msg){
-					consoleLog('error getting note ' + notekey + ' error:' + msg);
-				}
-			});
-		}).promise();
-	};
-	
-	// UPLOAD/SEND ONE NOTE
-	var sendNote = function(noteobject){
-		var dfd = $.Deferred();
-		var postData = {'action': 'sendnote', 'email': email,'token': token,'notekey': noteobject.key,'notebody': JSON.stringify(noteobject)},
-		newnote = 0;
-		if(noteobject.key.substr(0,9) == 'notestack'){
-			delete postData.notekey;
-			delete noteobject.key;
-			postData['notebody'] = JSON.stringify(noteobject);
-			newnote = 1;
-		};
-		$.ajax('/sn.php',{
-			type: 'POST',
-			data: postData,
-			success: function(data){
-				consoleLog('note updated');
-				note = $.parseJSON(data);
-				consoleLog(note);
-				if(!("content" in note)){
-					note['content'] = noteobject.content;
-				};
-				if(newnote = 1){
-					index = $.parseJSON(localStorage.index);
-					for (i=0; i<=index.data.length-1; i++){
-						if (index.data[i].key.substr(0,9)=='notestack'){
-							consoleLog('deleting from index: ' + index.data[i].key);
-							$('#list-' + index.data[i].key).remove();
-							localStorage.removeItem(index.data[i].key);
-							index.data.splice(i,1);
-							break
-						};
-					};
-					localStorage.index = JSON.stringify(index);
-				};
-				localStorage.setItem(note.key,JSON.stringify(note));
-				localToDOM(note.key);
-				$('#list-' + note.key).addClass('selected');
-				sortNotes();
-				refreshCards();
-				dfd.resolve();
-			},
-			error: function(msg){
-				consoleLog('error getting note ' + notekey + ' error:' + msg);
-			}
-		});
-		return dfd.promise();
-	};
-	
-	// CHECK ALL NOTES FOR UPDATES AGAINST INDEX
-	var updateAllNotes = function() {
-		return $.Deferred(function(dfd_uan){
-			consoleLog('iterating through index, showing local, getting if needed');
-			index = $.parseJSON(localStorage.index);
-			var i=0, set=0, snarray=[], notecount=0, deletedcount=0;
-			function updateSome(num){
-				for (i=set;i<=set+num;i++){
-					throttledProgress(50 + Math.round(50*(i/index.data.length))); 
-					if (!index.data[i]){
-						consoleLog('broke at ' + i);
-						dfd_uan.resolve();
-						var breaker = true;
-						break;
-					};
-					if (localStorage.getItem(index.data[i].key)){
-						localNote = $.parseJSON(localStorage.getItem(index.data[i].key));
-						if (localNote.key.substr(0,9) == 'notestack'){
-							// completely new local note, send it
-							snarray.push(sendNote(localNote));
-						}
-						else{
-							if (localNote.syncnum < index.data[i].syncnum){ 
-								// new remove version, get it
-								snarray.push(getNote(localNote.key));
-							}
-							else if (localNote.syncnum > index.data[i].syncnum){ 
-								// local version is newer, send it
-								snarray.push(sendNote(localNote));
-							}
-							else{ 
-								// have latest note, just show it
-								localToDOM(localNote.key);
-							};
-						};
-					}
-					else{ 
-						// completely new remote note, get it
-						snarray.push(getNote(index.data[i].key));
-					};
-					if (index.data[i].deleted==0){
-						notecount++;
-					}
-					else if (index.data[i].deleted==1){
-						deletedcount++;
-					};
-				};
-				if(breaker == true){return false};
-				if(snarray.length>0){
-					$.when.apply(null, snarray).done(function(){
-						set = set + num + 1;
-						snarray = [];
-						sortNotes();
-						refreshCards();
-						updateSome(num);
-					});
-				}
-				else{
-					set = set + num + 1;
-					snarray = [];
-					updateSome(num);
-				};
-			};
-			updateSome(20);
-			$('.note-data').text(notecount + ' notes | ');
-			$('.data_notes').text(notecount);
-			$('.data_deleted').text(deletedcount);
-			//$('.status').text('Syncing ' + snarray.length + ' notes');
-			//$('.status-div').addClass('loading');
-		}).promise();
-	};
-	
 	// SYNC INDEX
-	var syncIndex = function(postData){
-		return $.Deferred(function(dfd_syn){
-			$.ajax('/sn.php',{
+	var syncIndex = function (postData) {
+		return $.Deferred(function (dfd_syn) {
+			$.ajax('/sn.php', {
 				type: 'POST',
 				data: postData,
 				timeout: 5000,
-				success: function(rawNewIndex){
-					if(rawNewIndex=='401'){
+				success: function (rawNewIndex) {
+					var newIndex, existingIndex, i, leni, j, lenj;
+					if (rawNewIndex === '401') {
 						window.location = '/?login=expired';
-					};
+					}
 					newIndex = $.parseJSON(rawNewIndex);
 					consoleLog('recieved new index with ' + newIndex.count + ' new notes');
-					if(localStorage.index){
+					if (localStorage.index) {
 						existingIndex = $.parseJSON(localStorage.index);
-						for (i=0;i<=newIndex.data.length-1;i++){
-							for (j=0;j<=existingIndex.data.length-1;j++){
-								if(existingIndex.data[j].key==newIndex.data[i].key){
-									existingIndex.data.splice(j,1);
-									break
-								};
-							};
+						for (i = 0, leni = newIndex.data.length; i < leni; i += 1) {
+							for (j = 0, lenj = existingIndex.data.length; j < lenj; j += 1) {
+								if (existingIndex.data[j].key === newIndex.data[i].key) {
+									existingIndex.data.splice(j, 1);
+									break;
+								}
+							}
 							existingIndex.data.push(newIndex.data[i]);
-						};
+						}
 						existingIndex.count = existingIndex.data.length;
-					}
-					else{
+					} else {
 						existingIndex = newIndex;
-					};
-					localStorage.setItem('mark',newIndex.mark ? newIndex.mark : "DONE");
+					}
+					localStorage.setItem('mark', newIndex.mark || "DONE");
 					consoleLog(localStorage.mark);
-					localStorage.setItem('index',JSON.stringify(existingIndex));
-					localStorage.setItem('indexDate',newIndex.time);
-					if (localStorage.mark == "DONE"){ 
+					localStorage.setItem('index', JSON.stringify(existingIndex));
+					localStorage.setItem('indexDate', newIndex.time);
+					if (localStorage.mark === "DONE") { 
 						localStorage.removeItem('mark');
 						consoleLog('done syncing index');
 						dfd_syn.resolve();
-					}
-					else{ 
+					} else { 
 						// dfd_syn.reject();
-						postData['mark'] = localStorage.mark;
-						$.when(syncIndex(postData)).done(function(){
+						postData.mark = localStorage.mark;
+						$.when(syncIndex(postData)).done(function () {
 							dfd_syn.resolve();
 						});					
-					};
+					}
 				},
-				error: function(msg){
+				error: function (msg) {
 					$('.status').text('Working offline. Changes will sync when connected.');
 					$('.status-div').removeClass('loading');
 				}
@@ -970,29 +256,357 @@ var notestack = function() {
 		}).promise();
 	};
 	
+	// UPDATE NOTE PREVIEW AND PIN
+	var updateListnote = function (key) {
+		var thisnote = $('#list-' + key);
+		thisnote.removeClass('pinned');
+		if (thisnote.data().systemtags.indexOf('pinned') > -1) {thisnote.addClass('pinned'); }
+		var titlebreak = thisnote.data().content.indexOf('\n');
+		if (titlebreak < 0) {
+			thisnote.children('.title').text(thisnote.data().content.substring(0, 100));
+			thisnote.children('.preview').text('');
+		} else {
+			thisnote.children('.title').text(thisnote.data().content.substring(0, titlebreak));
+			thisnote.children('.preview').text(thisnote.data().content.substr(titlebreak, 100));
+		}
+	};
+	
+	// MOVE ONE NOTE FROM LOCAL STORAGE TO DOM
+	var localToDOM = function (key) { // add to DOM from localStorage
+		return $.Deferred(function (dfd_ltd) {
+			var note = $.parseJSON(localStorage.getItem(key));
+			if (note.deleted !== 1) {
+				if ($('#list-' + note.key).length > 0) {
+					$('#list-' + note.key).removeData().data(note);
+				} else {
+					$('#listnote-template').clone().attr('id', 'list-' + note.key).addClass('listnote').appendTo('.list').data(note);
+				}
+				updateListnote(note.key);
+				dfd_ltd.resolve();
+			}
+		}).promise();
+	};
+	
+	// SHOW ALL LOCAL NOTES
+	var allLocalToDOM = function () {
+		var i, len, index;
+		//$('.status').text('Loading notes from local storage');
+		//$('.status-div').addClass('loading');
+		progressBar(10);
+		if (localStorage.index) {
+			index = $.parseJSON(localStorage.index);
+			consoleLog('loading ' + index.data.length + ' local notes');
+			for (i = 0, len = index.data.length; i < len; i += 1) {
+				if ((localStorage.getItem(index.data[i].key) !== null)) {
+					localToDOM(index.data[i].key);
+				}
+			}
+		}
+		consoleLog('local notes loaded');
+	};
+	
+	// SORT NOTES: PINNED, THEN MODIFIED
+	var sortNotes = function () {
+		consoleLog('sorting notes');
+		$('.listnote').sortElements(function (a, b) {
+			if ($(a).hasClass('pinned')) {
+				if (!$(b).hasClass('pinned')) {return -1; }
+			} else if ($(b).hasClass('pinned')) {
+				if (!$(a).hasClass('pinned')) {return 1; }
+			}
+			return parseFloat($(a).data('modifydate')) < parseFloat($(b).data('modifydate')) ? 1 : -1;
+		}); 
+		return "sorted";
+	};
+	
+	// REFLOW CARDS
+	var reflowCards = function () {
+		var current = $('#' + $('.selected').data().key);
+		var prev2 = current.prevAll('.on').eq(1);
+		var prev1 = current.prevAll('.on').eq(0);
+		var next1 = current.nextAll('.on').eq(0);
+		var next2 = current.nextAll('.on').eq(1);
+		if (!current.hasClass('current')) {$('.current').removeClass('current'); current.addClass('current'); }
+		if (!prev2.hasClass('prev2')) {$('.prev2').removeClass('prev2'); prev2.addClass('prev2'); }
+		if (!prev1.hasClass('prev1')) {$('.prev1').removeClass('prev1'); prev1.addClass('prev1'); }
+		if (!next1.hasClass('next1')) {$('.next1').removeClass('next1'); next1.addClass('next1'); }
+		if (!next2.hasClass('next2')) {$('.next2').removeClass('next2'); next2.addClass('next2'); }
+	};
+	
+	// NEWLINE TO BR
+	var nl2br = function (str) {     
+		return str.replace(/\n/g, "<br>").replace(/\r/g, "");
+	};
+	
+	// REFRESH CARDS
+	var refreshCards = function () {
+		var i, len, allTagsObj, allTagsArr, bookmark;
+		if ($('.selected').length !== 1) {
+			$('.selected').removeClass('selected');
+			$('.listnote:visible:first').addClass('selected');
+		}
+		allTagsObj = $.parseJSON(localStorage.tagIndex).tags;
+		allTagsArr = [];
+		for (i = 0, len = allTagsObj.length; i < len; i += 1) {
+			allTagsArr.push(allTagsObj[i].name);
+		}
+		var createCard = function (noteObj) {
+			var card, tagStr, tagfield, tagName;
+			// clone template into note card
+			$('#note-template').clone().attr('id', noteObj.key).addClass('note').insertAfter(bookmark);
+			card = $('#' + noteObj.key);
+			// add syncnum to data for comparison later
+			card.data('syncnum', noteObj.syncnum);
+			// add content to textarea
+			card.children('.textarea').children('.ta-inner').children('textarea').val(noteObj.content);
+			// populate tags
+			tagStr = noteObj.tags.join(' ');
+			tagfield = card.children('.textarea').children('.tag-area').children('input');
+			tagfield.val(tagStr);
+			tagfield.tagit({
+				"singleFieldDelimiter": " ",
+				"availableTags": allTagsArr
+			}).tagit({
+				"onTagAdded": function (event, tag) {
+					updateTags($('.current').attr('id'));
+				},
+				"onTagRemoved": function (event, tag) {
+					var tagName = tag.children('.tagit-label').text();
+					updateTags($('.current').attr('id'), tagName);					
+				}
+			});
+			card.addClass('on');
+			if ($.inArray("markdown", noteObj.systemtags) > -1) {
+				toggleMarkdown(noteObj.key, 'on');
+			}
+			if ($.inArray("pinned", noteObj.systemtags) > -1) {
+				card.addClass('pinned');
+			}
+			refreshNoteBinds('#' + noteObj.key + ' .textarea textarea');
+		};
+		bookmark = $('.notes-placeholder');
+		$('.listnote').each(function () {
+			var thisdata = $(this).data();
+			var cardExists = $('#' + thisdata.key).length > 0;
+			var card = cardExists ? $('#' + thisdata.key) : false;
+			if ($(this).css('display') === 'none') { // card shouldn't be shown
+				if (cardExists) { 
+					card.removeClass('on')
+						.removeClass('current')
+						.removeClass('prev1')
+						.removeClass('prev2')
+						.removeClass('next1')
+						.removeClass('next2');
+				}
+			} else { // card should be shown
+				if (cardExists) { // already exists, just update it
+					if (thisdata.syncnum > card.data().syncnum) { // card is out of date, delete it and update
+						card.remove();
+						createCard(thisdata);
+						card = $('#' + thisdata.key);
+					} else { // card is current, just turn .on
+						card.addClass('on');
+					}
+					card.insertAfter(bookmark);
+				} else { // doesn't exist, create it
+					createCard(thisdata);
+					card = $('#' + thisdata.key);
+				}
+			}
+			bookmark = card;
+		}); // end each .listnote loop
+		reflowCards();
+	};
+	
+	// UPLOAD/SEND ONE NOTE
+	var sendNote = function (noteobject) {
+		var dfd = $.Deferred();
+		var postData = {'action': 'sendnote', 'email': email, 'token': token, 'notekey': noteobject.key, 'notebody': JSON.stringify(noteobject)};
+		var newnote = 0;
+		if (noteobject.key.substr(0, 9) === 'notestack') {
+			delete postData.notekey;
+			delete noteobject.key;
+			postData.notebody = JSON.stringify(noteobject);
+			newnote = 1;
+		}
+		$.ajax('/sn.php', {
+			type: 'POST',
+			data: postData,
+			success: function (data) {
+				var note, index, i, len;
+				consoleLog('note updated');
+				note = $.parseJSON(data);
+				consoleLog(note);
+				if (note.content === undefined) {
+					note.content = noteobject.content;
+				}
+				if (newnote === 1) {
+					index = $.parseJSON(localStorage.index);
+					for (i = 0, len = index.data.length; i < len; i += 1) {
+						if (index.data[i].key.substr(0, 9) === 'notestack') {
+							consoleLog('deleting from index: ' + index.data[i].key);
+							$('#list-' + index.data[i].key).remove();
+							localStorage.removeItem(index.data[i].key);
+							index.data.splice(i, 1);
+							break;
+						}
+					}
+					localStorage.index = JSON.stringify(index);
+				}
+				localStorage.setItem(note.key, JSON.stringify(note));
+				localToDOM(note.key);
+				$('#list-' + note.key).addClass('selected');
+				sortNotes();
+				refreshCards();
+				dfd.resolve();
+			},
+			error: function (msg) {
+				consoleLog('error getting note ' + noteobject.key + ' error:' + msg);
+			}
+		});
+		return dfd.promise();
+	};
+	
+	// DOWNLOAD ONE NOTE
+	var getNote = function (notekey) {
+		return $.Deferred(function (dfd_get) {
+			consoleLog('getNote(' + notekey + ')');
+			$.ajax('/sn.php', {
+				type: 'POST',
+				data: {'action': 'note', 'email': email, 'token': token, 'notekey': notekey},
+				success: function (data) {
+					var note;
+					consoleLog('getNote() success');
+					note = $.parseJSON(data);
+					consoleLog(note);
+					localStorage.setItem(note.key, data);
+					localToDOM(note.key);
+					dfd_get.resolve();
+				},
+				error: function (msg) {
+					consoleLog('error getting note ' + notekey + ' error:' + msg);
+				}
+			});
+		}).promise();
+	};
+	
+	// CHECK ALL NOTES FOR UPDATES AGAINST INDEX
+	var updateAllNotes = function () {
+		return $.Deferred(function (dfd_uan) {
+			var index, i, len, set = 0, snarray = [], notecount = 0, deletedcount = 0;
+			consoleLog('iterating through index, showing local, getting if needed');
+			index = $.parseJSON(localStorage.index);
+			function updateSome(num) {
+				var localNote, breaker;
+				for (i = set, len = set + num; i <= len; i += 1) {
+					throttledProgress(50 + Math.round(50 * (i / index.data.length))); 
+					if (!index.data[i]) {
+						consoleLog('broke at ' + i);
+						dfd_uan.resolve();
+						breaker = true;
+						break;
+					}
+					if (localStorage.getItem(index.data[i].key)) {
+						localNote = $.parseJSON(localStorage.getItem(index.data[i].key));
+						if (localNote.key.substr(0, 9) === 'notestack') {
+							// completely new local note, send it
+							snarray.push(sendNote(localNote));
+						} else {
+							if (localNote.syncnum < index.data[i].syncnum) { 
+								// new remove version, get it
+								snarray.push(getNote(localNote.key));
+							} else if (localNote.syncnum > index.data[i].syncnum) { 
+								// local version is newer, send it
+								snarray.push(sendNote(localNote));
+							} else { 
+								// have latest note, just show it
+								localToDOM(localNote.key);
+							}
+						}
+					} else { 
+						// completely new remote note, get it
+						snarray.push(getNote(index.data[i].key));
+					}
+					if (index.data[i].deleted === 0) {
+						notecount += 1;
+					} else if (index.data[i].deleted === 1) {
+						deletedcount += 1;
+					}
+				}
+				if (breaker === true) {
+					$('.note-data').text(notecount + ' notes | ');
+					$('.data_notes').text(notecount);
+					$('.data_deleted').text(deletedcount);
+					return false; 
+				}
+				if (snarray.length > 0) {
+					$.when.apply(null, snarray).done(function () {
+						set += num + 1;
+						snarray = [];
+						sortNotes();
+						refreshCards();
+						updateSome(num);
+					});
+				} else {
+					set = set + num + 1;
+					snarray = [];
+					updateSome(num);
+				}
+			}
+			updateSome(20);
+		}).promise();
+	};
+	
+	// STACK TIME
+	var stackTime = function (epoch_seconds) {
+		var epoch_num, time_dt;
+		epoch_num = parseFloat(epoch_seconds);
+		time_dt = new Date(epoch_num * 1000).toISOString();
+		return time_dt;
+	};
+	var padzero = function (n) {
+		return n < 10 ? '0' + n : n;
+	};
+	var pad2zeros = function (n) {
+		if (n < 100) {
+			n = '0' + n;
+		}
+		if (n < 10) {
+			n = '0' + n;
+		}
+		return n;     
+	};
+	var toISOString = function (d) {
+		return d.getUTCFullYear() + '-' + padzero(d.getUTCMonth() + 1) + '-' + padzero(d.getUTCDate()) + 'T' + padzero(d.getUTCHours()) + ':' + padzero(d.getUTCMinutes()) + ':' + padzero(d.getUTCSeconds()) + '.' + pad2zeros(d.getUTCMilliseconds()) + 'Z';
+	};
+	
+	// TIMEAGO
+	var bindTimeago = function () {
+		$(".timeago").timeago();
+	};
+	
 	// MANUAL SYNC
-	var manualSync = function(syncType){
+	var manualSync = function (syncType) {
 		progressBar(5);
-		if(localStorage.token){
-			$.when(getTagIndex()).done(function(){
+		if (localStorage.token) {
+			$.when(getTagIndex()).done(function () {
+				var since, mark;
 				consoleLog('done with tag index');
 				//$('.status').text('Syncing with Simplenote');
 				//$('.status-div').addClass('loading');
 				progressBar(25);
-				if(syncType == 'full'){
+				if (syncType === 'full') {
 					since = "";
 					mark = "";
-				}
-				else{
-					if(localStorage.mark){
+				} else {
+					if (localStorage.mark) {
 						since = "";
 						mark = localStorage.mark;
-					}
-					else{
-						since = localStorage.indexDate ? localStorage.indexDate : "";
+					} else {
+						since = localStorage.indexDate || "";
 						mark = "";
-					};
-				};
+					}
+				}
 				email = localStorage.email;
 				token = localStorage.token;
 				$.when(syncIndex({
@@ -1002,12 +616,13 @@ var notestack = function() {
 					'since': since,
 					'mark' : mark,
 					'length': 100
-				})).done(function(){
+				})).done(function () {
 					progressBar(50);
 					indexFinish = new Date().getTime();
 					consoleLog('indexTime = ' + (indexFinish - indexStart));
-					$.when(updateAllNotes()).done(function(){
-						progressBar(100,function(){
+					$.when(updateAllNotes()).done(function () {
+						progressBar(100, function () {
+							var indexDate;
 							consoleLog('inside progressBar done');
 							indexDate = stackTime(localStorage.indexDate);
 							$('.status').html('synced <abbr class="timeago" title="' + indexDate + '"></abbr>');
@@ -1019,231 +634,593 @@ var notestack = function() {
 					}); // updateAllNotes
 				}); // syncIndex
 			}); // tagIndex
-		}
-		else{
+		} else {
 			window.location = '/';
-		};
+		}
+	};
+	
+	// TOGGLE MARKDOWN
+	var toggleMarkdown = function (notekey, direction, temp) {
+		notekey = notekey || $('.current').attr('id');
+		if (direction === undefined) {
+			if ($('#' + notekey).hasClass('markdown-on')) {
+				direction = 'off';
+			} else {
+				direction = 'on';
+			}
+		}
+		if (temp !== 'temp') {temp = 'stick'; }
+		var notecard = $('#' + notekey);
+		var listnote = $('#list-' + notekey);
+		var listnotedata = listnote.data();
+		var ta_div = notecard.children('.textarea');
+		if (direction === 'on') {
+			notecard.removeClass('markdown-off').addClass('markdown-on');
+			var converter = new Markdown.Converter(),
+				markhtml = converter.makeHtml('# ' + ta_div.children('.ta-inner').children('textarea').val());
+			//markhtml = nl2br(markhtml);
+			ta_div.children('.ta-inner').replaceWith('<div class="markdown">' + markhtml + '</div>');
+			ta_div.children('.markdown').children('h1:first').addClass('first-h1');
+			ta_div.children('.markdown').children('p').each(function () {
+				$(this).html(nl2br($(this).html()));
+			});
+			if ($.inArray('markdown', listnotedata.systemtags) < 0) {
+				listnotedata.systemtags.push('markdown');
+				listnotedata.syncnum += 1;
+				localStorage.setItem(listnotedata.key, JSON.stringify(listnote.data()));
+				localToDOM(listnotedata.key);
+				manualSync();
+			}
+		} else if (direction === 'off') {
+			notecard.removeClass('markdown-on').addClass('markdown-off');
+			var notecontent = listnotedata.content;
+			ta_div.children('.markdown').replaceWith('<div class="ta-inner"><textarea>' + notecontent + '</textarea></div>');
+			refreshNoteBinds(ta_div.children('.ta-inner').children('textarea'));
+			if (temp === 'stick') {
+				var mk = listnote.data().systemtags.indexOf('markdown');
+				if (mk > -1) {listnotedata.systemtags.splice(mk, 1); }
+				listnotedata.syncnum = listnotedata.syncnum + 1;
+				localStorage.setItem(listnotedata.key, JSON.stringify(listnote.data()));
+				localToDOM(listnotedata.key);
+				manualSync();
+			}
+		}
+	};
+	
+	// UPDATE TAGS
+	var updateTags = function (notekey, deletetag) {
+		var tags, indx, note;
+		tags = $('#' + notekey + ' .tag-area input').val().split(' ');
+		indx = tags.indexOf(deletetag);
+		if (indx !== -1) {tags.splice(indx, 1); }
+		consoleLog(tags);
+		note = $.parseJSON(localStorage[notekey]);
+		if (note.tags !== tags) {
+			note.tags = tags;
+			note.syncnum = note.syncnum + 1;
+			localStorage[notekey] = JSON.stringify(note);
+			localToDOM(notekey);
+			manualSync();
+		}
+	};
+	
+	// SEARCH
+	var refreshSearch = function () {
+		var query = $('.search input').val().toLowerCase();
+		consoleLog(query);
+		var queryArr = query.split(' ');
+		$('.listnote').each(function () {
+			var content = $(this).data().content.toLowerCase();
+			var i, len;
+			for (i = 0, len = queryArr.length; i < len; i += 1) {
+				consoleLog(queryArr[i]);
+				if (content.indexOf(queryArr[i]) > -1) {
+					$(this).removeClass('search-hide');
+				} else {
+					$(this).addClass('search-hide');
+					break;
+				}
+			}
+		});
+		if ($('.selected:not(.search-hide,.tag-hide)').length === 0) {
+			$('.selected').removeClass('selected');
+			$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
+		}
+		refreshCards();
 	};
 
-// =========================
-//    LOADING LOCAL NOTES
-// =========================
-	
-	// UPDATE NOTE PREVIEW AND PIN
-	var updateListnote = function(key){
-		thisnote = $('#list-' + key);
-		thisnote.removeClass('pinned');
-		if (thisnote.data().systemtags.indexOf('pinned')>-1){thisnote.addClass('pinned')};
-		titlebreak = thisnote.data().content.indexOf('\n');
-		if(titlebreak<0){
-			thisnote.children('.title').text(thisnote.data().content.substring(0,100));
-			thisnote.children('.preview').text('');
+	// STORE/ACCESS DATA
+	var getData = function (key) {
+		if (storage === 'localStorage') {
+			return localStorage[key];
+		} else {
+			return sessionStorage[key];
 		}
-		else{
-			thisnote.children('.title').text(thisnote.data().content.substring(0,titlebreak));
-			thisnote.children('.preview').text(thisnote.data().content.substr(titlebreak,100));
-		};
+	};
+	var setData = function (key, val) {
+		if (storage === 'localStorage') {
+			localStorage[key] = val;
+		} else {
+			sessionStorage[key] = val;
+		}
+	};
+
+	// KEY AND CLICK BINDINGS FOR NOTE CARDS
+	var refreshNoteBinds = function (note_tas) {
+		//FROM WITHIN NOTE TEXT AREA
+		$(note_tas).bind('keydown', 'esc', function () {$('.note-directions').removeClass('show'); $(this).blur(); });
+		$(note_tas).tabby();
+		// MAXIMIZE BUTTON
+		$('.maximize').click(function () {
+			fullscreenMode();
+		});
+		// ON TAG CHANGE
+		$('.tagsinput div input').blur(function () { 
+			updateTags($('.current').attr('id'));
+		});
 	};
 	
-	// MOVE ONE NOTE FROM LOCAL STORAGE TO DOM
-	var localToDOM = function(key){ // add to DOM from localStorage
-		return $.Deferred(function(dfd_ltd){
-			note = $.parseJSON(localStorage.getItem(key));
-			if(note.deleted!=1){
-				if($('#list-' + note.key).length>0){
-					$('#list-' + note.key).removeData().data(note);
+	// SCROLL TO SELECTED NOTE
+	var scrollto = function () {
+		if ($('.selected').position().top < 0) {
+			// listnote is off the top of the screen, scroll up
+			$('.list').scrollTop($('.list').scrollTop() + $('.selected').position().top);
+		} else if ($('.selected').position().top + $('.listnote').height() > $('.list').height()) {
+			// listnote is off the bottom of the screen, scroll down
+			$('.list').scrollTop($('.list').scrollTop() + $('.selected').position().top - $('.list').height() + $('.listnote').height());
+		}
+	};
+	
+	// NEXT NOTE
+	var nextNote = function () { 
+		consoleLog('nextNote ' + $('.selected').nextAll('.listnote:not(.hide):first').length);
+		var nextOne = $('.selected').nextAll('.listnote:visible:first');
+		if (nextOne.length > 0) {
+			$('.selected').removeClass('selected');
+			nextOne.addClass('selected');
+			$('.prev2').removeClass('prev2');
+			$('.prev1').addClass('prev2').removeClass('prev1');
+			$('.current').addClass('prev1').removeClass('current');
+			$('.next1').addClass('current').removeClass('next1');
+			$('.next2').addClass('next1').removeClass('next2');
+			$('.next1').nextAll('.on').eq(0).addClass('next2');			
+			scrollto();
+		}
+	};
+	
+	// PREVIOUS NOTE
+	var prevNote = function () {
+		consoleLog('prevNote');
+		var prevOne = $('.selected').prevAll('.listnote:visible:first');
+		if (prevOne.length > 0) {
+			$('.selected').removeClass('selected');
+			prevOne.addClass('selected');
+			$('.next2').removeClass('next2');
+			$('.next1').removeClass('next1').addClass('next2');
+			$('.current').removeClass('current').addClass('next1');
+			$('.prev1').removeClass('prev1').addClass('current');
+			$('.prev2').removeClass('prev2').addClass('prev1');
+			$('.prev1').prevAll('.on').eq(0).addClass('prev2');
+			scrollto();
+		}
+	};
+	
+	// TOGGLE PIN
+	var togglePin = function (listitem) {
+		winMsg('Working...');
+		if (listitem === undefined) {
+			if ($('.selected').length > -1) {
+				listitem = $('.selected');
+			}
+		}
+		if (listitem.data().systemtags.indexOf('pinned') > -1) {
+			// already pinned, remove pin
+			listitem.data().systemtags.splice(listitem.data().systemtags.indexOf('pinned'), 1);
+		} else {
+			// not pinned, add pin
+			listitem.data().systemtags.push('pinned');
+		}
+		listitem.data().syncnum = listitem.data().syncnum + 1;
+		localStorage.setItem(listitem.data().key, JSON.stringify(listitem.data()));
+		localToDOM(listitem.data().key);
+		sortNotes();
+		refreshCards();
+		winMsg('clear');
+	};
+	
+	// CREATE NEW NOTE
+	var createNote = function () {
+		var createdate, newid, newdata, index;
+		createdate = (new Date()).getTime();
+		newid = 'notestack' + createdate;
+		newdata = {key: newid, createdate: createdate / 1000, modifydate: createdate / 1000, tags: [], systemtags: [], content: "new note"};
+		localStorage.setItem(newid, JSON.stringify(newdata));
+		index = $.parseJSON(localStorage.index);
+		index.data.push(newdata);
+		consoleLog(index.data);
+		localStorage.index = JSON.stringify(index);
+		localToDOM(newid);
+		sortNotes();
+		$('.selected').removeClass('selected');
+		$('#list-' + newid).addClass('selected');
+		refreshCards();
+		$('.current .textarea textarea').select();
+	};
+	
+	// DELETE NOTE
+	var deleteNote = function (notekey) {
+		var note = $('#list-' + notekey).data();
+		note.deleted = 1;
+		note.modifydate = (new Date()).getTime() / 1000;
+		note.syncnum = note.syncnum + 1;
+		localStorage.setItem(note.key, JSON.stringify(note));
+		$('#list-' + notekey).remove();
+		$('#' + notekey).remove();
+		$('.listnote:first').addClass('.selected');
+		refreshCards();
+	};
+	
+	// VIEW ALL NOTES (UNFILTER)
+	var viewAll = function () {
+		$('html body').removeClass('tag-filter');
+		$('.active-tag-filter').remove();
+		$('.listnote').removeClass('tag-hide');
+		$('.selected').removeClass('selected');
+		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
+		$('.search input').val('');
+		refreshSearch();
+	};
+
+	// SORT VERSIONS
+	var sortVersions = function () {
+		$('.version-item').sortElements(function (a, b) {
+			return parseFloat($(a).data('version')) < parseFloat($(b).data('version')) ? 1 : -1;
+		}); 
+		return "sorted";
+	};
+	
+	// DIFF VERSIONS
+	var diffVersions = function (fromtext, totext) {
+		var dmp = new Diff_Match_Patch();
+		var d = dmp.diff_main(fromtext, totext);
+		dmp.diff_cleanupSemantic(d);
+		var ds = dmp.diff_prettyHtml(d);
+		return ds;
+	};
+	
+	// GET VERSION OF NOTE
+	var getNoteVersion = function (notekey, version) {
+		return $.Deferred(function (dfd) {
+			$.ajax('/sn.php', {
+				type: 'POST',
+				data: {'action': 'noteversion', 'email': email, 'token': token, 'notekey': notekey, 'noteversion': version},
+				success: function (data) {
+					var note = $.parseJSON(data);
+					$('#version-template').clone().attr('id', notekey + "version" + note.version).addClass('version-item').appendTo('.versions .versions-left').data(note);
+					var thisversion = $('#' + notekey + 'version' + note.version);
+					//thisversion.children('.version-num').text(note.version);
+					thisversion.children('.version-date').html('<abbr class="timeago" title="' + stackTime(note.versiondate) + '"></abbr>');
+					bindTimeago();
+					sortVersions();
+					dfd.resolve();
+				},
+				error: function (msg) {
+					return 'false';
 				}
-				else{
-					$('#listnote-template').clone().attr('id','list-'+note.key).addClass('listnote').appendTo('.list').data(note);
-				};
-				updateListnote(note.key);
-				dfd_ltd.resolve();
-			};
+			});
 		}).promise();
 	};
 	
-	// SHOW ALL LOCAL NOTES
-	var allLocalToDOM = function(){
-		//$('.status').text('Loading notes from local storage');
-		//$('.status-div').addClass('loading');
-		progressBar(10);
-		if(localStorage.index){
-			index = $.parseJSON(localStorage.index);
-			consoleLog( 'loading ' + index.data.length + ' local notes' );
-			for (i=0;i<=(index.data.length-1);i++){
-				if(!(localStorage.getItem(index.data[i].key)==null)){
-					localToDOM(index.data[i].key);
-				};
-			};
-		};
-		consoleLog('local notes loaded');
+	// GET ALL VERSIONS OF NOTE
+	var populateVersions = function (notekey) {
+		$('.version-item').remove();
+		var verarray = [],
+			noteobj = $.parseJSON(localStorage.getItem(notekey)),
+			curversion = noteobj.version,
+			minversion = noteobj.minversion,
+			i;
+		for (i = minversion; i <= curversion; i += 1) {
+			verarray.push(getNoteVersion(notekey, i));
+		}
+		$.when.apply(null, verarray).done(function () {
+			consoleLog('done with all versions');
+			$('.version-item').each(function () {
+				if ($(this).data().version > minversion) {
+					var prev = $(this).data().version - 1;
+					var ds = diffVersions($('#' + notekey + "version" + prev).data().content, $(this).data().content);
+					$(this).data('diff', ds);
+				} else if ($(this).data().version === minversion) {
+					$(this).data('diff', $(this).data().content);
+				}
+			});
+			$('.versions-right .right-inner').html($('.version-item:first').data().diff);
+			$('.version-item:first').addClass('version-select');
+		});
 	};
 	
-	// ON PAGE LOAD
-	var storage = '',
-	indexStart = '',
-	indexFinish = '';
+	// TOGGLE SHOWING OF VERSIONS WINDOW
+	var toggleVersions = function (notekey) {
+		if ($('.versions').hasClass('show')) {
+			clearOverlays();
+		} else {
+			fullscreenMode('off');
+			$('.versions').addClass('show');
+			$('.overlay').addClass('show');
+			$('.versions-right .right-inner').html("");
+			populateVersions(notekey);
+		}
+	};
+
+	// POPULATE LABELS INTO LABEL OVERLAY
+	var populateLabels = function () {
+		$('.labels .item').remove();
+		var tagIndex = $.parseJSON(localStorage.tagIndex),
+			notecount = $('.listnote').length,
+			i, 
+			len,
+			tagname,
+			tagid,
+			j;
+		var countNotes = function () {
+			if ($.inArray(tagname, $(this).data().tags) > -1) {
+				consoleLog(tagname + $(this).data().tags);
+				j += 1;
+			}
+		};
+		for (i = 0, len = tagIndex.count; i < len; i += 1) {
+			tagname = tagIndex.tags[i].name;
+			tagid = tagname.replace('@', '').replace('.', '');
+			j = 0;
+			$('.listnote').each(countNotes());
+			$('#label-template').clone().attr('id', tagid).addClass('item').appendTo('.labels .items');
+			$('#' + tagid).children('.name').html('<pre>' + tagname + '</pre>');
+			$('#' + tagid).children('.notecount').text(j + " notes");
+		}
+		$('.labels .item').sortElements(function (a, b) {
+			return parseFloat($(a).children('.notecount').text()) < parseFloat($(b).children('.notecount').text()) ? 1 : -1;
+		}); 
+	};
 	
+	// SHOW LABELS OVERLAY
+	var showLabels = function () {
+		if ($('.labels').hasClass('show')) {
+			clearOverlays();
+		} else {
+			fullscreenMode('off');
+			populateLabels();
+			$('.labels').addClass('show');
+			$('.overlay').addClass('show');
+			$('.labels input').val("").select();
+		}
+		return false;
+	};
+	
+	
+	
+	// SEARCH FOR LABELS
+	var labelSearch = function () {
+		var query = $('.labels input').val().toLowerCase();
+		consoleLog(query);
+		$('.labels .item').each(function () {
+			if ($(this).children('.name').text().toLowerCase().indexOf(query) > -1) {
+				$(this).removeClass('hide');
+			} else {
+				$(this).addClass('hide');
+			}
+		});
+		$('.label-select').removeClass('label-select');
+		$('.labels .item:not(.hide):first').addClass('label-select');
+	};
+	
+	// SELECT PREVIOUS LABEL
+	var prevLabel = function () {
+		var prevOne = $('.label-select').prevAll('.item:not(.hide):first');
+		if (prevOne.length > 0) {
+			$('.label-select').removeClass('label-select');
+			prevOne.addClass('label-select');
+		}
+	};
+	
+	// SELECT NEXT LABEL
+	var nextLabel = function () {
+		var nextOne = $('.label-select').nextAll('.item:not(.hide):first');
+		if (nextOne.length > 0) {
+			$('.label-select').removeClass('label-select');
+			nextOne.addClass('label-select');
+		}
+	};
+	
+	// UNFILTER LABEL
+	var unfilterLabel = function (partial) {
+		$('.tag-hide').removeClass('tag-hide');
+		$('.active-tag-filter').remove();
+		if (partial !== 'partial') {
+			$('html body').removeClass('tag-filter');
+			$('.selected').removeClass('selected');
+			$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
+			refreshCards();
+		}
+	};
+	
+	// FILTER BY LABEL
+	var filterByLabel = function (labelName) {
+		winMsg('Working...');
+		$('.labels input').val('').blur();
+		clearOverlays();
+		unfilterLabel('partial');
+		$('html body').addClass('tag-filter');
+		$('#tag-filter-template').clone().attr('id', '').addClass('active-tag-filter').insertBefore('.list');
+		$('.active-tag-filter .inner .tag-filter-label').text(labelName);
+		$('.listnote').each(function () {
+			if ($.inArray(labelName, $(this).data().tags) <= -1) {
+				$(this).addClass('tag-hide');
+			}
+		});
+		$('.selected').removeClass('selected');
+		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
+		refreshCards();
+		winMsg('clear');
+	};
+
 	// FIRST SYNC ON LOAD
-	var notestackLoadSync = function() {
-		if(localStorage.email){
+	var notestackLoadSync = function () {
+		if (localStorage.email) {
 			$('.username').text(localStorage.email);
-			if(localStorage.index){
+			if (localStorage.index) {
 				allLocalToDOM();
-				if($('.listnote').length>0){
+				if ($('.listnote').length > 0) {
 					sortNotes();
 					refreshCards();
-				};
-			};
+				}
+			}
 			indexStart = new Date().getTime();
 			manualSync();
-		}
-		else{
+		} else {
 			window.location = '/';
-		};
+		}
 	};
 
-// =================================
-//    CHANGE APPEARANCE FUNCTIONS
-// =================================
-
 	// CHANGE OVERALL THEME
-	var changeTheme = function(themename) {
-		var classes = $('html body').attr('class').split(" ");
-		for (i=0, len=classes.length ; i<len; i++){
-			if (classes[i].substr(0,6)=="theme-"){
+	var changeTheme = function (themename) {
+		var classes = $('html body').attr('class').split(" "),
+			i,
+			len;
+		for (i = 0, len = classes.length; i < len; i += 1) {
+			if (classes[i].substr(0, 6) === "theme-") {
 				classes[i] = "";
-			};
-		};
+			}
+		}
 		$('.appearance .item.theme').siblings('.theme').addClass('dim');
 		$('#' + themename).removeClass('dim');
-		$('html body').attr('class',classes.join(" "));
+		$('html body').attr('class', classes.join(" "));
 		$('html body').addClass(themename);
-		localStorage['theme'] = themename;
+		localStorage.theme = themename;
 	};
 	
 	// CHANGE FONT
-	var changeFont = function(fontname){
-		var classes = $('html body').attr('class').split(" ");
-		for (i=0, len=classes.length ; i<len; i++){
-			if (classes[i].substr(0,5)=="font-"){
+	var changeFont = function (fontname) {
+		var classes = $('html body').attr('class').split(" "),
+			i,
+			len;
+		for (i = 0, len = classes.length; i < len; i += 1) {
+			if (classes[i].substr(0, 5) === "font-") {
 				classes[i] = "";
-			};
-		};
+			}
+		}
 		$('.appearance .font').siblings('.font').addClass('dim');
 		$('#' + fontname).removeClass('dim');
-		$('html body').attr('class',classes.join(" "));
+		$('html body').attr('class', classes.join(" "));
 		$('html body').addClass(fontname);
-		localStorage['font'] = fontname;
+		localStorage.font = fontname;
 	};
 	
 	// CHANGE FONTSIZE
-	var changeFontsize = function(fontsize){
-		var classes = $('html body').attr('class').split(" ");
-		for (i=0, len=classes.length ; i<len; i++){
-			if (classes[i].substr(0,9)=="fontsize-"){
+	var changeFontsize = function (fontsize) {
+		var classes = $('html body').attr('class').split(" "),
+			i,
+			len;
+		for (i = 0, len = classes.length; i < len; i += 1) {
+			if (classes[i].substr(0, 9) === "fontsize-") {
 				classes[i] = "";
-			};
-		};
+			}
+		}
 		$('.appearance .fontsize').siblings('.fontsize').addClass('dim');
 		$('#' + fontsize).removeClass('dim');
-		$('html body').attr('class',classes.join(" "));
+		$('html body').attr('class', classes.join(" "));
 		$('html body').addClass(fontsize);
-		localStorage['fontsize'] = fontsize;
+		localStorage.fontsize = fontsize;
 	};
 	
-	var notestackLoadInteractions = function() {
+	var notestackLoadInteractions = function () {
+		
+		var themename, fontname, fontsize;
 		
 		// =========================
 		//    APPEARANCE SETTINGS
 		// =========================
 	
 		// LOAD THEME
-		if(localStorage.theme){
+		if (localStorage.theme) {
 			themename = localStorage.theme;
 			changeTheme(themename);
-		}
-		else{
+		} else {
 			changeTheme('theme-moleskine'); // default theme
-		};
+		}
 		// CLICK THEME
-		$('.appearance .item.theme').click(function(){
+		$('.appearance .item.theme').click(function () {
 			themename = $(this).attr('id');
 			$(this).removeClass('dim');
 			changeTheme(themename);
 		});
 		
 		// LOAD FONT
-		if(localStorage.font){
+		if (localStorage.font) {
 			fontname = localStorage.font;
 			changeFont(fontname);
-		}
-		else{
+		} else {
 			changeFont('font-mono'); // default font
-		};
+		}
 		// CLICK FONT
-		$('.appearance .font').click(function(){
-			var fontname = $(this).attr('id');
+		$('.appearance .font').click(function () {
+			fontname = $(this).attr('id');
 			changeFont(fontname);
 		});
 		
 		// LOAD FONTSIZE
-		if(localStorage.fontsize){
+		if (localStorage.fontsize) {
 			fontsize = localStorage.fontsize;
 			changeFontsize(fontsize);
-		}
-		else{
+		} else {
 			changeFontsize('fontsize-12'); // default fontsize
-		};
+		}
 		// CLICK FONTSIZE
-		$('.appearance .fontsize').click(function(){
+		$('.appearance .fontsize').click(function () {
 			var fontsize = $(this).attr('id');
 			changeFontsize(fontsize);
 		});
 		
 		// LOAD TAG-PREF
-		if(localStorage.tagPref == "no-tags"){
+		if (localStorage.tagPref === "no-tags") {
 			$('html body').addClass('no-tags');
 			$('.tag-pref').addClass('dim');
-		};
+		}
 		// CLICK TAG-PREF
-		$('.appearance .tag-pref').click(function(){
-			if($(this).hasClass('dim')){
+		$('.appearance .tag-pref').click(function () {
+			if ($(this).hasClass('dim')) {
 				// enable tags
 				$(this).removeClass('dim');
 				$('html body').removeClass('no-tags');
 				localStorage.removeItem('tagPref');
-			}
-			else{
+			} else {
 				// disable tags
 				$(this).addClass('dim');
 				$('html body').addClass('no-tags');
-				localStorage.setItem('tagPref','no-tags');
-			};
+				localStorage.setItem('tagPref', 'no-tags');
+			}
 		});
 	
 		// ON NOTE FOCUS
-		$('.note .textarea textarea').live('focus',function(){
+		$('.note .textarea textarea').live('focus', function () {
 			$('.current .note-directions').addClass('show');
 			$('div.current').addClass('highlight');
 		});
 	
 		// ON NOTE BLUR
-		$('.note .textarea textarea').live('blur',function(){
+		$('.note .textarea textarea').live('blur', function () {
 			var blurkey = $(this).parent().parent().parent().attr('id');
 			var listnotedata = $('#list-' + blurkey).data();
-			if ($.inArray('markdown',listnotedata.systemtags)>-1){
-				toggleMarkdown(blurkey,'on');
-			};
-			if ($(this).val() != listnotedata.content){
-				blurnote = $.parseJSON(localStorage.getItem(blurkey));
+			if ($.inArray('markdown', listnotedata.systemtags) > -1) {
+				toggleMarkdown(blurkey, 'on');
+			}
+			if ($(this).val() !== listnotedata.content) {
+				var blurnote = $.parseJSON(localStorage.getItem(blurkey));
 				blurnote.content = $(this).val();
-				blurnote.modifydate = (new Date()).getTime()/1000;
+				blurnote.modifydate = (new Date()).getTime() / 1000;
 				blurnote.syncnum = blurnote.syncnum + 1;
-				localStorage.setItem(blurkey,JSON.stringify(blurnote));
+				localStorage.setItem(blurkey, JSON.stringify(blurnote));
 				localToDOM(blurnote.key);
 				manualSync();
-			};
+			}
 			$('.current .note-directions').removeClass('show');
 			$('.current').removeClass('highlight');
 		});
@@ -1253,53 +1230,52 @@ var notestack = function() {
 		// =============
 	
 		// NEW NOTE BUTTON
-		$('.addnote').click(function(){createNote();});
+		$('.addnote').click(function () {createNote(); });
 		// TAGS BUTTON
-		$('.tags').click(function(){showLabels();});
+		$('.tags').click(function () {showLabels(); });
 		// SYNC BUTTON
-		$('.reload').click(function(){manualSync();});
+		$('.reload').click(function () {manualSync(); });
 		// CLOSE 'X' BUTTON (LABELS OR VERSIONS)
-		$('.close').click(function(){clearOverlays();});
+		$('.close').click(function () {clearOverlays(); });
 		// NOTE DELETE BUTTON
-		$('.delete').live('click',function(){
+		$('.delete').live('click', function () {
 			$(this).parent().children('.message').toggleClass('show').html('Mark this note as deleted?  <a href="#" class="confirmDelete">Delete</a> / <a href="#" class="cancelDelete">Cancel</a>');
 		});
-		$('.confirmDelete').live('click',function(){
-			notekey = $(this).parent().parent().attr('id');
+		$('.confirmDelete').live('click', function () {
+			var notekey = $(this).parent().parent().attr('id');
 			deleteNote(notekey);
 			return false;
 		});
-		$('.cancelDelete').live('click',function(){
+		$('.cancelDelete').live('click', function () {
 			$('.message').removeClass('show');
 			return false;
 		});
 		// CLICK NOTE IN LIST
-		$('.listnote').live('click',function(){
-			var selected = $('.selected');
-			var fromIndex = $('.listnote:visible').index(selected);
-			var toIndex = $('.listnote:visible').index(this);
-			var distance = Math.abs(toIndex - fromIndex);
-			var direction = fromIndex < toIndex ? 'next' : 'prev';
+		$('.listnote').live('click', function () {
+			var selected = $('.selected'),
+				fromIndex = $('.listnote:visible').index(selected),
+				toIndex = $('.listnote:visible').index(this),
+				distance = Math.abs(toIndex - fromIndex),
+				direction = fromIndex < toIndex ? 'next' : 'prev',
+				i;
 			//$('.selected').removeClass('selected');
 			//$(this).addClass('selected');
-			if(distance <= 6){
+			if (distance <= 6) {
 				// clicked note is close by, 
 				// just hit next or prev a couple of times
-				if(direction == 'next'){
-					for (var i=1; i<=distance; i++){
+				if (direction === 'next') {
+					for (i = 1; i <= distance; i += 1) {
 						nextNote();
-					};
-				}
-				else if (direction == 'prev'){
-					for (var i=1; i<=distance; i++){
+					}
+				} else if (direction === 'prev') {
+					for (i = 1; i <= distance; i += 1) {
 						prevNote();
-					};
-				};
-			}
-			else{
+					}
+				}
+			} else {
 				// clicked note is far away
 				// zoom to 2 away from it, then slide in
-				if(direction == 'next'){
+				if (direction === 'next') {
 					$('.selected').removeClass('selected');
 					$('.listnote:visible').eq(toIndex - 4).addClass('selected');
 					reflowCards();
@@ -1307,8 +1283,7 @@ var notestack = function() {
 					nextNote();
 					nextNote();
 					nextNote();
-				}
-				else if(direction == 'prev'){
+				} else if (direction === 'prev') {
 					$('.selected').removeClass('selected');
 					$('.listnote:visible').eq(toIndex + 4).addClass('selected');
 					reflowCards();
@@ -1316,11 +1291,11 @@ var notestack = function() {
 					prevNote();
 					prevNote();
 					prevNote();
-				};
-			};
+				}
+			}
 		});
 		// CLICK NON-CURRENT NOTE
-		$('.note').live('click',function(){
+		$('.note').live('click', function () {
 			$('.current').removeClass('current');
 			$(this).addClass('current');
 			$('.selected').removeClass('selected');
@@ -1328,70 +1303,68 @@ var notestack = function() {
 			reflowCards();
 		});
 		// CLICK NOTE .TEXTAREA (UN-MARKDOWN)
-		$('.textarea:not(a)').live('click',function(e){
-			if($(e.target).parents('.tag-area').length > 0){return;}; 
-			toggleMarkdown($(this).parent().attr('id'),'off','temp');
+		$('.textarea:not(a)').live('click', function (e) {
+			if ($(e.target).parents('.tag-area').length > 0) {return; }
+			toggleMarkdown($(this).parent().attr('id'), 'off', 'temp');
 			$(this).children('.ta-inner').children('textarea').focus();
 		});
 		// CLICK LINK IN MARKDOWN
-		$('.markdown a').live('click',function(e){
-			$(this).attr('target',"_blank");
+		$('.markdown a').live('click', function (e) {
+			$(this).attr('target', "_blank");
 		});
 		// CLICK SETTINGS
-		$('.settings_icon').click(function() {
+		$('.settings_icon').click(function () {
 			$('.settings').toggleClass('show');
 		});
-		$('.userdata').click(function(){
+		$('.userdata').click(function () {
 			$('.settings').toggleClass('show');
 			$('.settings_pane').removeClass('show');
 			$('.settings_pane.data').addClass('show');
 		});
 		// CLICK SETTINGS TAB
-		$('.settings .tabs a').click(function(e){
+		$('.settings .tabs a').click(function (e) {
 			$('.settings_pane').removeClass('show');
-			$('.settings_pane.' + $(this).text().replace(" ","_")).addClass('show');
+			$('.settings_pane.' + $(this).text().replace(' ', '_')).addClass('show');
 			e.preventDefault();
 			return false;
 		});
 		// CLICK VERSIONS BUTTON
-		$('.versions-button').live('mousedown',function(){
-			notekey = $(this).parent().attr('id');
+		$('.versions-button').live('mousedown', function () {
+			var notekey = $(this).parent().attr('id');
 			toggleVersions(notekey);
 		});
 		// CLICK INDIVIDUAL VERSION
-		$('.version-item').live('mousedown',function(){
-			if($('.diff-view').hasClass('depressed')){
+		$('.version-item').live('mousedown', function () {
+			if ($('.diff-view').hasClass('depressed')) {
 				$('.versions-right .right-inner').html($(this).data().diff);
-			}
-			else{
+			} else {
 				$('.versions-right .right-inner').html('<textarea disabled="disabled">' + $(this).data().content + '</textarea>');
 			}
 			$('.version-select').removeClass('version-select');
 			$(this).addClass('version-select');
 		});
 		// CLICK VERSION VIEW BUTTON
-		$('.versions-toolbar .diff-view,.versions-toolbar .text-view').live('mousedown',function(){
+		$('.versions-toolbar .diff-view,.versions-toolbar .text-view').live('mousedown', function () {
 			$('.versions-toolbar .depressed').removeClass('depressed');
 			$(this).addClass('depressed');
-			if($('.version-select').length < 1){
+			if ($('.version-select').length < 1) {
 				$('.version-item:first').addClass('.version-select');
-			};
-			if($(this).hasClass('diff-view')){
-				$('.versions-right .right-inner').html($('.version-select').data().diff);
 			}
-			else if ($(this).hasClass('text-view')){
+			if ($(this).hasClass('diff-view')) {
+				$('.versions-right .right-inner').html($('.version-select').data().diff);
+			} else if ($(this).hasClass('text-view')) {
 				$('.versions-right .right-inner').html('<textarea disabled="disabled">' + $('.version-select').data().content + '</textarea>');
-			};
+			}
 		});
 		// CLICK OUTSIDE OF OVERLAY WINDOW
-		$('.overlay').click(function(){
+		$('.overlay').click(function () {
 			clearOverlays();
 		});
 		// CLICK REVERT
-		$('.versions-toolbar .revert-version').live('mousedown',function(){
-			if( $('.version-select').length==1 ){
-				notekey = $('.version-select').attr('id').split('version').shift();
-				verContent = $('.version-select').data().content;
+		$('.versions-toolbar .revert-version').live('mousedown', function () {
+			if ($('.version-select').length === 1) {
+				var notekey = $('.version-select').attr('id').split('version').shift(),
+					verContent = $('.version-select').data().content;
 				$('.selected').removeClass('selected');
 				$('#list-' + notekey).addClass('selected');
 				$('.current').removeClass('current');
@@ -1400,30 +1373,31 @@ var notestack = function() {
 				clearOverlays();
 				$('.note.current .textarea textarea').val(verContent).focus();
 				return false;
-			};
+			}
+			return false;
 		});
 		// CLICK TAG FILTER 'X'
-		$('.clear-tag-filter').live('mouseup',function(){
+		$('.clear-tag-filter').live('mouseup', function () {
 			unfilterLabel();
 		});
 		// CLICK TAG FROM TAG LIST
-		$('.labels .item').live('mouseup',function(){
+		$('.labels .item').live('mouseup', function () {
 			filterByLabel($(this).attr('id'));
 		});
 		// CLICK TAG IN NOTE
-		$('.tagit-label').live('mouseup',function(){
+		$('.tagit-label').live('mouseup', function () {
 			filterByLabel($(this).text());
 		});
 		// CLICK MARKDOWN BUTTON
-		$('.markdown-button').live('mouseup',function(){
+		$('.markdown-button').live('mouseup', function () {
 			toggleMarkdown($(this).parent().attr('id'));
 		});
 		// CLICK PIN BUTTON
-		$('.pin-button').live('mouseup',function(){
+		$('.pin-button').live('mouseup', function () {
 			togglePin();
 		});
 		// CLICK LOGOUT AND CLEAR DATA
-		$('.cleardata').click(function(){
+		$('.cleardata').click(function () {
 			localStorage.clear();
 		});
 		
@@ -1432,66 +1406,75 @@ var notestack = function() {
 		// ========================
 	
 		//GENERAL SHORTCUTS
-		$(document).bind('keydown','esc',function(){clearOverlays();});
-		$(document).bind('keydown','j',function(){nextNote();});
-		$(document).bind('keydown','right',function(){nextNote();});
-		$(document).bind('keydown','down',function(){nextNote();});
-		$(document).bind('keydown','k',function(){prevNote();});
-		$(document).bind('keydown','left',function(){prevNote();});
-		$(document).bind('keydown','up',function(){prevNote();});
-		$(document).bind('keydown','return',function(){if($('.current').hasClass('markdown-on')){toggleMarkdown($('.current').attr('id'),'off','temp');$('.note.current .textarea textarea').focus()}else{$('.note.current .textarea textarea').focus()}; return false;});
-		$(document).bind('keydown','tab',function(){$('.note.current .textarea textarea').focus(); return false;});
-		$(document).bind('keydown','shift+/',function(){$('.settings').toggleClass('show');});
-		$(document).bind('keydown','/',function(){$('.search input').select();return false;});
-		$(document).bind('keydown','c',function(){createNote();return false;});
-		$(document).bind('keydown','s',function(){manualSync();return false;});
-		$(document).bind('keydown','p',function(){togglePin($('.selected'));});
-		$(document).bind('keydown','f',function(){fullscreenMode();});
-		$(document).bind('keydown','l',function(){showLabels();return false;});
-		$(document).bind('keydown','t',function(){showLabels();return false;});
-		$(document).bind('keydown','v',function(){toggleVersions($('.current').attr('id'));return false;});
-		$(document).bind('keydown','a',function(){viewAll();return false;});
-		$(document).bind('keydown','i',function(){viewAll();return false;});
-		$(document).bind('keydown','m',function(){toggleMarkdown();return false;});
+		$(document).bind('keydown', 'esc', function () {clearOverlays(); });
+		$(document).bind('keydown', 'j', function () {nextNote(); });
+		$(document).bind('keydown', 'right', function () {nextNote(); });
+		$(document).bind('keydown', 'down', function () {nextNote(); });
+		$(document).bind('keydown', 'k', function () {prevNote(); });
+		$(document).bind('keydown', 'left', function () {prevNote(); });
+		$(document).bind('keydown', 'up', function () {prevNote(); });
+		$(document).bind('keydown', 'return', function () {
+			if ($('.current').hasClass('markdown-on')) {
+				toggleMarkdown($('.current').attr('id'), 'off', 'temp');
+				$('.note.current .textarea textarea').focus();
+			} else {
+				$('.note.current .textarea textarea').focus();
+			}
+			return false;
+		});
+		$(document).bind('keydown', 'tab', function () {$('.note.current .textarea textarea').focus(); return false; });
+		$(document).bind('keydown', 'shift+/', function () {$('.settings').toggleClass('show'); });
+		$(document).bind('keydown', '/', function () {$('.search input').select(); return false; });
+		$(document).bind('keydown', 'c', function () {createNote(); return false; });
+		$(document).bind('keydown', 's', function () {manualSync(); return false; });
+		$(document).bind('keydown', 'p', function () {togglePin($('.selected')); });
+		$(document).bind('keydown', 'f', function () {fullscreenMode(); });
+		$(document).bind('keydown', 'l', function () {showLabels(); return false; });
+		$(document).bind('keydown', 't', function () {showLabels(); return false; });
+		$(document).bind('keydown', 'v', function () {toggleVersions($('.current').attr('id')); return false; });
+		$(document).bind('keydown', 'a', function () {viewAll(); return false; });
+		$(document).bind('keydown', 'i', function () {viewAll(); return false; });
+		$(document).bind('keydown', 'm', function () {toggleMarkdown(); return false; });
 		
 		//FROM WITHIN SEARCH BAR
-		$('.search input').keyup($.debounce(250,refreshSearch));
-		$('.search input').bind('keydown','return',function(){$(this).blur();return false;});
-		$('.search input').bind('keydown','esc',function(){$(this).val('');refreshSearch();$(this).blur();return false;});
-		$('.search input').bind('keydown','down',function(){$(this).blur();nextNote();return false;});
-		$('.search input').bind('keydown','up',function(){$(this).blur();prevNote();return false;});
+		$('.search input').keyup($.debounce(250, refreshSearch));
+		$('.search input').bind('keydown', 'return', function () {$(this).blur(); return false; });
+		$('.search input').bind('keydown', 'esc', function () {$(this).val(''); refreshSearch(); $(this).blur(); return false; });
+		$('.search input').bind('keydown', 'down', function () {$(this).blur(); nextNote(); return false; });
+		$('.search input').bind('keydown', 'up', function () {$(this).blur(); prevNote(); return false; });
 		
 		//FROM WITHIN LABEL SEARCH
-		$('.labels input').keyup(function(e){
+		$('.labels input').keyup(function (e) {
 			var key = e.which;
-			if(key != 38 && key != 40 && key != 13){
+			if (key !== 38 && key !== 40 && key !== 13) {
 				labelSearch();
-			};
+			}
 		});
-		$('.labels input').bind('keydown','esc',function(){$(this).val('');$(this).blur();clearOverlays();return false;});
-		$('.labels input').bind('keydown','down',function(){nextLabel();return false;});
-		$('.labels input').bind('keydown','up',function(){prevLabel();return false;});
-		$('.labels input').bind('keydown','return',function(){
-			if($('.label-select').length == 1){
+		$('.labels input').bind('keydown', 'esc', function () {$(this).val(''); $(this).blur(); clearOverlays(); return false; });
+		$('.labels input').bind('keydown', 'down', function () {nextLabel(); return false; });
+		$('.labels input').bind('keydown', 'up', function () {prevLabel(); return false; });
+		$('.labels input').bind('keydown', 'return', function () {
+			if ($('.label-select').length === 1) {
 				filterByLabel($('.label-select .name').text());
 				return false;
-			}
-			else{
+			} else {
 				// you hit enter with no label selected
-				$('.labels').effect('shake',{times:3},100,function(){
+				$('.labels').effect('shake', {times: 3}, 100, function () {
 					$('.labels input').val('').select();
 					labelSearch();
 				});
 				return false;
-			};
+			}
 		});
 		refreshNoteBinds('.note .textarea textarea');
 	};
 	
-	// LOAD EVERYTHING
-	$(function(){
+	// #########################
+	//    LOAD EVERYTHING
+	// #########################
+	$(function () {
 		notestackLoadInteractions();
 		notestackLoadSync();
 	});
 
-}(); // CLOSE 'NOTESTACK' NAMESPACE
+}()); // CLOSE 'NOTESTACK' NAMESPACE

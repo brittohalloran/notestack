@@ -4,6 +4,11 @@ britt.j.ohalloran@gmail.com
 
 // CHANGE HISTORY
 
+2011-09-03 - v0.8.6
+- improved javascript code (switched to strict mode - jslint.com)
+- restyled homepage links
+- fixed bug with wrong note count on first load
+
 2011-08-31 - v0.8.5
 - improved search method to find multiple words (any order)
 - made login and 'create simplenote account' more intuitive
