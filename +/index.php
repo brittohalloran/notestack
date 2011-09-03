@@ -109,7 +109,7 @@
 								<?php
 								};
 							?>
-							<div class="design-a-theme">Know CSS? <a href="mailto:britt.j.ohalloran@gmail.com?subject=Notestack Theme">Design a theme for Notestack</a></div>
+							<div class="design-a-theme">Know CSS? <a href="http://github.com/brittohalloran/notestack/wiki">Design a theme for Notestack</a></div>
 						</div>
 						<div class="clear"></div>
 						<div class="pane_section">

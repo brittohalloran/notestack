@@ -4,15 +4,16 @@
 
 a {
 	text-decoration: none;
-	color: #628EB5;
-	-webkit-transition:color 0.25s ease-in;  
-	-moz-transition:color 0.25s ease-in;  
-	-o-transition:color 0.25s ease-in;  
-	transition:color 0.25s ease-in; 
+	color: inherit;
+	border-bottom: 1px dotted black;
+	-webkit-transition:background 0.25s ease-in;  
+	-moz-transition:background 0.25s ease-in;  
+	-o-transition:background 0.25s ease-in;  
+	transition:background 0.25s ease-in; 
 }
 
 a:hover {
-	color: #B56262;
+	background: #FFFBCC;
 }
 	
 .button1 {
@@ -651,11 +652,22 @@ a:hover {
 	.settings .tabs a {
 		color: white;
 		text-decoration: none;
+		border-bottom: none;
 	}
+		.settings .tabs a:hover {
+			background: rgb(100,100,100);
+		}
 	
 	.settings .content {
 		color: white;
 	}
+	
+		.settings .content a {
+			border-bottom: 1px dotted white;
+		}
+			.settings .content a:hover {
+				background: rgb(100,100,100);
+			}
 
 	.appearance .item {
 		background: white;
