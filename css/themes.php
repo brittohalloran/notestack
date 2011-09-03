@@ -733,6 +733,7 @@ ul.tagit li.tagit-choice .close {
     position: absolute;
     top: 50%;
     margin-top: -8px;
+    border-bottom: none;
 }
 
 ul.tagit li.tagit-choice input {
