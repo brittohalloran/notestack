@@ -14,7 +14,7 @@
 	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	  })();
-	</script></head><body><div class='fullwindow'>	<div class='container_12'>		<div class='grid_12'>			<div class='grid_8 alpha left'>				<div class='grid_8 alpha omega titles'>					<div class='title'><h1>Notestack</h1></div>					<div class='subtitle'><h3>an <a href="http://github.com/brittohalloran/notestack">open source</a> web-based text only note app for the modern browser</h3></div>				</div>			</div>			<div class='grid_4 omega right'>				<div class='grid_4 alpha omega login'>
+	</script></head><body><div class='fullwindow'>	<div class='container_12'>		<div class='grid_12'>			<div class='grid_8 alpha left'>				<div class='grid_8 alpha omega titles'>					<div class='title'><h1>Notestack</h1></div>					<div class='subtitle'><h3>an <a href="http://github.com/brittohalloran/notestack">open source</a> text only note app for the modern browser</h3></div>				</div>			</div>			<div class='grid_4 omega right'>				<div class='grid_4 alpha omega login'>
 					<div class='login_inner'>
 						<form action='' method='post' onSubmit="return false;">
 							<input tabindex=1 type="text" placeholder="simplenote email" class='email' />
