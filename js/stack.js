@@ -533,7 +533,12 @@ var notestack = (function () {
 						deletedcount += 1;
 					}
 				}
-				if (breaker === true) {return false; }
+				if (breaker === true) {
+					$('.note-data').text(notecount + ' notes | ');
+					$('.data_notes').text(notecount);
+					$('.data_deleted').text(deletedcount);
+					return false; 
+				}
 				if (snarray.length > 0) {
 					$.when.apply(null, snarray).done(function () {
 						set += num + 1;
@@ -549,11 +554,6 @@ var notestack = (function () {
 				}
 			}
 			updateSome(20);
-			$('.note-data').text(notecount + ' notes | ');
-			$('.data_notes').text(notecount);
-			$('.data_deleted').text(deletedcount);
-			//$('.status').text('Syncing ' + snarray.length + ' notes');
-			//$('.status-div').addClass('loading');
 		}).promise();
 	};
 	
