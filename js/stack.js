@@ -966,7 +966,7 @@ var notestack = (function () {
 			tagid = tagname.replace('@', '').replace('.', '');
 			j = 0;
 			$('.listnote').each(function () {
-				console.log(tagname + $(this).data().tags);
+				consoleLog(tagname + $(this).data().tags);
 				if ($.inArray(tagname, $(this).data().tags) > -1) {
 					j += 1;
 				}

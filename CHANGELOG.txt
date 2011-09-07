@@ -4,6 +4,9 @@ britt.j.ohalloran@gmail.com
 
 // CHANGE HISTORY
 
+2011-09-07 - v0.8.7
+- fixed bug with viewing labels
+
 2011-09-03 - v0.8.6
 - improved javascript code (switched to strict mode - jslint.com)
 - restyled homepage links
