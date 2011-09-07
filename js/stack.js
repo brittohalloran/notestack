@@ -961,17 +961,16 @@ var notestack = (function () {
 			tagname,
 			tagid,
 			j;
-		var countNotes = function () {
-			if ($.inArray(tagname, $(this).data().tags) > -1) {
-				consoleLog(tagname + $(this).data().tags);
-				j += 1;
-			}
-		};
 		for (i = 0, len = tagIndex.count; i < len; i += 1) {
 			tagname = tagIndex.tags[i].name;
 			tagid = tagname.replace('@', '').replace('.', '');
 			j = 0;
-			$('.listnote').each(countNotes());
+			$('.listnote').each(function () {
+				consoleLog(tagname + $(this).data().tags);
+				if ($.inArray(tagname, $(this).data().tags) > -1) {
+					j += 1;
+				}
+			});
 			$('#label-template').clone().attr('id', tagid).addClass('item').appendTo('.labels .items');
 			$('#' + tagid).children('.name').html('<pre>' + tagname + '</pre>');
 			$('#' + tagid).children('.notecount').text(j + " notes");
