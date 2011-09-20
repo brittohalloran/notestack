@@ -421,12 +421,12 @@ var notestack = (function () {
 	// UPLOAD/SEND ONE NOTE
 	var sendNote = function (noteobject) {
 		var dfd = $.Deferred();
-		var postData = {'action': 'sendnote', 'email': email, 'token': token, 'notekey': noteobject.key, 'notebody': JSON.stringify(noteobject)};
+		var postData = {'action': 'sendnote', 'email': email, 'token': token, 'notekey': noteobject.key, 'notebody': encodeURIComponent(JSON.stringify(noteobject))};
 		var newnote = 0;
 		if (noteobject.key.substr(0, 9) === 'notestack') {
 			delete postData.notekey;
 			delete noteobject.key;
-			postData.notebody = JSON.stringify(noteobject);
+			postData.notebody = encodeURIComponent(JSON.stringify(noteobject));
 			newnote = 1;
 		}
 		$.ajax('/sn.php', {
