@@ -1153,7 +1153,7 @@ var notestack = (function () {
 	
 	var notestackLoadInteractions = function () {
 		
-		var themename, fontname, fontsize;
+		var themename, fontname, fontsize, sortby;
 		
 		// =========================
 		//    APPEARANCE SETTINGS
