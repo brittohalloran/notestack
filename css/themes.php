@@ -675,6 +675,7 @@ a:hover {
 	
 		.appearance .font,
 		.appearance .fontsize,
+		.appearance .sortby,
 		.appearance .tag-pref {
 			font-size: 1.5em;
 			background: white;

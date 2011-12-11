@@ -85,6 +85,16 @@
 				<div class="content">
 					<div class="appearance settings_pane show">
 						<div class="pane_section">
+						  <h3>Sorting</h3>
+						  <div id="sortby-modified" class="sortby">
+								<div class="name sortby-modified">modified date</div>
+							</div>
+						  <div id="sortby-alphabetic" class="sortby">
+								<div class="name sortby-alphabetic">alphabetic</div>
+							</div>
+						</div>
+						<div class="clear"></div>
+						<div class="pane_section">
 							<h3>Tags</h3>
 							<div id="tags-pref" class="tag-pref">
 								<div class="name">Enable tags</div>

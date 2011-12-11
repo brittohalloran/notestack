@@ -125,6 +125,7 @@ var notestack = (function () {
 
 	// CONSOLE LOG (DEV MODE)
 	var consoleLog = function (msg) {
+	  // dev mode, uncomment to let it log
 		//console.log(msg);
 	};
 	
@@ -305,7 +306,7 @@ var notestack = (function () {
 		consoleLog('local notes loaded');
 	};
 	
-	// SORT NOTES: PINNED, THEN MODIFIED
+	// SORT NOTES
 	var sortNotes = function () {
 		consoleLog('sorting notes');
 		$('.listnote').sortElements(function (a, b) {
@@ -313,6 +314,9 @@ var notestack = (function () {
 				if (!$(b).hasClass('pinned')) {return -1; }
 			} else if ($(b).hasClass('pinned')) {
 				if (!$(a).hasClass('pinned')) {return 1; }
+			}
+			if (localStorage.sortby && localStorage.sortby == "sortby-alphabetic") {
+			  return $(a).data('content').toLowerCase() > $(b).data('content').toLowerCase() ? 1 : -1;
 			}
 			return parseFloat($(a).data('modifydate')) < parseFloat($(b).data('modifydate')) ? 1 : -1;
 		}); 
@@ -421,12 +425,12 @@ var notestack = (function () {
 	// UPLOAD/SEND ONE NOTE
 	var sendNote = function (noteobject) {
 		var dfd = $.Deferred();
-		var postData = {'action': 'sendnote', 'email': email, 'token': token, 'notekey': noteobject.key, 'notebody': JSON.stringify(noteobject)};
+		var postData = {'action': 'sendnote', 'email': email, 'token': token, 'notekey': noteobject.key, 'notebody': encodeURIComponent(JSON.stringify(noteobject))};
 		var newnote = 0;
 		if (noteobject.key.substr(0, 9) === 'notestack') {
 			delete postData.notekey;
 			delete noteobject.key;
-			postData.notebody = JSON.stringify(noteobject);
+			postData.notebody = encodeURIComponent(JSON.stringify(noteobject));
 			newnote = 1;
 		}
 		$.ajax('/sn.php', {
@@ -1130,9 +1134,28 @@ var notestack = (function () {
 		localStorage.fontsize = fontsize;
 	};
 	
+	// CHANGE SORT
+	var changeSort = function (sortby) {
+	  // sortby = "sortby-alphabetic" or something
+		var classes = $('html body').attr('class').split(" "),
+			i,
+			len;
+		for (i = 0, len = classes.length; i < len; i += 1) {
+			if (classes[i].substr(0, 9) === "sortby-") {
+				classes[i] = "";
+			}
+		}
+		$('.appearance .sortby').siblings('.sortby').addClass('dim');
+		$('#' + sortby).removeClass('dim');
+		$('html body').attr('class', classes.join(" "));
+		$('html body').addClass(sortby);
+		localStorage.sortby = sortby;
+		sortNotes();
+	};
+	
 	var notestackLoadInteractions = function () {
 		
-		var themename, fontname, fontsize;
+		var themename, fontname, fontsize, sortby;
 		
 		// =========================
 		//    APPEARANCE SETTINGS
@@ -1176,6 +1199,19 @@ var notestack = (function () {
 		$('.appearance .fontsize').click(function () {
 			var fontsize = $(this).attr('id');
 			changeFontsize(fontsize);
+		});
+		
+		// LOAD SORT
+		if (localStorage.sortby) {
+			sortby = localStorage.sortby;
+			changeSort(sortby);
+		} else {
+			changeSort('sortby-modified'); // default sortby
+		}
+		// CLICK SORT
+		$('.appearance .sortby').click(function () {
+			var sortby = $(this).attr('id');
+			changeSort(sortby);
 		});
 		
 		// LOAD TAG-PREF
