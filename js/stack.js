@@ -305,7 +305,7 @@ var notestack = (function () {
 		consoleLog('local notes loaded');
 	};
 	
-	// SORT NOTES: PINNED, THEN MODIFIED
+	// SORT NOTES
 	var sortNotes = function () {
 		consoleLog('sorting notes');
 		$('.listnote').sortElements(function (a, b) {
@@ -1149,6 +1149,7 @@ var notestack = (function () {
 		$('html body').attr('class', classes.join(" "));
 		$('html body').addClass(sortby);
 		localStorage.sortby = sortby;
+		sortNotes();
 	};
 	
 	var notestackLoadInteractions = function () {
