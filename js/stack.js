@@ -314,6 +314,9 @@ var notestack = (function () {
 			} else if ($(b).hasClass('pinned')) {
 				if (!$(a).hasClass('pinned')) {return 1; }
 			}
+			if (localStorage.sortby && localStorage.sortby == "sortby-alphabetic") {
+			  return $(a).data('content') < $(b).data('content') ? 1 : -1;
+			}
 			return parseFloat($(a).data('modifydate')) < parseFloat($(b).data('modifydate')) ? 1 : -1;
 		}); 
 		return "sorted";
