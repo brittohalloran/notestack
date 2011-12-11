@@ -1130,6 +1130,24 @@ var notestack = (function () {
 		localStorage.fontsize = fontsize;
 	};
 	
+	// CHANGE SORT
+	var changeSort = function (sortby) {
+	  // sortby = "sortby-alphabetic" or something
+		var classes = $('html body').attr('class').split(" "),
+			i,
+			len;
+		for (i = 0, len = classes.length; i < len; i += 1) {
+			if (classes[i].substr(0, 9) === "sortby-") {
+				classes[i] = "";
+			}
+		}
+		$('.appearance .sortby').siblings('.sortby').addClass('dim');
+		$('#' + sortby).removeClass('dim');
+		$('html body').attr('class', classes.join(" "));
+		$('html body').addClass(sortby);
+		localStorage.sortby = sortby;
+	};
+	
 	var notestackLoadInteractions = function () {
 		
 		var themename, fontname, fontsize;
@@ -1176,6 +1194,19 @@ var notestack = (function () {
 		$('.appearance .fontsize').click(function () {
 			var fontsize = $(this).attr('id');
 			changeFontsize(fontsize);
+		});
+		
+		// LOAD SORT
+		if (localStorage.sortby) {
+			sortby = localStorage.sortby;
+			changeSort(sortby);
+		} else {
+			changeSort('sortby-modified'); // default sortby
+		}
+		// CLICK SORT
+		$('.appearance .sortby').click(function () {
+			var sortby = $(this).attr('id');
+			changeSort(sortby);
 		});
 		
 		// LOAD TAG-PREF
