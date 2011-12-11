@@ -125,6 +125,7 @@ var notestack = (function () {
 
 	// CONSOLE LOG (DEV MODE)
 	var consoleLog = function (msg) {
+	  // dev mode, uncomment to let it log
 		//console.log(msg);
 	};
 	
