@@ -315,7 +315,7 @@ var notestack = (function () {
 				if (!$(a).hasClass('pinned')) {return 1; }
 			}
 			if (localStorage.sortby && localStorage.sortby == "sortby-alphabetic") {
-			  return $(a).data('content') < $(b).data('content') ? 1 : -1;
+			  return $(a).data('content').toLowerCase() > $(b).data('content').toLowerCase() ? 1 : -1;
 			}
 			return parseFloat($(a).data('modifydate')) < parseFloat($(b).data('modifydate')) ? 1 : -1;
 		}); 
