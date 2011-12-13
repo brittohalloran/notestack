@@ -372,6 +372,11 @@ a:hover {
 			content: "\00BB" "\0020";
 		}
 		
+		/* MARKDOWN BLOCKQUOTE */
+		.theme-<?php echo $theme; ?> .window .note .textarea .markdown blockquote {
+			padding: 0 20px;
+			font-style: italic;
+		}
 	
 	/*MAXIMIZE AND HISTORY BUTTON*/
 	.theme-<?php echo $theme; ?> .window .note .maximize,

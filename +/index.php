@@ -21,8 +21,8 @@
 	<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"> 
 	<!-- STYLESHEETS -->
 	<link href="../js/keyboard/shortcuts.css?<?php echo $version; ?>" type="text/css" media="screen" />
-	<link rel="stylesheet" href="../css/themes.php?<?php echo $version; ?>" type="text/css" media="screen" />
 	<link rel="stylesheet" href="../css/structure.css?<?php echo $version; ?>" type="text/css" media="screen" />
+	<link rel="stylesheet" href="../css/themes.php?<?php echo $version; ?>" type="text/css" media="screen" />
 	<!-- FONTS -->
 	<link href="https://fonts.googleapis.com/css?family=Droid+Sans:regular,bold&v1" rel='stylesheet' type='text/css' />
 	<link href="../fonts/fonts.css?<?php echo $version; ?>" rel='stylesheet' type='text/css' />
