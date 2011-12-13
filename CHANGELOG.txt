@@ -1,8 +1,12 @@
-Notestack.me
-Britt O'Halloran
-britt.j.ohalloran@gmail.com
+// NOTESTACK.ME CHANGE HISTORY
 
-// CHANGE HISTORY
+Contributors:
+Britt O'Halloran (brittohalloran) - https://github.com/brittohalloran
+Eliezer Kanal (eykanal) - https://github.com/eykanal
+
+
+2011-12-13 - v0.8.9
+- added markdown blockquote support [eykanal]
 
 2011-12-11 - v0.8.8
 - added sort by alphabetic option (in settings)
