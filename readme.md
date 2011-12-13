@@ -1,7 +1,5 @@
-# Notestack.me
-
 ### About
-Notestack.me is a web-based simplenote client for the modern browser. It takes advantage of browser localStorage, a new HTML5 feature, to store your notes locally and make them available even when your internet connection is down. 
+[Notestack.me](https://notestack.me) is a web-based simplenote client for the modern browser. It takes advantage of browser localStorage, a new HTML5 feature, to store your notes locally and make them available even when your internet connection is down. 
 
 Issues? Bugs? Feature ideas? Click on over to the [issue tracker](http://github.com/brittohalloran/notestack/issues) and log an issue.
 
