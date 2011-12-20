@@ -1,5 +1,6 @@
 #!/bin/sh
 
+echo "----> Committing any uncommitted changes..."
 git add -A
 git commit
 git checkout dev
@@ -11,9 +12,15 @@ echo "----> Enter new version number (i.e. 'v0.1.1' - no quotes or spaces)"
 echo -n "----> "
 read version
 
-echo "----> Updating 'version.php' and 'cache.manifest'"
+echo "----> Updating 'version.php' and 'cache.manifest'..."
 sed -i 's/v[0-9]*\.[0-9]*\.[0-9]*/'$version'/' ./version.php
 sed -i 's/v[0-9]*\.[0-9]*\.[0-9]*/'$version'/' ./cache.manifest
+
+echo "----> Updating 'CHANGELOG.txt'..."
+echo -n "----> Type the name of your editor (i.e. mate or gedit): "
+$editor CHANGELOG.txt
+
+echo "----> Committing changes..."
 git add -A
 git commit -m "ready for release $version"
 git checkout master
@@ -32,4 +39,7 @@ echo "- version bumped to $version"
 echo "- changes merged into master branch (--no-ff)"
 echo "- master branch tagged with $version"
 echo "- all branches and tags pushed to github"
+echo "- live site updated"
+echo "    [dev] -> dev.notestack.me"
+echo "    [master] -> notestack.me"
 echo ""
