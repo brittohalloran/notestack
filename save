@@ -1,0 +1,5 @@
+#!/bin/sh
+git add -A
+git commit
+git push github --all
+git push github --tags
