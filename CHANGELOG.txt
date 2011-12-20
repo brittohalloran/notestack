@@ -4,7 +4,7 @@ Contributors:
 Britt O'Halloran (brittohalloran) - https://github.com/brittohalloran
 Eliezer Kanal (eykanal) - https://github.com/eykanal
 
-2011-12-20 - v0.8.11 ... v0.8.18
+2011-12-20 - v0.8.11 ... v0.8.20
 - updated deploy scripts
 
 2011-12-20 - v0.8.10
