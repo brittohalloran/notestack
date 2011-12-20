@@ -6,7 +6,7 @@ git merge dev
 
 echo "----> Currently Notestack $version"
 echo "----> Enter new version number (i.e. 'v0.1.1' - no quotes or spaces)"
-echo -n "---->"
+echo -n "----> "
 read version
 
 echo "----> Updating 'version.php' and 'cache.manifest'"
