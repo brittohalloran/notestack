@@ -8,6 +8,8 @@ git push github --tags
 echo ""
 echo "#####################"
 echo ""
+echo "Save complete."
 echo "- changes have been committed"
 echo "- 'dev' branch deployed to dev.notestack.me"
 echo "- 'master' branch deployed to notestack.me"
+echo ""
