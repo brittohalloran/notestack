@@ -18,6 +18,7 @@ sed -i 's/v[0-9]*\.[0-9]*\.[0-9]*/'$version'/' ./cache.manifest
 
 echo "----> Updating 'CHANGELOG.txt'..."
 echo -n "----> Type the name of your editor (i.e. mate or gedit): "
+read editor
 $editor CHANGELOG.txt
 
 echo "----> Committing changes..."
