@@ -4,9 +4,9 @@ read version
 sed -i 's/v[0-9]*\.[0-9]*\.[0-9]*/'$version'/' ./version.php
 sed -i 's/v[0-9]*\.[0-9]*\.[0-9]*/'$version'/' ./cache.manifest
 git add -A
-git commit -m "ready for release '$version'"
+git commit -m "ready for release "$version""
 git checkout master
-git merge release --no-ff -m "release '$version'"
+git merge release --no-ff -m "release "$version""
 git tag $version
 git push github --all
 git push github --tags
