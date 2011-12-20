@@ -1,0 +1,22 @@
+#!/bin/sh
+
+echo "Opening SSH connection to notestack.me"
+ssh -p 2222 britt@notestack.me <<'ENDSSH'
+
+echo "##############################################"
+echo "Deploying 'dev' branch to dev.notestack.me ..."
+echo ""
+
+cd ~/public_html/notestack_dev
+git checkout dev
+git pull github dev
+
+echo "#############################################"
+echo "Deploying 'master' branch to notestack.me ..."
+echo ""
+
+cd ~/public_html/notestack.me
+git checkout master
+git pull github master
+
+ENDSSH
