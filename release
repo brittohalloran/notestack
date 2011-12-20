@@ -24,7 +24,9 @@ git push github --tags
 git checkout dev
 ./deploy
 
-echo "#########################################"
+echo ""
+echo "###########################"
+echo ""
 echo "Notestack $version released"
 echo "- version bumped to $version"
 echo "- changes merged into master branch (--no-ff)"
