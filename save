@@ -3,3 +3,13 @@ git add -A
 git commit
 git push github --all
 git push github --tags
+./deploy
+
+echo ""
+echo "#####################"
+echo ""
+echo "Save complete."
+echo "- changes have been committed"
+echo "- 'dev' branch deployed to dev.notestack.me"
+echo "- 'master' branch deployed to notestack.me"
+echo ""
