@@ -1,8 +1,8 @@
 #!/bin/sh
 
-echo "----> Checking out 'release' branch and merging 'dev'"
-git checkout release
-git merge dev
+git add -A
+git commit
+git checkout dev
 
 version=$(grep -o 'v[0-9]*\.[0-9]*\.[0-9]*' ./version.php)
 
@@ -17,11 +17,12 @@ sed -i 's/v[0-9]*\.[0-9]*\.[0-9]*/'$version'/' ./cache.manifest
 git add -A
 git commit -m "ready for release $version"
 git checkout master
-git merge release --no-ff -m "release $version"
+git merge dev --no-ff -m "release $version"
 git tag $version
 git push github --all
 git push github --tags
 git checkout dev
+./deploy
 
 echo "#########################################"
 echo "Notestack $version released"
