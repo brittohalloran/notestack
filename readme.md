@@ -4,8 +4,9 @@
 Issues? Bugs? Feature ideas? Click on over to the [issue tracker](http://github.com/brittohalloran/notestack/issues) and log an issue.
 
 ### Contributors
-- [Britt O'Halloran](https://github.com/brittohalloran)
-- [Eliezer Kanal](https://github.com/eykanal)
+- [Britt O'Halloran](https://github.com/brittohalloran) - main codebase
+- [Eliezer Kanal](https://github.com/eykanal) - markdown formatting support
+- [Haroon Q. Raja](http://hqraja.com) - Chrome web store writeup
 
 ### Contribute
 If you want to contribute, go ahead and fork this repository, make some changes, then submit a pull request for me to review. I'm happy to discuss any ideas you have for improvements.
