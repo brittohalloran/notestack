@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# fetch all new stuff
+git fetch --all
+
+# update github branches
+git checkout master
+git merge github/master
+git checkout dev
+git merge github/dev
+
+# update contributor branches
+git checkout eykanal-dev
+git merge eykanal/dev
+
+# switch back to dev branch
+git checkout dev
