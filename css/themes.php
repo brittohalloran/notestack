@@ -339,7 +339,7 @@ a:hover {
 
     .theme-<?php echo $theme; ?> .window .note .textarea textarea::selection,
     .theme-<?php echo $theme; ?> .window .note .textarea textarea::-moz-selection {
-      background: <?php echo $options['textarea-highlight-bg']; ?>;
+      background-color: <?php echo $options['textarea-highlight-bg']; ?>;
       /*color: <?php echo $options['textarea-highlight-color']; ?>;*/
     }	
 
