@@ -135,7 +135,7 @@ a:hover {
 			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.5)',
 			'note-textarea-bg' 		=> 'url(../images/moleskine.jpg)',
 			'textarea-box-shadow'	=> 'inset 0px 0px 10px rgba(0,0,0,0.6)',
-			'textarea-highlight-bg' => '#b4d5fe' ,
+			'textarea-highlight-bg' => '#F29101' ,
       		'textarea-highlight-color' => '#222222' ,
 			'default-font' 			=> '"courier new", monospace',
 			'markdown-header-style'	=> 'font-family: "Museo500";
