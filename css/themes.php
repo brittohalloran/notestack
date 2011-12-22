@@ -337,8 +337,8 @@ a:hover {
 			-moz-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 		}
 
-    .theme-<?php echo $theme; ?> .window .note .textarea ::selection,
-    .theme-<?php echo $theme; ?> .window .note .textarea ::-moz-selection {
+    .theme-<?php echo $theme; ?> .window .note .textarea::selection,
+    .theme-<?php echo $theme; ?> .window .note .textarea::-moz-selection {
       background: <?php echo $options['textarea-highlight-bg']; ?>;
       color: <?php echo $options['textarea-highlight-color']; ?>;
     }	
