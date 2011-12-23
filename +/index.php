@@ -45,7 +45,7 @@
   <?php
   	if ($subdomain == "dev"){
   ?>
-  <div id="dev-warning">Warning: This is the cutting edge developers version of notestack. Things may be broken. We recommend the <a href="http://notestack.me">main site.</a></dev>
+  <div class="dev-warning">Warning: This is the cutting edge developers version of notestack. Things may be broken. We recommend the <a href="http://notestack.me">main site.</a></dev>
   <?php
   	};
   ?>
