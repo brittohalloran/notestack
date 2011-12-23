@@ -19,6 +19,11 @@
 .dev-warning {
   height: 20px;
   width: 100%;
+  line-height: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: #333333;
+  background: #FFB714;
 }
 .dev .fullwindow {
   top: 20px;

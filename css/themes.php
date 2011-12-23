@@ -773,11 +773,3 @@ ul.tagit input[type="text"] {
 	background-color: inherit;
     outline: none;
 }
-
-/*DEV WARNING*/
-.dev-warning {
-	text-align: center;
-  font-size: 13px;
-  color: #333333;
-  background: #FFB714;
-}
