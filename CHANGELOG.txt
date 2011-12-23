@@ -4,7 +4,7 @@ Contributors:
 Britt O'Halloran (brittohalloran) - https://github.com/brittohalloran
 Eliezer Kanal (eykanal) - https://github.com/eykanal
 
-2011-12-23 - v0.8.22
+2011-12-23 - v0.8.22-23
 - added public dev site (dev.notestack.me)
 
 2011-12-22 - v0.8.21
