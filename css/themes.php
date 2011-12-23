@@ -236,14 +236,6 @@ a:hover {
 
 <?php foreach ($themes as $theme => $options) { ?>
 
-/*DEV WARNING*/
-.theme-<?php echo $theme; ?> .dev-warning {
-	text-align: center;
-  font-size: 13px;
-  color: #333333;
-  background: #FFB714;
-}
-
 /*MAIN BACKGROUND BEHIND NOTES*/
 .theme-<?php echo $theme; ?> .fullwindow {
 	background: <?php echo $options['window-bg']; ?>;
@@ -780,4 +772,12 @@ ul.tagit input[type="text"] {
 	width: inherit;
 	background-color: inherit;
     outline: none;
+}
+
+/*DEV WARNING*/
+.theme-<?php echo $theme; ?> .dev-warning {
+	text-align: center;
+  font-size: 13px;
+  color: #333333;
+  background: #FFB714;
 }
