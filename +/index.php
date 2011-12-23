@@ -41,7 +41,7 @@
 	  })();
 	</script>
 </head>
-<body class="theme-moleskine <?php if ($subdomain=="dev"){echo "dev"};?>">
+<body class="theme-moleskine <?php if ($subdomain=="dev"){echo "dev";};?>">
   <?php
   	if ($subdomain == "dev"){
   ?>
