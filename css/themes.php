@@ -127,7 +127,7 @@ a:hover {
 										background: -webkit-gradient(linear,left top,left bottom,from(#F29101),to(#E68901));", 
 			'note-bg' 				=> 'rgba(30,30,30,0.5)',
 			'note-current-bg' 		=> 'rgba(30,30,30,0.95)',
-			'note-edit-bg' 			=> 'rgba(255,255,255,0.95)',
+			'note-edit-bg' 			=> 'rgba(175,175,175,0.95)',
 			'note-edit-border'		=> '2px solid rgba(0,0,0,0.5)',
 			'note-border-rad-px' 	=> '10',
 			'note-border' 			=> '1px solid rgba(50,50,50,1)',
