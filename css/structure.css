@@ -16,6 +16,20 @@
 	top: 0;
 	overflow: hidden;
 }
+.dev-warning {
+  height: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: #333333;
+}
+.dev .fullwindow {
+  top: 20px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background: #FFB714;
+}
 .sidebar{
 	position: absolute;
 	left: 0px;
