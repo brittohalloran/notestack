@@ -9,12 +9,11 @@ version=$(grep -o 'v[0-9]*\.[0-9]*\.[0-9]*' ./version.php)
 
 echo "----> Currently Notestack $version"
 echo "----> Enter new version number (i.e. 'v0.1.1' - no quotes or spaces)"
-echo -n "----> "
 read version
 
 echo "----> Updating 'version.php' and 'cache.manifest'..."
-sed -i 's/v[0-9]*\.[0-9]*\.[0-9]*/'$version'/' ./version.php
-sed -i 's/v[0-9]*\.[0-9]*\.[0-9]*/'$version'/' ./cache.manifest
+sed -i '' 's/v[0-9]*\.[0-9]*\.[0-9]*/'$version'/' ./version.php
+sed -i '' 's/v[0-9]*\.[0-9]*\.[0-9]*/'$version'/' ./cache.manifest
 
 echo "----> Updating 'CHANGELOG.txt'..."
 eval $EDITOR CHANGELOG.txt

@@ -127,7 +127,7 @@ a:hover {
 										background: -webkit-gradient(linear,left top,left bottom,from(#F29101),to(#E68901));", 
 			'note-bg' 				=> 'rgba(30,30,30,0.5)',
 			'note-current-bg' 		=> 'rgba(30,30,30,0.95)',
-			'note-edit-bg' 			=> 'rgba(100,100,100,0.95)',
+			'note-edit-bg' 			=> 'rgba(255,255,255,0.95)',
 			'note-edit-border'		=> '2px solid rgba(0,0,0,0.5)',
 			'note-border-rad-px' 	=> '10',
 			'note-border' 			=> '1px solid rgba(50,50,50,1)',
@@ -135,7 +135,7 @@ a:hover {
 			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.5)',
 			'note-textarea-bg' 		=> 'url(../images/moleskine.jpg)',
 			'textarea-box-shadow'	=> 'inset 0px 0px 10px rgba(0,0,0,0.6)',
-			'textarea-highlight-bg' => '#b4d5fe' ,
+			'textarea-highlight-bg' => '#F29101' ,
       		'textarea-highlight-color' => '#222222' ,
 			'default-font' 			=> '"courier new", monospace',
 			'markdown-header-style'	=> 'font-family: "Museo500";
@@ -337,10 +337,10 @@ a:hover {
 			-moz-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 		}
 
-    .theme-<?php echo $theme; ?> .window .note .textarea ::selection,
-    .theme-<?php echo $theme; ?> .window .note .textarea ::-moz-selection {
-      background: <?php echo $options['textarea-highlight-bg']; ?>;
-      color: <?php echo $options['textarea-highlight-color']; ?>;
+    .theme-<?php echo $theme; ?> .window .note .textarea textarea::selection,
+    .theme-<?php echo $theme; ?> .window .note .textarea textarea::-moz-selection {
+      background-color: <?php echo $options['textarea-highlight-bg']; ?>;
+      /*color: <?php echo $options['textarea-highlight-color']; ?>;*/
     }	
 
 		/*NOTE TEXTAREA WHEN FOCUSED*/
