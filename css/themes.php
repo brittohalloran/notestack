@@ -775,7 +775,7 @@ ul.tagit input[type="text"] {
 }
 
 /*DEV WARNING*/
-.theme-<?php echo $theme; ?> .dev-warning {
+.dev-warning {
 	text-align: center;
   font-size: 13px;
   color: #333333;
