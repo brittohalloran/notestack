@@ -62,56 +62,9 @@
 			position: absolute;
 			left: 5px;
 			top: 5px;
-			width: 218px;
+			width: 326px;
 			height: 13px;
 			padding: 3px 0px 3px 8px;
-		}
-		
-			.no-tags .search input {
-				width: 252px;
-			}
-		
-		.search .addnote,
-		.search .tags,
-		.search .reload {
-			position: absolute;
-			height: 24px;
-			width: 24px;
-			top: 4px;
-		}
-		
-		.search .inner {
-			width: 100%;
-			height: 100%;
-			cursor: pointer;
-		}
-		
-		.search .addnote {
-			left: 281px;
-		}
-		
-		.search .addnote .inner {
-			background: url('../images/plus.png') center no-repeat;
-		}
-		
-		.search .tags {
-			left: 246px;
-		}
-		
-			.no-tags .search .tags {
-				display: none;
-			}
-		
-		.search .tags .inner {
-			background: url('../images/tag.png') center no-repeat;
-		}
-		
-		.search .reload {
-			left: 316px;
-		}
-		
-		.search .reload .inner {
-			background: url('../images/reload.png') center no-repeat;
 		}
 		
 	.active-tag-filter {
@@ -217,18 +170,66 @@
 				display: none;
 				visibility: hidden;
 			}
-			
-	.sidebar-hider {
+	
+	.sidebar .addnote,
+	.sidebar .tags,
+	.sidebar .reload {
 		position: absolute;
-		top: 73px;
-		height: 60px;
-		width: 20px;
-		right: -20px;
-		background: rgba(0, 0, 0, 0.2);
-		border-bottom-right-radius: 10px;
-		border-top-right-radius: 10px;
+		height: 28px;
+		width: 28px;
+		right: -38px;
+	}
+	
+	.sidebar .inner {
+		width: 100%;
+		height: 100%;
 		cursor: pointer;
 	}
+	
+	.sidebar .addnote {
+		top: 100px;
+	}
+	
+	.sidebar .addnote .inner {
+		background: url('../images/plus.png') center no-repeat;
+	}
+	
+	.sidebar .tags {
+		top: 150px;
+	}
+	
+		.no-tags .sidebar .tags {
+			display: none;
+		}
+	
+	.sidebar .tags .inner {
+		background: url('../images/tag.png') center no-repeat;
+	}
+	
+	.sidebar .reload {
+		top: 50px;
+	}
+	
+	.sidebar .reload .inner {
+		background: url('../images/reload.png') center no-repeat;
+	}
+	
+	.sidebar-hider {
+		position: absolute;
+		top: 200px;
+		bottom: 20px;
+		width: 20px;
+		right: -21px;
+		border: 1px solid rgba(0,0,0,0.4);
+		border-left: none;
+		cursor: pointer;
+	}
+		.sidebar-hider:hover {
+			background: rgba(0,0,0,0.1);
+		}
+		.no-tags .sidebar-hider {
+			top: 150px;
+		}
 	
 .window {
 	overflow: hidden;
@@ -238,8 +239,13 @@
 	top: 0;
 	height: 100%;
 	display: block;
+	-webkit-transition: all 0.25s ease-out;
+	-moz-transition: all 0.25s ease-out;
+	-o-transition: all 0.25s ease-out;
+	transition: all 0.25s ease-out;
 }
-.sidebar-hide .window {
+.sidebar-hide .window,
+.sidebar-hover .window {
 	left: 0px;
 }
 	.note {
@@ -400,57 +406,36 @@
 			font-size: 0.8em;
 		}
 		
-		.note .maximize,
-		.note .versions-button,
-		.note .delete,
-		.note .pin-button,
-		.note .markdown-button {
+		.note .actionoverflow {
+			height: 28px;
+			width: 28px;
 			position: absolute;
-			top: -1px;
-			height: 13px;
-			font-size: 10px;
-			border-bottom: 1px solid white;
-			border-right: 1px solid white;
-			border-left: 1px solid white;
-			-webkit-border-bottom-right-radius: 3px;
-			-webkit-border-bottom-left-radius: 3px;
-			-moz-border-radius-bottomright: 3px;
-			-moz-border-radius-bottomleft: 3px;
-			border-bottom-right-radius: 3px;
-			border-bottom-left-radius: 3px;
-			color: white;
-			text-align: center;
+			right: -30px;
+			top: 40px;
+			background: url('/images/actionoverflow.png') center center;
+			border: 1px solid rgba(0,0,0,0.4);
 			cursor: pointer;
-			padding-top: 2px;
-			-webkit-transition: background 1s ease-in-out;
-			-moz-transition: background 1s ease-in-out;
-			-o-transition: background 1s ease-in-out;
-			transition: background 1s ease-in-out; 
 		}
-		
-		.note .delete {
-			right: 20px;
-			width: 16px;
+		.note .actionoverflow:hover {
+			background-color: rgba(0,0,0,0.1);
 		}
-		
-		.note .maximize {
-			right: 46px;
-			width: 35px;
+		.note .actionoverflow .buttons {
+			display: none;
+			position: absolute;
+			top: 28px;
+			left: -1px;
+			width: 120px;
+			border: 1px solid rgba(0,0,0,0.4);
 		}
-		
-		.note .versions-button {
-			right: 92px;
-			width: 45px;
+		.note .actionoverflow:hover .buttons {
+			display: block;
 		}
-		
-		.note .pin-button {
-			left: 20px;
-			width: 34px;
-		}
-		
-		.note .markdown-button {
-			left: 64px;
-			width: 34px;
+
+		.note .actionoverflow .buttons div {
+			position: relative;
+			width: 100px;
+			font-size: 14px;
+			padding: 5px 10px;
 		}
 		
 		.note .maximize:hover,
@@ -603,6 +588,10 @@
 }
 	.settings.show {
 		top: 40%;
+	}
+	.sidebar-hide .settings,
+	.sidebar-hover .settings {
+		left: 0px;
 	}
 	
 	.settings .inner {

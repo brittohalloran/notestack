@@ -1467,7 +1467,9 @@ var notestack = (function () {
 		$(document).bind('keydown', 'c', function () {createNote(); return false; });
 		$(document).bind('keydown', 's', function () {manualSync(); return false; });
 		$(document).bind('keydown', 'p', function () {togglePin($('.selected')); });
-		$(document).bind('keydown', 'f', function () {fullscreenMode(); });
+		$(document).bind('keydown', 'f', function () {
+			$('body').toggleClass('sidebar-hide');
+		});
 		$(document).bind('keydown', 'l', function () {showLabels(); return false; });
 		$(document).bind('keydown', 't', function () {showLabels(); return false; });
 		$(document).bind('keydown', 'v', function () {toggleVersions($('.current').attr('id')); return false; });

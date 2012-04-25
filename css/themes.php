@@ -24,47 +24,7 @@ a:hover {
 	border: 1px solid #bbb;
 }
 
-.button {
-	border: 1px solid rgba(0,0,0,0.3);
-	text-align: center;	
-	cursor: pointer;
-	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd));
-	background: -moz-linear-gradient(top, #fff, #ddd);  
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
-}
 
-	.button:hover {
-		background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc));
-		background: -moz-linear-gradient(top, #fff, #ccc); 
-	}
-
-	.button.depressed,
-	.button:active,
-	.button:focus {
-		background: -webkit-gradient(linear, left top, left bottom, from(#C2C2C2), to(#ddd));
-		background: -moz-linear-gradient(top, #C2C2C2, #ddd);
-		box-shadow: inset 1px 1px 3px rgba(0,0,0,0.3);
-	}
-	
-	.button.button-first {
-		-webkit-border-top-right-radius: 0px;
-		-webkit-border-bottom-right-radius: 0px;
-		-moz-border-radius-topright: 0px;
-		-moz-border-radius-bottomright: 0px;
-		border-top-right-radius: 0px;
-		border-bottom-right-radius: 0px;
-	}
-	
-	.button.button-last {
-		-webkit-border-top-left-radius: 0px;
-		-webkit-border-bottom-left-radius: 0px;
-		-moz-border-radius-topleft: 0px;
-		-moz-border-radius-bottomleft: 0px;
-		border-top-left-radius: 0px;
-		border-bottom-left-radius: 0px;
-	}
 
 /* ########## THEME OPTIONS ########## */
 <?PHP 
@@ -93,10 +53,14 @@ a:hover {
 			'note-border' 			=> '1px solid rgba(50,50,50,0.6)',
 			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
 			'note-buttons-color' 	=> 'rgba(50,50,50,0.6)', 
+			'note-buttons-simple' 	=> 'true',
 			'note-textarea-bg' 		=> 'white',
 			'textarea-box-shadow'	=> 'inset 0px 0px 10px rgba(0,0,0,0.5)',
 			'textarea-highlight-bg' => '#b4d5fe' ,
       		'textarea-highlight-color' => '#222222' ,
+			'button-border'			=> '1px solid rgba(0,0,0,0.4)',
+			'button-bg'				=> 'none',
+			'button-hover-bg'		=> 'rgba(0,0,0,0.1)',
 			'default-font' 			=> '"courier new", monospace',
 			'markdown-header-style'	=> 'font-family: "Museo500";
 										text-transform: uppercase;
@@ -106,6 +70,7 @@ a:hover {
 			'tag-bg' 				=> '#CCC',
 			'tag-border' 			=> 'rgba(0,0,0,0.2)',
 			'overlay-bg'			=> 'rgba(64,64,64,0.3)',
+			'show-non-current'		=> 'false',
 			'theme-card-inner-bg' 	=> '#636363',
 			'theme-card-outer-bg' 	=> '#A4C639',
 			'theme-card-border' 	=> 'rgba(255,255,255,0.3)'
@@ -132,11 +97,15 @@ a:hover {
 			'note-border-rad-px' 	=> '10',
 			'note-border' 			=> '1px solid rgba(50,50,50,1)',
 			'note-buttons-color' 	=> 'rgba(50,50,50,1)',
+			'note-buttons-simple' 	=> 'true',
 			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.5)',
 			'note-textarea-bg' 		=> 'url(../images/moleskine.jpg)',
 			'textarea-box-shadow'	=> 'inset 0px 0px 10px rgba(0,0,0,0.6)',
 			'textarea-highlight-bg' => '#F29101' ,
       		'textarea-highlight-color' => '#222222' ,
+			'button-border'			=> '1px solid rgba(0,0,0,0.4)',
+			'button-bg'				=> 'none',
+			'button-hover-bg'		=> 'rgba(0,0,0,0.1)',
 			'default-font' 			=> '"courier new", monospace',
 			'markdown-header-style'	=> 'font-family: "Museo500";
 										text-transform: uppercase;
@@ -146,6 +115,7 @@ a:hover {
 			'tag-bg' 				=> 'rgba(255,255,255,0.8)',
 			'tag-border' 			=> '1px solid rgba(0,0,0,0.5)',
 			'overlay-bg'			=> 'rgba(30,30,30,0.95)',
+			'show-non-current'		=> 'false',
 			'theme-card-inner-bg' 	=> 'url(../images/moleskine.jpg)',
 			'theme-card-outer-bg'	=> 'rgba(30,30,30,1)',
 			'theme-card-border' 	=> '1px solid rgba(244,241,232,0.3)'
@@ -170,11 +140,15 @@ a:hover {
 			'note-border-rad-px' 	=> '5',
 			'note-border' 			=> '1px solid rgba(0,0,0,0.3)',
 			'note-buttons-color' 	=> 'rgba(0,0,0,0.3)',
+			'note-buttons-simple' 	=> 'true',
 			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
 			'note-textarea-bg' 		=> 'white',
 			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.2)',
 			'textarea-highlight-bg' => '#b4d5fe' ,
       		'textarea-highlight-color' => '#222222' ,
+			'button-border'			=> '1px solid rgba(0,0,0,0.4)',
+			'button-bg'				=> 'none',
+			'button-hover-bg'		=> 'rgba(0,0,0,0.1)',
 			'default-font' 			=> '"courier new", monospace',
 			'markdown-header-style'	=> 'font-family: "Museo500";
 										text-transform: uppercase;
@@ -186,6 +160,7 @@ a:hover {
 			'overlay-bg'			=> "-moz-linear-gradient(top,#F2F2F2,#E6E6E6); 
 										background: -o-linear-gradient(top,#F2F2F2,#E6E6E6);
 										background: -webkit-gradient(linear,left top,left bottom,from(#F2F2F2),to(#E6E6E6));",
+			'show-non-current'		=> 'false',
 			'theme-card-inner-bg' 	=> 'rgba(200,200,200,0.95)',
 			'theme-card-outer-bg' 	=> "-moz-linear-gradient(top,#DD4B39,#D14836); 
 										background: -o-linear-gradient(top,#DD4B39,#D14836);
@@ -212,11 +187,15 @@ a:hover {
 			'note-border-rad-px' 	=> '10',
 			'note-border' 			=> '1px solid rgba(168, 122, 44, 0.8)',
 			'note-buttons-color' 	=> 'rgba(0, 0, 0, 0.4)',
+			'note-buttons-simple' 	=> 'true',
 			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
 			'note-textarea-bg' 		=> '#FFFFD9',
 			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.4)',
 			'textarea-highlight-bg' => '#b4d5fe' ,
       		'textarea-highlight-color' => '#222222' ,
+			'button-border'			=> '1px solid rgba(0,0,0,0.4)',
+			'button-bg'				=> 'none',
+			'button-hover-bg'		=> 'rgba(0,0,0,0.1)',
 			'default-font' 			=> '"MuseoSans-500", sans-serif',
 			'markdown-header-style'	=> 'font-family: "Museo300";
 										text-transform: uppercase;
@@ -227,14 +206,60 @@ a:hover {
 			'tag-border' 			=> '1px solid rgba(0,0,0,0.1)',
 			'overlay-bg'			=> 'rgba(168,122,44,1)',
 			'theme-card-inner-bg' 	=> '#B4B48D',
+			'show-non-current'		=> 'false',
 			'theme-card-outer-bg' 	=> 'rgba(168,122,44,1)',
 			'theme-card-border' 	=> '1px solid rgba(200,200,200,0.5)'
 		),
 		'clean' => array(
-			'window-bg' 			=> "linear-gradient(bottom, #FFFFFF, #D9D9D9);
-										background: -webkit-gradient(linear, left bottom, left top, from(#FFFFFF), to(#D9D9D9));
-										background: -moz-linear-gradient(bottom, #FFFFFF, #D9D9D9);",
-			'sidebar-bg' 			=> 'rgba(255,255,255,0.8)',
+			'window-bg' 			=> "white",
+			'sidebar-bg' 			=> 'white',
+			'sidebar-boxshadow' 	=> '5px 0px 10px rgba(0,0,0,0.1)',
+			'sidebar-borders'		=> '1px solid rgba(0,0,0,0.4)',
+			'listnote-text-color' 	=> 'rgba(0,0,0,1)',
+			'listnote-font' 		=> '"MuseoSans-500", sans-serif',
+			'listnote-title-style' 	=> 'text-transform: uppercase;',
+			'highlight-text-color' 	=> 'rgba(0,0,0,1)', // same as non-highlight
+			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(255,255,255,0.1);',
+			'highlight-bg' 			=> "-moz-linear-gradient(top,#F29101,#E68901); 
+										background: -o-linear-gradient(top,#F29101,#E68901);
+										background: -webkit-gradient(linear,left top,left bottom,from(#F29101),to(#E68901));", 
+			'note-bg' 				=> 'none',
+			'note-current-bg' 		=> 'none',
+			'note-edit-bg' 			=> 'rgba(200,200,200,0.1)',
+			'note-edit-border'		=> '1px solid rgba(0,0,0,0)',
+			'note-border-rad-px' 	=> '0',
+			'note-border' 			=> '1px solid rgba(0,0,0,0)',
+			'note-buttons-color' 	=> 'none',
+			'note-buttons-simple' 	=> 'true',
+			'note-boxshadow' 		=> 'none',
+			'note-textarea-bg' 		=> 'none',
+			'textarea-box-shadow'	=> 'none',
+			'textarea-border-top'	=> 'none',
+			'textarea-highlight-bg' => '#F29101' ,
+      		'textarea-highlight-color' => '#222222' ,
+			'button-border'			=> '1px solid rgba(0,0,0,0.4)',
+			'button-bg'				=> 'none',
+			'button-hover-bg'		=> 'rgba(0,0,0,0.1)',
+			'button-add-icon'		=>	'url(/images/plus-black.png) center no-repeat',
+			'button-reload-icon'	=>	'url(/images/reload-black.png) center no-repeat',
+			'button-action-icon'		=>	'url(/images/actionoverflow-black.png) center no-repeat',
+			'default-font' 			=> '"courier new", monospace',
+			'markdown-header-style'	=> 'font-family: "Museo500";
+										text-transform: uppercase;
+										font-weight: normal;',
+			'markdown-body-style'	=>	'font-family: "MuseoSans-500";',
+			'tag-area-bg' 			=> 'url(../images/moleskine.jpg)',
+			'tag-bg' 				=> 'rgba(255,255,255,0.8)',
+			'tag-border' 			=> '1px solid rgba(0,0,0,0.5)',
+			'overlay-bg'			=> 'rgba(255,255,255,0.95)',
+			'show-non-current'		=> 'false',
+			'theme-card-inner-bg' 	=> 'url(../images/moleskine.jpg)',
+			'theme-card-outer-bg'	=> 'rgba(30,30,30,1)',
+			'theme-card-border' 	=> '1px solid rgba(244,241,232,0.3)'
+		),
+		'hacker' => array(
+			'window-bg' 			=> "rgba(0,0,0,1)",
+			'sidebar-bg' 			=> 'rgba(0,0,0,0.1)',
 			'sidebar-boxshadow' 	=> '5px 0px 10px rgba(0,0,0,0.1)',
 			'sidebar-borders'		=> '1px solid rgba(0,0,0,0.2)',
 			'listnote-text-color' 	=> '#454545',
@@ -248,17 +273,24 @@ a:hover {
 			'note-bg' 				=> 'none',
 			'note-current-bg' 		=> 'none',
 			'note-edit-bg' 			=> 'none',
-			'note-edit-border'		=> '1px solid rgba(0,0,0,0.7)',
-			'note-border-rad-px' 	=> '10',
+			'note-edit-border'		=> '1px solid rgba(0,0,0,0)',
+			'note-border-rad-px' 	=> '0',
 			'note-border' 			=> '1px solid rgba(0,0,0,0)',
 			'note-buttons-color' 	=> 'none',
 			'note-buttons-simple' 	=> 'true',
 			'note-boxshadow' 		=> 'none',
 			'note-textarea-bg' 		=> 'none',
+			'note-text-color' 		=> 'rgba(0,255,0,1)',
 			'textarea-box-shadow'	=> 'none',
-			'textarea-border-top'	=> '1px solid rgba(0,0,0,0.1)',
+			'textarea-border-top'	=> 'none',
 			'textarea-highlight-bg' => '#F29101' ,
       		'textarea-highlight-color' => '#222222' ,
+			'button-border'			=> '1px solid rgba(255,255,255,0.4)',
+			'button-bg'				=> 'rgba(255,255,255,0.1)',
+			'button-hover-bg'		=> 'rgba(255,255,255,0.2)',
+			'button-add-icon'		=>	'url(/images/plus-white.png) center no-repeat',
+			'button-reload-icon'		=>	'url(/images/reload-white.png) center no-repeat',
+			'button-action-icon'		=>	'url(/images/actionoverflow-white.png) center no-repeat',
 			'default-font' 			=> '"courier new", monospace',
 			'markdown-header-style'	=> 'font-family: "Museo500";
 										text-transform: uppercase;
@@ -269,8 +301,8 @@ a:hover {
 			'tag-border' 			=> '1px solid rgba(0,0,0,0.5)',
 			'overlay-bg'			=> 'rgba(30,30,30,0.95)',
 			'show-non-current'		=> 'false',
-			'theme-card-inner-bg' 	=> 'url(../images/moleskine.jpg)',
-			'theme-card-outer-bg'	=> 'rgba(30,30,30,1)',
+			'theme-card-inner-bg' 	=> 'black',
+			'theme-card-outer-bg'	=> 'black',
 			'theme-card-border' 	=> '1px solid rgba(244,241,232,0.3)'
 		)
 	);
@@ -337,10 +369,41 @@ a:hover {
 		.theme-<?php echo $theme; ?> .list .listnote.pinned>.pinboard {
 			background: url(../images/rsz_pin.png) no-repeat center;
 		}
-		
+	
+	/*BUTTON STYLES*/
+	.theme-<?php echo $theme; ?> .button {
+		border: <?php echo $options['button-border']; ?>;
+		cursor: pointer;
+		background-color: <?php echo $options['button-bg']; ?>; 
+	}
+		.theme-<?php echo $theme; ?> .button:hover {
+			background-color: <?php echo $options['button-hover-bg']; ?>; 
+		}
+
+		.theme-<?php echo $theme; ?> .button.depressed,
+		.theme-<?php echo $theme; ?> .button:active,
+		.theme-<?php echo $theme; ?> .button:focus {
+			background-color: rgba(0,0,0,0.2);
+		}
+	
+	/*ADD NOTE BUTTON*/
+	.theme-<?php echo $theme; ?> .sidebar .addnote .inner {
+		background: <?php echo $options['button-add-icon']; ?>;
+	}
+	
+	/*RELOAD BUTTON*/
+	.theme-<?php echo $theme; ?> .sidebar .reload .inner {
+		background: <?php echo $options['button-reload-icon']; ?>;
+	}
+	
 	/*SIDEBAR HIDER BUTTON*/
-	.sidebar-hider {
-		background: rgba(0,0,0,0.2);
+	.theme-<?php echo $theme; ?> .sidebar-hider {
+		border-left: none;
+	}
+	
+	/*SIDEBAR HIDER BUTTON*/
+	.theme-<?php echo $theme; ?> .actionoverflow {
+		background: <?php echo $options['button-action-icon']; ?>;
 	}
 
 /*FRAME AROUND UNSELECTED NOTES (PARTIALLY OFFSCREEN)*/
@@ -388,6 +451,11 @@ a:hover {
 		background: <?php echo $options['note-textarea-bg']; ?>;
 		border: <?php echo $options['note-border']; ?>;
 	}
+	
+		.theme-<?php echo $theme; ?> .window .note .textarea textarea {
+			color: <?php echo $options['note-text-color']; ?>;
+		}
+	
 		.theme-<?php echo $theme; ?> .window .note .textarea {
 			box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 			-webkit-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
@@ -450,22 +518,16 @@ a:hover {
 			font-style: italic;
 		}
 	
-	/*MAXIMIZE AND HISTORY BUTTON*/
-	.theme-<?php echo $theme; ?> .window .note .maximize,
-	.theme-<?php echo $theme; ?> .window .note .versions-button,
-	.theme-<?php echo $theme; ?> .window .note .delete,
-	.theme-<?php echo $theme; ?> .window .note .pin-button,
-	.theme-<?php echo $theme; ?> .window .note .markdown-button {
-		border: 1px solid <?php echo $options['note-buttons-color']; ?>;
+	/*ACTION OVERFLOW*/
+	.theme-<?php echo $theme; ?> .window .note .actionoverflow {
+		border: <?php echo $options['button-border']; ?>;
 		color: black;
-		background: linear-gradient(bottom, #BFBFBF, #D9D9D9);
-		background: -webkit-gradient(linear, left bottom, left top, from(#BFBFBF), to(#D9D9D9));
-		background: -moz-linear-gradient(bottom, #BFBFBF, #D9D9D9);
-		<?php if ($options['note-buttons-simple'] == 'true') { ?>
-		border: none;
-		background: none;
-		<?php }; ?>
 	}
+	
+		.theme-<?php echo $theme; ?> .window .note .actionoverflow .buttons {
+			background: <?php echo $options['button-hover-bg']; ?>;
+		}
+		
 		.theme-<?php echo $theme; ?> .window .note.pinned .pin-button,
 		.theme-<?php echo $theme; ?> .window .note.markdown-on .markdown-button {
 			/*color: <?php echo $options['highlight-text-color']; ?>;
@@ -477,8 +539,8 @@ a:hover {
 			-webkit-box-shadow: inset 0px 0px 3px rgba(0,0,0,0.3);
 			-moz-box-shadow: inset 0px 0px 3px rgba(0,0,0,0.3);
 			<?php if ($options['note-buttons-simple'] == 'true') { ?>
-			background: rgba(0,0,0,0.2);
-			box-shadow: none;
+				background: rgba(0,0,0,0.2);
+				box-shadow: none;
 			<?php }; ?>
 		}
 		.theme-<?php echo $theme; ?> .window .note .maximize:hover,

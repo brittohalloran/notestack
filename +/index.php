@@ -47,8 +47,6 @@
 			<div id="searchbar" class='search'>
 				<input type="text" name="q" />
 				<div class='tags button' title="Tags (t) or (l)"><div class='inner'></div></div>
-				<div class='addnote button' title="New Note (c)"><div class='inner'></div></div>
-				<div class='reload button' title="Sync (s)"><div class='inner'></div></div>
 			</div>
 			<div id="note-list" class="list">
 				<div class="filter-status"></div>
@@ -56,7 +54,9 @@
 					<!-- listnotes will be inserted here -->
 				</div>
 			</div>
-			<div class="sidebar-hider" title=""Toggle sidebar"></div>
+			<div class='addnote button' title="New Note (c)"><div class='inner'></div></div>
+			<div class='reload button' title="Sync (s)"><div class='inner'></div></div>
+			<div class="sidebar-hider button" title="Fullscreen Mode (f)"></div>
 		</div>
 		<div id="note-window" class="window ">
 			<div class="msg">
@@ -108,7 +108,8 @@
 									"theme-moleskine" => "Moleskine",
 									"theme-gmail" => "New Gmail",
 									"theme-earthy" => "Earthy",
-									"theme-clean" => "Clean"
+									"theme-clean" => "Sterile",
+									"theme-hacker" => "Hacker"
 								);
 								
 								foreach($themes as $key => $value){
@@ -253,13 +254,16 @@
 				</div>
 			</div>
 			<div class='note-directions'><p>esc to save</p></div>
-			<div class='pin-button' title='Toggle pin (p)'>pin</div>
-			<div class='markdown-button' title='Toggle markdown (m)'># #</div>
-			<div class='versions-button' title='View old versions (v)'>history</div>
-			<div class='maximize' title='Fullscreen mode (f)'>focus</div>
-			<div class='delete' title='Delete note'>x</div> 
-			
+			<div class='actionoverflow button'>
+				<div class='buttons'>
+					<div class='pin-button'>pin (p)</div>
+					<div class='markdown-button'>markdown (m)</div>
+					<div class='versions-button' title='View old versions (v)'>versions (v)</div>
+					<div class='delete'>delete note</div>
+				</div>
+			</div>
 			<div class='message'></div>
+			
 		</div>
 		<div id="listnote-template">
 			<div class="title"></div>
