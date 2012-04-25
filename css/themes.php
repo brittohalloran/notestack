@@ -229,6 +229,49 @@ a:hover {
 			'theme-card-inner-bg' 	=> '#B4B48D',
 			'theme-card-outer-bg' 	=> 'rgba(168,122,44,1)',
 			'theme-card-border' 	=> '1px solid rgba(200,200,200,0.5)'
+		),
+		'clean' => array(
+			'window-bg' 			=> "linear-gradient(bottom, #FFFFFF, #D9D9D9);
+										background: -webkit-gradient(linear, left bottom, left top, from(#FFFFFF), to(#D9D9D9));
+										background: -moz-linear-gradient(bottom, #FFFFFF, #D9D9D9);",
+			'sidebar-bg' 			=> 'rgba(255,255,255,0.8)',
+			'sidebar-boxshadow' 	=> '5px 0px 10px rgba(0,0,0,0.1)',
+			'sidebar-borders'		=> '1px solid rgba(0,0,0,0.2)',
+			'listnote-text-color' 	=> '#454545',
+			'listnote-font' 		=> '"MuseoSans-500", sans-serif',
+			'listnote-title-style' 	=> 'text-transform: uppercase;',
+			'highlight-text-color' 	=> '#454545', // same as non-highlight
+			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(255,255,255,0.1);',
+			'highlight-bg' 			=> "-moz-linear-gradient(top,#F29101,#E68901); 
+										background: -o-linear-gradient(top,#F29101,#E68901);
+										background: -webkit-gradient(linear,left top,left bottom,from(#F29101),to(#E68901));", 
+			'note-bg' 				=> 'none',
+			'note-current-bg' 		=> 'none',
+			'note-edit-bg' 			=> 'none',
+			'note-edit-border'		=> '1px solid rgba(0,0,0,0.7)',
+			'note-border-rad-px' 	=> '10',
+			'note-border' 			=> '1px solid rgba(0,0,0,0)',
+			'note-buttons-color' 	=> 'none',
+			'note-buttons-simple' 	=> 'true',
+			'note-boxshadow' 		=> 'none',
+			'note-textarea-bg' 		=> 'none',
+			'textarea-box-shadow'	=> 'none',
+			'textarea-border-top'	=> '1px solid rgba(0,0,0,0.1)',
+			'textarea-highlight-bg' => '#F29101' ,
+      		'textarea-highlight-color' => '#222222' ,
+			'default-font' 			=> '"courier new", monospace',
+			'markdown-header-style'	=> 'font-family: "Museo500";
+										text-transform: uppercase;
+										font-weight: normal;',
+			'markdown-body-style'	=>	'font-family: "MuseoSans-500";',
+			'tag-area-bg' 			=> 'url(../images/moleskine.jpg)',
+			'tag-bg' 				=> 'rgba(255,255,255,0.8)',
+			'tag-border' 			=> '1px solid rgba(0,0,0,0.5)',
+			'overlay-bg'			=> 'rgba(30,30,30,0.95)',
+			'show-non-current'		=> 'false',
+			'theme-card-inner-bg' 	=> 'url(../images/moleskine.jpg)',
+			'theme-card-outer-bg'	=> 'rgba(30,30,30,1)',
+			'theme-card-border' 	=> '1px solid rgba(244,241,232,0.3)'
 		)
 	);
 	
@@ -294,6 +337,11 @@ a:hover {
 		.theme-<?php echo $theme; ?> .list .listnote.pinned>.pinboard {
 			background: url(../images/rsz_pin.png) no-repeat center;
 		}
+		
+	/*SIDEBAR HIDER BUTTON*/
+	.sidebar-hider {
+		background: rgba(0,0,0,0.2);
+	}
 
 /*FRAME AROUND UNSELECTED NOTES (PARTIALLY OFFSCREEN)*/
 .theme-<?php echo $theme; ?> .window .note {
@@ -307,14 +355,23 @@ a:hover {
 	box-shadow: <?php echo $options['note-boxshadow']; ?>;
 }
 
+	<?php if ($options['show-non-current'] == 'false') { ?>
+	/*HIDE NON-CURRENT NOTES*/
+	.theme-<?php echo $theme; ?> .window .note {
+		display: none;
+	}
+	<?php }; ?>
+
 	/*FRAME AROUND SELECTED NOTE CARD*/
 	.theme-<?php echo $theme; ?> .window .current.note {
 		background: <?php echo $options['note-current-bg']; ?>;
+		display: block;
 	}
 
 	/*FRAME AROUND NOTE WHEN EDITING*/
 	.theme-<?php echo $theme; ?> .window .current.highlight {
 		background: <?php echo $options['note-edit-bg']; ?>;
+		border: <?php echo $options['note-edit-border']; ?>;
 	}
 	
 	/*FRAME AROUND OVERLAY*/
@@ -335,6 +392,7 @@ a:hover {
 			box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 			-webkit-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 			-moz-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
+			border-top: <?php echo $options['textarea-border-top']; ?>;
 		}
 
     .theme-<?php echo $theme; ?> .window .note .textarea textarea::selection,
@@ -403,6 +461,10 @@ a:hover {
 		background: linear-gradient(bottom, #BFBFBF, #D9D9D9);
 		background: -webkit-gradient(linear, left bottom, left top, from(#BFBFBF), to(#D9D9D9));
 		background: -moz-linear-gradient(bottom, #BFBFBF, #D9D9D9);
+		<?php if ($options['note-buttons-simple'] == 'true') { ?>
+		border: none;
+		background: none;
+		<?php }; ?>
 	}
 		.theme-<?php echo $theme; ?> .window .note.pinned .pin-button,
 		.theme-<?php echo $theme; ?> .window .note.markdown-on .markdown-button {
@@ -414,6 +476,10 @@ a:hover {
 			box-shadow: inset 0px 0px 3px rgba(0,0,0,0.3);
 			-webkit-box-shadow: inset 0px 0px 3px rgba(0,0,0,0.3);
 			-moz-box-shadow: inset 0px 0px 3px rgba(0,0,0,0.3);
+			<?php if ($options['note-buttons-simple'] == 'true') { ?>
+			background: rgba(0,0,0,0.2);
+			box-shadow: none;
+			<?php }; ?>
 		}
 		.theme-<?php echo $theme; ?> .window .note .maximize:hover,
 		.theme-<?php echo $theme; ?> .window .note .versions-button:hover,

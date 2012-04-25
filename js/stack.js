@@ -1263,7 +1263,11 @@ var notestack = (function () {
 		// =============
 		//    BUTTONS
 		// =============
-	
+		
+		// TOGGLE SIDEBAR BUTTON
+		$('.sidebar-hider').click(function () {
+			$('body').toggleClass('sidebar-hide');
+		});
 		// NEW NOTE BUTTON
 		$('.addnote').click(function () {createNote(); });
 		// TAGS BUTTON

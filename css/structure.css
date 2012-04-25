@@ -36,13 +36,21 @@
 	left: 0px;
 	top: 0px;
 	bottom: 0px;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	width: 350px;
 	-moz-box-shadow: 3px 0px 5px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 3px 0px 5px rgba(0,0,0,0.5);
 	box-shadow: 3px 0px 5px rgba(0,0,0,0.5);
 	z-index: 10;
-}	.search {
+	-webkit-transition: all 0.25s ease-out;
+	-moz-transition: all 0.25s ease-out;
+	-o-transition: all 0.25s ease-out;
+	transition: all 0.25s ease-out;
+}	
+.sidebar-hide .sidebar {
+	left: -350px;
+}
+	.search {
 		position: absolute;
 		left: 0px;
 		top: 0px;
@@ -209,6 +217,19 @@
 				display: none;
 				visibility: hidden;
 			}
+			
+	.sidebar-hider {
+		position: absolute;
+		top: 73px;
+		height: 60px;
+		width: 20px;
+		right: -20px;
+		background: rgba(0, 0, 0, 0.2);
+		border-bottom-right-radius: 10px;
+		border-top-right-radius: 10px;
+		cursor: pointer;
+	}
+	
 .window {
 	overflow: hidden;
 	position: absolute;
@@ -217,6 +238,9 @@
 	top: 0;
 	height: 100%;
 	display: block;
+}
+.sidebar-hide .window {
+	left: 0px;
 }
 	.note {
 		display: none;

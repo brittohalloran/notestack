@@ -56,6 +56,7 @@
 					<!-- listnotes will be inserted here -->
 				</div>
 			</div>
+			<div class="sidebar-hider" title=""Toggle sidebar"></div>
 		</div>
 		<div id="note-window" class="window ">
 			<div class="msg">
@@ -106,7 +107,8 @@
 									"theme-android" => "Android",
 									"theme-moleskine" => "Moleskine",
 									"theme-gmail" => "New Gmail",
-									"theme-earthy" => "Earthy"
+									"theme-earthy" => "Earthy",
+									"theme-clean" => "Clean"
 								);
 								
 								foreach($themes as $key => $value){
