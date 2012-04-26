@@ -41,12 +41,12 @@
 	  })();
 	</script>
 </head>
-<body class="theme-moleskine <?php if ($subdomain=="dev"){echo "dev";};?>">
+<body class="theme-clean fontsize-16 font-sans">
 	<div id="full-window" class="fullwindow">
 		<div id='sidebar' class='sidebar'>
 			<div id="searchbar" class='search'>
 				<input type="text" name="q" />
-				<div class='tags button' title="Tags (t) or (l)"><div class='inner'></div></div>
+				
 			</div>
 			<div id="note-list" class="list">
 				<div class="filter-status"></div>
@@ -56,6 +56,7 @@
 			</div>
 			<div class='addnote button' title="New Note (c)"><div class='inner'></div></div>
 			<div class='reload button' title="Sync (s)"><div class='inner'></div></div>
+			<div class='tags button' title="Tags (t) or (l)"><div class='inner'></div></div>
 			<div class="sidebar-hider button" title="Fullscreen Mode (f)"></div>
 		</div>
 		<div id="note-window" class="window ">
@@ -104,12 +105,7 @@
 							<h3>Theme</h3>
 							<?php 
 								$themes = array(
-									"theme-android" => "Android",
-									"theme-moleskine" => "Moleskine",
-									"theme-gmail" => "New Gmail",
-									"theme-earthy" => "Earthy",
-									"theme-clean" => "Sterile",
-									"theme-hacker" => "Hacker"
+									"theme-clean" => "Sterile"
 								);
 								
 								foreach($themes as $key => $value){
@@ -122,26 +118,15 @@
 								<?php
 								};
 							?>
-							<div class="design-a-theme">Know CSS? <a href="http://github.com/brittohalloran/notestack/wiki">Design a theme for Notestack</a></div>
+							<div class="design-a-theme">More themes coming soon. Know CSS? <a href="http://github.com/brittohalloran/notestack/wiki">Design a theme for Notestack</a></div>
 						</div>
 						<div class="clear"></div>
 						<div class="pane_section">
 							<h3>Note Font</h3>
 							<?php 
 								$fontarray = array(
-									"mono" =>  "Courier New",
-									"veramono" => "Vera Mono",
-									"lmmono" => "LM Mono",
-									"dsmono" => "Droid Sans Mono",
-									"sans" => "Arial",
-									"lmsans" => "LM Sans",
-									"dssans" => "Droid Sans",
-									"museosans" => "Museo Sans",
-									"greyscale" => "Greyscale",
-									"serif" => "Times",
-									"architect" => "Flux Architect",
-									"arvo" => "Arvo",
-									"colaborate" => "Colaborate"
+									"mono" => "Mono",
+									"sans" => "Sans"
 								);
 								
 								foreach($fontarray as $key => $value){
@@ -155,23 +140,14 @@
 						</div>
 						<div class="pane_section">
 							<h3>Font Size</h3>
-							<div id="fontsize-10" class="fontsize">
-								<div class="name fontsize-10">tiny</div>
-							</div>
-							<div id="fontsize-11" class="fontsize">
-								<div class="name fontsize-11">small</div>
-							</div>
-							<div id="fontsize-12" class="fontsize">
-								<div class="name fontsize-12">normal</div>
-							</div>
 							<div id="fontsize-13" class="fontsize">
-								<div class="name fontsize-13">plus</div>
-							</div>
-							<div id="fontsize-14" class="fontsize">
-								<div class="name fontsize-14">big</div>
+								<div class="name fontsize-13">small</div>
 							</div>
 							<div id="fontsize-16" class="fontsize">
-								<div class="name fontsize-16">huge</div>
+								<div class="name fontsize-16">normal</div>
+							</div>
+							<div id="fontsize-18" class="fontsize">
+								<div class="name fontsize-18">big</div>
 							</div>
 						</div>
 					</div>
@@ -285,13 +261,6 @@
 			<div class="clear-tag-filter" title="clear filter (a)">x</div>
 		</div>
 	</div>
-	<?php
-  	if ($subdomain == "dev"){
-  ?>
-  <div class="dev-warning">Warning: This is the cutting edge developers version of notestack. Things may be broken. We recommend the <a href="http://notestack.me">main site.</a></dev>
-  <?php
-  	};
-  ?>
 	<!-- SCRIPTS -->
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js"></script>

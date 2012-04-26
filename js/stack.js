@@ -126,27 +126,12 @@ var notestack = (function () {
 	// CONSOLE LOG (DEV MODE)
 	var consoleLog = function (msg) {
 	  // dev mode, uncomment to let it log
-		//console.log(msg);
-	};
-	
-	// FULLSCREEN MODE
-	var fullscreenMode = function (direction) {
-		if (direction === "off") {
-			$('html body').removeClass('fullscreen-mode');
-			$('.overlay').removeClass('show');
-		} else if (direction === "on") {
-			$('html body').addClass('fullscreen-mode');
-			$('.overlay').addClass('show');		
-		} else {
-			$('html body').toggleClass('fullscreen-mode');
-			$('.overlay').toggleClass('show');
-		}
+		console.log(msg);
 	};
 	
 	// CLEAR OVERLAYS
 	var clearOverlays = function () {
 		$('.show').not('.settings_pane,.msg').removeClass('show');
-		fullscreenMode("off");
 	};
 	
 	// PROGRESS BAR
@@ -754,10 +739,6 @@ var notestack = (function () {
 		//FROM WITHIN NOTE TEXT AREA
 		$(note_tas).bind('keydown', 'esc', function () {$('.note-directions').removeClass('show'); $(this).blur(); });
 		$(note_tas).tabby();
-		// MAXIMIZE BUTTON
-		$('.maximize').click(function () {
-			fullscreenMode();
-		});
 		// ON TAG CHANGE
 		$('.tagsinput div input').blur(function () { 
 			updateTags($('.current').attr('id'));
@@ -789,6 +770,7 @@ var notestack = (function () {
 			$('.next2').addClass('next1').removeClass('next2');
 			$('.next1').nextAll('.on').eq(0).addClass('next2');			
 			scrollto();
+			toggleFullscreen('show');
 		}
 	};
 	
@@ -806,6 +788,7 @@ var notestack = (function () {
 			$('.prev2').removeClass('prev2').addClass('prev1');
 			$('.prev1').prevAll('.on').eq(0).addClass('prev2');
 			scrollto();
+			toggleFullscreen('show');
 		}
 	};
 	
@@ -873,6 +856,7 @@ var notestack = (function () {
 		$('.listnote:not(.search-hide,.tag-hide):first').addClass('selected');
 		$('.search input').val('');
 		refreshSearch();
+		toggleFullscreen('show');
 	};
 
 	// SORT VERSIONS
@@ -947,7 +931,6 @@ var notestack = (function () {
 		if ($('.versions').hasClass('show')) {
 			clearOverlays();
 		} else {
-			fullscreenMode('off');
 			$('.versions').addClass('show');
 			$('.overlay').addClass('show');
 			$('.versions-right .right-inner').html("");
@@ -989,7 +972,7 @@ var notestack = (function () {
 		if ($('.labels').hasClass('show')) {
 			clearOverlays();
 		} else {
-			fullscreenMode('off');
+			toggleFullscreen('show');
 			populateLabels();
 			$('.labels').addClass('show');
 			$('.overlay').addClass('show');
@@ -1153,6 +1136,32 @@ var notestack = (function () {
 		sortNotes();
 	};
 	
+	// TOGGLE FULLSCREEN MODE
+	var toggleFullscreen = function(action) {
+		if (action == undefined) {
+			if ($('body').hasClass('sidebar-hover')) {
+				// sidebar is hovered, trying to show
+				action = 'show';
+			} else if ($('body').hasClass('sidebar-hide')) {
+				// sidebar is hidden, trying to lock out
+				action = 'show';
+			} else {
+				// sidebar is locked out, trying to hide
+				action = 'hide';
+			};
+		};
+		consoleLog('toggling fullscreen mode: ' + action);
+		if (action == 'hover') {
+			//$('body').removeClass('sidebar-hide').addClass('sidebar-hover');
+		} else if (action == 'unhover') {
+			//$('body').removeClass('sidebar-hover').addClass('sidebar-hide');
+		} else if (action == 'hide') {
+			$('body').addClass('sidebar-hide').removeClass('sidebar-hover');
+		} else if (action == 'show') {
+			$('body').removeClass('sidebar-hide').removeClass('sidebar-hover');
+		};
+	};
+	
 	var notestackLoadInteractions = function () {
 		
 		var themename, fontname, fontsize, sortby;
@@ -1166,7 +1175,7 @@ var notestack = (function () {
 			themename = localStorage.theme;
 			changeTheme(themename);
 		} else {
-			changeTheme('theme-moleskine'); // default theme
+			changeTheme('theme-clean'); // default theme
 		}
 		// CLICK THEME
 		$('.appearance .item.theme').click(function () {
@@ -1180,7 +1189,7 @@ var notestack = (function () {
 			fontname = localStorage.font;
 			changeFont(fontname);
 		} else {
-			changeFont('font-mono'); // default font
+			changeFont('font-sans'); // default font
 		}
 		// CLICK FONT
 		$('.appearance .font').click(function () {
@@ -1193,7 +1202,7 @@ var notestack = (function () {
 			fontsize = localStorage.fontsize;
 			changeFontsize(fontsize);
 		} else {
-			changeFontsize('fontsize-12'); // default fontsize
+			changeFontsize('fontsize-16'); // default fontsize
 		}
 		// CLICK FONTSIZE
 		$('.appearance .fontsize').click(function () {
@@ -1258,16 +1267,31 @@ var notestack = (function () {
 			}
 			$('.current .note-directions').removeClass('show');
 			$('.current').removeClass('highlight');
-		});
-	
+		});		
+		
+		// HOVER SIDEBAR BUTTON
+		$('.sidebar-hider').hover(
+			function () {
+				toggleFullscreen('show'); 
+			},
+			function () {
+				return false;
+			}
+		);
+		$('.sidebar').hover(
+			function () {
+				return false; 
+			},
+			function () {
+				return false;
+			}
+		);
+		
 		// =============
 		//    BUTTONS
 		// =============
-		
 		// TOGGLE SIDEBAR BUTTON
-		$('.sidebar-hider').click(function () {
-			$('body').toggleClass('sidebar-hide');
-		});
+		$('.sidebar-hider').click(function () {toggleFullscreen(); });
 		// NEW NOTE BUTTON
 		$('.addnote').click(function () {createNote(); });
 		// TAGS BUTTON
@@ -1388,7 +1412,7 @@ var notestack = (function () {
 			$(this).addClass('depressed');
 			if ($('.version-select').length < 1) {
 				$('.version-item:first').addClass('.version-select');
-			}
+			} 
 			if ($(this).hasClass('diff-view')) {
 				$('.versions-right .right-inner').html($('.version-select').data().diff);
 			} else if ($(this).hasClass('text-view')) {
@@ -1463,13 +1487,15 @@ var notestack = (function () {
 		});
 		$(document).bind('keydown', 'tab', function () {$('.note.current .textarea textarea').focus(); return false; });
 		$(document).bind('keydown', 'shift+/', function () {$('.settings').toggleClass('show'); });
-		$(document).bind('keydown', '/', function () {$('.search input').select(); return false; });
+		$(document).bind('keydown', '/', function () {
+			$('.search input').select(); 
+			toggleFullscreen('show');
+			return false; 
+		});
 		$(document).bind('keydown', 'c', function () {createNote(); return false; });
 		$(document).bind('keydown', 's', function () {manualSync(); return false; });
 		$(document).bind('keydown', 'p', function () {togglePin($('.selected')); });
-		$(document).bind('keydown', 'f', function () {
-			$('body').toggleClass('sidebar-hide');
-		});
+		$(document).bind('keydown', 'f', function () {toggleFullscreen(); return false; });
 		$(document).bind('keydown', 'l', function () {showLabels(); return false; });
 		$(document).bind('keydown', 't', function () {showLabels(); return false; });
 		$(document).bind('keydown', 'v', function () {toggleVersions($('.current').attr('id')); return false; });

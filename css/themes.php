@@ -30,202 +30,24 @@ a:hover {
 <?PHP 
 	
 	$themes = array(
-		'android' => array(
-			'window-bg' 			=> "linear-gradient(bottom, #FCFCFC, #DBDBDB);
-										background: -webkit-gradient(linear, left bottom, left top, from(#FCFCFC), to(#DBDBDB));
-										background: -moz-linear-gradient(bottom, #FCFCFC, #DBDBDB);",
-			'sidebar-bg' 			=> '#636363',
-			'sidebar-boxshadow' 	=> '5px 0px 10px rgba(0,0,0,0.1)',
-			'sidebar-borders'		=> '1px solid #ccc',
-			'listnote-text-color' 	=> 'white',
-			'listnote-font' 		=> 'inherit',
-			'listnote-title-style' 	=> 'font-weight: bold;',
-			'highlight-text-color' 	=> 'white',
-			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(0,0,0,0.1);',
-			'highlight-bg' 			=> "-moz-linear-gradient(top,#A4C639,#9ABA36); 
-										background: -o-linear-gradient(top,#A4C639,#9ABA36);
-										background: -webkit-gradient(linear,left top,left bottom,from(#A4C639),to(#9ABA36));", // android green
-			'note-bg' 				=> 'rgba(64,64,64,0.5)',
-			'note-current-bg' 		=> 'rgba(64,64,64,0.8)',
-			'note-edit-bg' 			=> 'rgba(64,64,64,0.3)',
-			'note-edit-border'		=> '1px solid #4D90FE',
-			'note-border-rad-px' 	=> '10',
-			'note-border' 			=> '1px solid rgba(50,50,50,0.6)',
-			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
-			'note-buttons-color' 	=> 'rgba(50,50,50,0.6)', 
-			'note-buttons-simple' 	=> 'true',
-			'note-textarea-bg' 		=> 'white',
-			'textarea-box-shadow'	=> 'inset 0px 0px 10px rgba(0,0,0,0.5)',
-			'textarea-highlight-bg' => '#b4d5fe' ,
-      		'textarea-highlight-color' => '#222222' ,
-			'button-border'			=> '1px solid rgba(0,0,0,0.4)',
-			'button-bg'				=> 'none',
-			'button-hover-bg'		=> 'rgba(0,0,0,0.1)',
-			'default-font' 			=> '"courier new", monospace',
-			'markdown-header-style'	=> 'font-family: "Museo500";
-										text-transform: uppercase;
-										font-weight: normal;',
-			'markdown-body-style'	=>	'font-family: "MuseoSans-500";',
-			'tag-area-bg' 			=> 'white',
-			'tag-bg' 				=> '#CCC',
-			'tag-border' 			=> 'rgba(0,0,0,0.2)',
-			'overlay-bg'			=> 'rgba(64,64,64,0.3)',
-			'show-non-current'		=> 'false',
-			'theme-card-inner-bg' 	=> '#636363',
-			'theme-card-outer-bg' 	=> '#A4C639',
-			'theme-card-border' 	=> 'rgba(255,255,255,0.3)'
-		),
-		'moleskine' => array(
-			'window-bg' 			=> "linear-gradient(bottom, #FCFCFC, #DBDBDB);
-										background: -webkit-gradient(linear, left bottom, left top, from(#FCFCFC), to(#DBDBDB));
-										background: -moz-linear-gradient(bottom, #FCFCFC, #DBDBDB);",
-			'sidebar-bg' 			=> 'rgba(244,241,232,1)',
-			'sidebar-boxshadow' 	=> '5px 0px 10px rgba(0,0,0,0.1)',
-			'sidebar-borders'		=> '1px solid #ccc',
-			'listnote-text-color' 	=> '#454545',
-			'listnote-font' 		=> '"MuseoSans-500", sans-serif',
-			'listnote-title-style' 	=> 'text-transform: uppercase;',
-			'highlight-text-color' 	=> '#454545', // same as non-highlight
-			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(255,255,255,0.1);',
-			'highlight-bg' 			=> "-moz-linear-gradient(top,#F29101,#E68901); 
-										background: -o-linear-gradient(top,#F29101,#E68901);
-										background: -webkit-gradient(linear,left top,left bottom,from(#F29101),to(#E68901));", 
-			'note-bg' 				=> 'rgba(30,30,30,0.5)',
-			'note-current-bg' 		=> 'rgba(30,30,30,0.95)',
-			'note-edit-bg' 			=> 'rgba(175,175,175,0.95)',
-			'note-edit-border'		=> '2px solid rgba(0,0,0,0.5)',
-			'note-border-rad-px' 	=> '10',
-			'note-border' 			=> '1px solid rgba(50,50,50,1)',
-			'note-buttons-color' 	=> 'rgba(50,50,50,1)',
-			'note-buttons-simple' 	=> 'true',
-			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.5)',
-			'note-textarea-bg' 		=> 'url(../images/moleskine.jpg)',
-			'textarea-box-shadow'	=> 'inset 0px 0px 10px rgba(0,0,0,0.6)',
-			'textarea-highlight-bg' => '#F29101' ,
-      		'textarea-highlight-color' => '#222222' ,
-			'button-border'			=> '1px solid rgba(0,0,0,0.4)',
-			'button-bg'				=> 'none',
-			'button-hover-bg'		=> 'rgba(0,0,0,0.1)',
-			'default-font' 			=> '"courier new", monospace',
-			'markdown-header-style'	=> 'font-family: "Museo500";
-										text-transform: uppercase;
-										font-weight: normal;',
-			'markdown-body-style'	=>	'font-family: "MuseoSans-500";',
-			'tag-area-bg' 			=> 'url(../images/moleskine.jpg)',
-			'tag-bg' 				=> 'rgba(255,255,255,0.8)',
-			'tag-border' 			=> '1px solid rgba(0,0,0,0.5)',
-			'overlay-bg'			=> 'rgba(30,30,30,0.95)',
-			'show-non-current'		=> 'false',
-			'theme-card-inner-bg' 	=> 'url(../images/moleskine.jpg)',
-			'theme-card-outer-bg'	=> 'rgba(30,30,30,1)',
-			'theme-card-border' 	=> '1px solid rgba(244,241,232,0.3)'
-		),
-		'gmail' => array(
-			'window-bg' 			=> 'white',
-			'sidebar-bg' 			=> '#F1F1F1',
-			'sidebar-boxshadow' 	=> '5px 0px 10px rgba(0,0,0,0.1)',
-			'sidebar-borders'		=> '1px solid rgba(0,0,0,0.1)',
-			'listnote-text-color' 	=> '#666',
-			'listnote-font' 		=> 'arial, sans-serif',
-			'listnote-title-style' 	=> 'font-weight: bold;',
-			'highlight-text-color' 	=> 'white',
-			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(0,0,0,0.1);',
-			'highlight-bg' 			=> "-moz-linear-gradient(top,#DD4B39,#D14836); 
-										background: -o-linear-gradient(top,#DD4B39,#D14836);
-										background: -webkit-gradient(linear,left top,left bottom,from(#DD4B39),to(#D14836));", 
-			'note-bg' 				=> 'rgba(241,241,241,0.5)',
-			'note-current-bg' 		=> "#F2F2F2",
-			'note-edit-bg' 			=> 'rgba(200,200,200,0.95)',
-			'note-edit-border'		=> '1px solid #4D90FE',
-			'note-border-rad-px' 	=> '5',
-			'note-border' 			=> '1px solid rgba(0,0,0,0.3)',
-			'note-buttons-color' 	=> 'rgba(0,0,0,0.3)',
-			'note-buttons-simple' 	=> 'true',
-			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
-			'note-textarea-bg' 		=> 'white',
-			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.2)',
-			'textarea-highlight-bg' => '#b4d5fe' ,
-      		'textarea-highlight-color' => '#222222' ,
-			'button-border'			=> '1px solid rgba(0,0,0,0.4)',
-			'button-bg'				=> 'none',
-			'button-hover-bg'		=> 'rgba(0,0,0,0.1)',
-			'default-font' 			=> '"courier new", monospace',
-			'markdown-header-style'	=> 'font-family: "Museo500";
-										text-transform: uppercase;
-										font-weight: normal;',
-			'markdown-body-style'	=>	'font-family: "MuseoSans-500";',
-			'tag-area-bg' 			=> 'white',
-			'tag-bg' 				=> 'rgba(100,100,100,0.2)',
-			'tag-border' 			=> '1px solid rgba(0,0,0,0.1)',
-			'overlay-bg'			=> "-moz-linear-gradient(top,#F2F2F2,#E6E6E6); 
-										background: -o-linear-gradient(top,#F2F2F2,#E6E6E6);
-										background: -webkit-gradient(linear,left top,left bottom,from(#F2F2F2),to(#E6E6E6));",
-			'show-non-current'		=> 'false',
-			'theme-card-inner-bg' 	=> 'rgba(200,200,200,0.95)',
-			'theme-card-outer-bg' 	=> "-moz-linear-gradient(top,#DD4B39,#D14836); 
-										background: -o-linear-gradient(top,#DD4B39,#D14836);
-										background: -webkit-gradient(linear,left top,left bottom,from(#DD4B39),to(#D14836));",
-			'theme-card-border' 	=> '1px solid rgba(200,200,200,0.5)'
-		),
-		'earthy' => array(
-			'window-bg' 			=> '#B4B48D',
-			'sidebar-bg' 			=> '#BFB68F',
-			'sidebar-boxshadow' 	=> '5px 0px 10px rgba(0,0,0,0.1)',
-			'sidebar-borders'		=> '1px solid rgba(0,0,0,0.1)',
-			'listnote-text-color' 	=> 'black',
-			'listnote-font' 		=> '"MuseoSans-500", sans-serif',
-			'listnote-title-style' 	=> 'text-transform: uppercase;',
-			'highlight-text-color' 	=> 'white',
-			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(0,0,0,0.1);',
-			'highlight-bg' 			=> "-moz-linear-gradient(top,#B55230,#A94D2D); 
-										background: -o-linear-gradient(top,#B55230,#A94D2D);
-										background: -webkit-gradient(linear,left top,left bottom,from(#B55230),to(#A94D2D));", 
-			'note-bg' 				=> 'rgba(168,122,44,0.7)',
-			'note-current-bg' 		=> 'rgba(168,122,44,1)',
-			'note-edit-bg' 			=> 'rgba(219,179,79,1)',
-			'note-edit-border'		=> '1px solid #A94D2D',
-			'note-border-rad-px' 	=> '10',
-			'note-border' 			=> '1px solid rgba(168, 122, 44, 0.8)',
-			'note-buttons-color' 	=> 'rgba(0, 0, 0, 0.4)',
-			'note-buttons-simple' 	=> 'true',
-			'note-boxshadow' 		=> '2px 2px 16px rgba(0,0,0,0.6)',
-			'note-textarea-bg' 		=> '#FFFFD9',
-			'textarea-box-shadow'	=> 'inset 1px 1px 5px rgba(0,0,0,0.4)',
-			'textarea-highlight-bg' => '#b4d5fe' ,
-      		'textarea-highlight-color' => '#222222' ,
-			'button-border'			=> '1px solid rgba(0,0,0,0.4)',
-			'button-bg'				=> 'none',
-			'button-hover-bg'		=> 'rgba(0,0,0,0.1)',
-			'default-font' 			=> '"MuseoSans-500", sans-serif',
-			'markdown-header-style'	=> 'font-family: "Museo300";
-										text-transform: uppercase;
-										font-weight: normal;',
-			'markdown-body-style'	=>	'font-family: "MuseoSans-500";',
-			'tag-area-bg' 			=> '#FFFFD9',
-			'tag-bg' 				=> 'rgba(100,100,100,0.2)',
-			'tag-border' 			=> '1px solid rgba(0,0,0,0.1)',
-			'overlay-bg'			=> 'rgba(168,122,44,1)',
-			'theme-card-inner-bg' 	=> '#B4B48D',
-			'show-non-current'		=> 'false',
-			'theme-card-outer-bg' 	=> 'rgba(168,122,44,1)',
-			'theme-card-border' 	=> '1px solid rgba(200,200,200,0.5)'
-		),
 		'clean' => array(
 			'window-bg' 			=> "white",
-			'sidebar-bg' 			=> 'white',
+			'sidebar-bg' 			=> '#262626',
 			'sidebar-boxshadow' 	=> '5px 0px 10px rgba(0,0,0,0.1)',
-			'sidebar-borders'		=> '1px solid rgba(0,0,0,0.4)',
-			'listnote-text-color' 	=> 'rgba(0,0,0,1)',
-			'listnote-font' 		=> '"MuseoSans-500", sans-serif',
+			'sidebar-borders'		=> '1px solid white',
+			'listnote-text-color' 	=> 'white',
+			'listnote-font' 		=> '"DroidSansRegular", sans-serif',
 			'listnote-title-style' 	=> 'text-transform: uppercase;',
-			'highlight-text-color' 	=> 'rgba(0,0,0,1)', // same as non-highlight
+			'listnote-hover-bg'		=> '#525252',
+			'pin-icon'				=> 'url(/images/pin-white.png) center no-repeat',
+			'highlight-text-color' 	=> 'white', // same as non-highlight
 			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(255,255,255,0.1);',
 			'highlight-bg' 			=> "-moz-linear-gradient(top,#F29101,#E68901); 
 										background: -o-linear-gradient(top,#F29101,#E68901);
 										background: -webkit-gradient(linear,left top,left bottom,from(#F29101),to(#E68901));", 
 			'note-bg' 				=> 'none',
 			'note-current-bg' 		=> 'none',
-			'note-edit-bg' 			=> 'rgba(200,200,200,0.1)',
+			'note-edit-bg' 			=> 'rgba(150,150,150,0.1)',
 			'note-edit-border'		=> '1px solid rgba(0,0,0,0)',
 			'note-border-rad-px' 	=> '0',
 			'note-border' 			=> '1px solid rgba(0,0,0,0)',
@@ -237,20 +59,25 @@ a:hover {
 			'textarea-border-top'	=> 'none',
 			'textarea-highlight-bg' => '#F29101' ,
       		'textarea-highlight-color' => '#222222' ,
-			'button-border'			=> '1px solid rgba(0,0,0,0.4)',
-			'button-bg'				=> 'none',
-			'button-hover-bg'		=> 'rgba(0,0,0,0.1)',
-			'button-add-icon'		=>	'url(/images/plus-black.png) center no-repeat',
-			'button-reload-icon'	=>	'url(/images/reload-black.png) center no-repeat',
-			'button-action-icon'		=>	'url(/images/actionoverflow-black.png) center no-repeat',
+			'font-mono'				=> '"DroidSansMonoRegular", monospace',
+			'font-sans'				=> '"DroidSansRegular", sans-serif',
+			'font-serif'			=> '"courier new", monospace',
+			'button-border'			=> 'none',
+			'button-bg'				=> '#262626',
+			'button-color'			=> 'white',
+			'button-hover-bg'		=> '#F29101',
+			'button-add-icon'		=>	'url(/images/plus-white.png) center no-repeat',
+			'button-reload-icon'	=>	'url(/images/reload-white.png) center no-repeat',
+			'button-tag-icon'		=>	'url(/images/tag-white.png) center no-repeat',
+			'button-action-icon'	=>	'url(/images/actionoverflow-white.png) center no-repeat',
 			'default-font' 			=> '"courier new", monospace',
 			'markdown-header-style'	=> 'font-family: "Museo500";
 										text-transform: uppercase;
 										font-weight: normal;',
 			'markdown-body-style'	=>	'font-family: "MuseoSans-500";',
 			'tag-area-bg' 			=> 'url(../images/moleskine.jpg)',
-			'tag-bg' 				=> 'rgba(255,255,255,0.8)',
-			'tag-border' 			=> '1px solid rgba(0,0,0,0.5)',
+			'tag-bg' 				=> '#262626',
+			'tag-border' 			=> 'none',
 			'overlay-bg'			=> 'rgba(255,255,255,0.95)',
 			'show-non-current'		=> 'false',
 			'theme-card-inner-bg' 	=> 'url(../images/moleskine.jpg)',
@@ -265,6 +92,7 @@ a:hover {
 			'listnote-text-color' 	=> '#454545',
 			'listnote-font' 		=> '"MuseoSans-500", sans-serif',
 			'listnote-title-style' 	=> 'text-transform: uppercase;',
+			'pin-icon'				=> 'url(/images/pin-white.png) center no-repeat',
 			'highlight-text-color' 	=> '#454545', // same as non-highlight
 			'highlight-text-style'  => 'text-shadow: 0px 1px 0px rgba(255,255,255,0.1);',
 			'highlight-bg' 			=> "-moz-linear-gradient(top,#F29101,#E68901); 
@@ -285,12 +113,13 @@ a:hover {
 			'textarea-border-top'	=> 'none',
 			'textarea-highlight-bg' => '#F29101' ,
       		'textarea-highlight-color' => '#222222' ,
-			'button-border'			=> '1px solid rgba(255,255,255,0.4)',
+			'button-border'			=> '1px solid #333',
 			'button-bg'				=> 'rgba(255,255,255,0.1)',
 			'button-hover-bg'		=> 'rgba(255,255,255,0.2)',
 			'button-add-icon'		=>	'url(/images/plus-white.png) center no-repeat',
-			'button-reload-icon'		=>	'url(/images/reload-white.png) center no-repeat',
-			'button-action-icon'		=>	'url(/images/actionoverflow-white.png) center no-repeat',
+			'button-reload-icon'	=>	'url(/images/reload-white.png) center no-repeat',
+			'button-tag-icon'		=>	'url(/images/tag-white.png) center no-repeat',
+			'button-action-icon'	=>	'url(/images/actionoverflow-white.png) center no-repeat',
 			'default-font' 			=> '"courier new", monospace',
 			'markdown-header-style'	=> 'font-family: "Museo500";
 										text-transform: uppercase;
@@ -346,7 +175,10 @@ a:hover {
 		font-size: 0.8em;
 		color: <?php echo $options['listnote-text-color']; ?>;
 	}
-	
+		.theme-<?php echo $theme; ?> .list .listnote:hover,
+		.theme-<?php echo $theme; ?> .versions .versions-left .version-item:hover {
+			background: <?php echo $options['listnote-hover-bg']; ?>;
+		}
 		/*SIDEBAR NOTE FONT*/
 		.theme-<?php echo $theme; ?> .listnote .title,
 		.theme-<?php echo $theme; ?> .listnote .preview {
@@ -367,7 +199,7 @@ a:hover {
 		}
 		
 		.theme-<?php echo $theme; ?> .list .listnote.pinned>.pinboard {
-			background: url(../images/rsz_pin.png) no-repeat center;
+			background: <?php echo $options['pin-icon']; ?>;
 		}
 	
 	/*BUTTON STYLES*/
@@ -375,6 +207,9 @@ a:hover {
 		border: <?php echo $options['button-border']; ?>;
 		cursor: pointer;
 		background-color: <?php echo $options['button-bg']; ?>; 
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
 	}
 		.theme-<?php echo $theme; ?> .button:hover {
 			background-color: <?php echo $options['button-hover-bg']; ?>; 
@@ -396,17 +231,40 @@ a:hover {
 		background: <?php echo $options['button-reload-icon']; ?>;
 	}
 	
-	/*SIDEBAR HIDER BUTTON*/
-	.theme-<?php echo $theme; ?> .sidebar-hider {
-		border-left: none;
+	/*TAG BUTTON*/
+	.theme-<?php echo $theme; ?> .sidebar .tags .inner {
+		background: <?php echo $options['button-tag-icon']; ?>;
 	}
 	
 	/*SIDEBAR HIDER BUTTON*/
+	.theme-<?php echo $theme; ?> .sidebar-hider {
+		border-left: none;
+		-webkit-border-top-left-radius: 0px;
+		-webkit-border-bottom-left-radius: 0px;
+		-moz-border-radius-topleft: 0px;
+		-moz-border-radius-bottomleft: 0px;
+		border-top-left-radius: 0px;
+		border-bottom-left-radius: 0px;
+	}
+	
+	/*ACTION OVERFLOW BUTTON*/
 	.theme-<?php echo $theme; ?> .actionoverflow {
 		background: <?php echo $options['button-action-icon']; ?>;
+		background-color: <?php echo $options['button-bg']; ?>;
 	}
+		.theme-<?php echo $theme; ?> .actionoverflow:hover {
+			background-color: <?php echo $options['button-hover-bg']; ?>;
+		}
+		.theme-<?php echo $theme; ?> .actionoverflow .buttons,
+		.theme-<?php echo $theme; ?> .actionoverflow:hover .buttons {
+			color: <?php echo $options['button-color']; ?>;
+			background: <?php echo $options['button-bg']; ?>;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+			border-radius: 3px;
+		}
 
-/*FRAME AROUND UNSELECTED NOTES (PARTIALLY OFFSCREEN)*/
+/*FRAME AROUND UNSELECTED NOTES (PARTIALLY OFFSCREEN)*/ 
 .theme-<?php echo $theme; ?> .window .note {
 	background: <?php echo $options['note-bg']; ?>;
 	border: <?php echo $options['note-border']; ?>;
@@ -518,31 +376,15 @@ a:hover {
 			font-style: italic;
 		}
 	
-	/*ACTION OVERFLOW*/
-	.theme-<?php echo $theme; ?> .window .note .actionoverflow {
-		border: <?php echo $options['button-border']; ?>;
-		color: black;
-	}
-	
-		.theme-<?php echo $theme; ?> .window .note .actionoverflow .buttons {
-			background: <?php echo $options['button-hover-bg']; ?>;
-		}
 		
 		.theme-<?php echo $theme; ?> .window .note.pinned .pin-button,
 		.theme-<?php echo $theme; ?> .window .note.markdown-on .markdown-button {
-			/*color: <?php echo $options['highlight-text-color']; ?>;
-			background: <?php echo $options['highlight-bg']; ?>;*/
-			background: linear-gradient(bottom, #BFBFBF, #A9A9A9);
-			background: -webkit-gradient(linear, left bottom, left top, from(#BFBFBF), to(#A9A9A9));
-			background: -moz-linear-gradient(bottom, #BFBFBF, #A9A9A9);
-			box-shadow: inset 0px 0px 3px rgba(0,0,0,0.3);
-			-webkit-box-shadow: inset 0px 0px 3px rgba(0,0,0,0.3);
-			-moz-box-shadow: inset 0px 0px 3px rgba(0,0,0,0.3);
 			<?php if ($options['note-buttons-simple'] == 'true') { ?>
 				background: rgba(0,0,0,0.2);
 				box-shadow: none;
 			<?php }; ?>
 		}
+		
 		.theme-<?php echo $theme; ?> .window .note .maximize:hover,
 		.theme-<?php echo $theme; ?> .window .note .versions-button:hover,
 		.theme-<?php echo $theme; ?> .window .note .delete:hover,
@@ -566,14 +408,10 @@ a:hover {
 			text-decoration: underline;
 		}
 
-	/*TAG AREA
+	/*TAG AREA*/
 	.theme-<?php echo $theme; ?> .window .note .tag-area {
-		border: <?php echo $options['note-border']; ?>;
-		background: <?php echo $options['tag-area-bg']; ?>;
-		box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
-		-webkit-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
-		-moz-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
-	}*/
+		border-top: 2px solid #262626;
+	}
 	
 	/*TAG AREA BACKGROUND*/
 	.theme-<?php echo $theme; ?> .window .note .tagsinput {
@@ -668,7 +506,25 @@ a:hover {
 	border: <?php echo $options['theme-card-border']; ?>;
 }
 
-<?php }; //end foreach ?>
+/*MONO FONT*/
+.theme-<?php echo $theme; ?>.font-mono .window .note textarea,
+.appearance .font .name.mono {
+	font-family: <?php echo $options['font-mono']; ?>;
+}
+
+/*SANS FONT*/
+.theme-<?php echo $theme; ?>.font-sans .window .note textarea,
+.appearance .font .name.sans {
+	font-family: <?php echo $options['font-sans']; ?>;
+}
+
+/*SERIF FONT*/
+.theme-<?php echo $theme; ?>.font-serif .window .note textarea,
+.appearance .font .name.serif {
+	font-family: <?php echo $options['font-serif']; ?>;
+}
+
+<?php }; //end foreach theme loop ?> 
 
 /* FONT THEMES ############################################################################ */
 
@@ -778,6 +634,18 @@ a:hover {
 .fontsize-16 .window .note .textarea textarea,
 .appearance .fontsize .name.fontsize-16 {
 	font-size: 16px;
+	line-height: 1.2
+}
+
+.fontsize-17 .window .note .textarea textarea,
+.appearance .fontsize .name.fontsize-17 {
+	font-size: 17px;
+	line-height: 1.2
+}
+
+.fontsize-18 .window .note .textarea textarea,
+.appearance .fontsize .name.fontsize-18 {
+	font-size: 18px;
 	line-height: 1.2
 }
 

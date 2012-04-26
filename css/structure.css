@@ -41,14 +41,14 @@
 	-moz-box-shadow: 3px 0px 5px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 3px 0px 5px rgba(0,0,0,0.5);
 	box-shadow: 3px 0px 5px rgba(0,0,0,0.5);
-	z-index: 10;
+	z-index: 21;
 	-webkit-transition: all 0.25s ease-out;
 	-moz-transition: all 0.25s ease-out;
 	-o-transition: all 0.25s ease-out;
 	transition: all 0.25s ease-out;
 }	
 .sidebar-hide .sidebar {
-	left: -350px;
+	left: -351px;
 }
 	.search {
 		position: absolute;
@@ -105,7 +105,7 @@
 		position: absolute;
 		width: 100%;
 		left: 0px;
-		top: 35px;
+		top: 36px;
 		bottom: 0px;
 		overflow-x: hidden;
 		overflow-y: scroll;
@@ -187,7 +187,7 @@
 	}
 	
 	.sidebar .addnote {
-		top: 100px;
+		top: 90px;
 	}
 	
 	.sidebar .addnote .inner {
@@ -195,7 +195,7 @@
 	}
 	
 	.sidebar .tags {
-		top: 150px;
+		top: 130px;
 	}
 	
 		.no-tags .sidebar .tags {
@@ -384,7 +384,6 @@
 				right: 5px;
 				bottom: 5px;
 				height: 32px;
-				border-top: 1px solid rgba(0,0,0,0.1);
 			}
 			
 			.no-tags .tag-area {
@@ -410,22 +409,17 @@
 			height: 28px;
 			width: 28px;
 			position: absolute;
-			right: -30px;
-			top: 40px;
-			background: url('/images/actionoverflow.png') center center;
-			border: 1px solid rgba(0,0,0,0.4);
+			right: 31px;
+			bottom: 27px;
 			cursor: pointer;
-		}
-		.note .actionoverflow:hover {
-			background-color: rgba(0,0,0,0.1);
 		}
 		.note .actionoverflow .buttons {
 			display: none;
 			position: absolute;
-			top: 28px;
-			left: -1px;
+			bottom: 28px;
+			right: -2px;
 			width: 120px;
-			border: 1px solid rgba(0,0,0,0.4);
+			cursor: pointer;
 		}
 		.note .actionoverflow:hover .buttons {
 			display: block;
