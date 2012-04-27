@@ -772,9 +772,9 @@
 	
 		.labels .inner input {
 			position: absolute;
-			top: 12px;
-			right: 12px;
-			left: 12px;
+			top: 9px;
+			right: 0px;
+			left: 0px;
 		}
 		
 		.labels .items {
@@ -787,17 +787,11 @@
 		}
 		
 		.labels .item {
-			width: 437px;
+			width: 100%;
 			position: relative;
 			font-size: 18px;
-			margin: 4px auto;
-			background: rgba(0,0,0,0.2);
 			height: 25px;
 			cursor: pointer;
-			-moz-border-radius: 3px;
-			-webkit-border-radius: 3px;
-			-o-border-radius: 3px;
-			border-radius: 3px;
 		}
 		
 		.labels .item .name {

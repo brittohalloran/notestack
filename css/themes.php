@@ -150,10 +150,12 @@ a:hover {
 .theme-<?php echo $theme; ?> .versions-left {
 	background: <?php echo $options['sidebar-bg']; ?>;
 	border-right: <?php echo $options['sidebar-borders']; ?>;
-	-moz-box-shadow: <?php echo $options['sidebar-boxshadow']; ?>;
-	-webkit-box-shadow: <?php echo $options['sidebar-boxshadow']; ?>;
-	box-shadow: <?php echo $options['sidebar-boxshadow']; ?>;
 }
+	.theme-<?php echo $theme; ?> .sidebar {
+		-moz-box-shadow: <?php echo $options['sidebar-boxshadow']; ?>;
+		-webkit-box-shadow: <?php echo $options['sidebar-boxshadow']; ?>;
+		box-shadow: <?php echo $options['sidebar-boxshadow']; ?>;
+	}	
 
 	/*SEARCH AREA*/
 	.theme-<?php echo $theme; ?> .search {
@@ -165,6 +167,7 @@ a:hover {
 		border-bottom: <?php echo $options['sidebar-borders']; ?>;
 	}
 		.theme-<?php echo $theme; ?> .active-tag-filter span {
+			color: <?php echo $options['listnote-text-color']; ?>;
 			font-family: <?php echo $options['listnote-font']; ?>;
 		}
 
@@ -188,7 +191,8 @@ a:hover {
 	/*SELECTED NOTE IN SIDEBAR AND SETTINGS PANE*/
 	.theme-<?php echo $theme; ?> .list .listnote.selected,
 	.theme-<?php echo $theme; ?> .labels .item.label-select,
-	.theme-<?php echo $theme; ?> .versions .versions-left .version-select {
+	.theme-<?php echo $theme; ?> .versions .versions-left .version-select,
+	.theme-<?php echo $theme; ?> .versions .versions-left .version-select:hover	{
 		background: <?php echo $options['highlight-bg']; ?>;
 		color: <?php echo $options['highlight-text-color']; ?>;
 		<?php echo $options['highlight-text-style']; ?>
@@ -213,12 +217,6 @@ a:hover {
 	}
 		.theme-<?php echo $theme; ?> .button:hover {
 			background-color: <?php echo $options['button-hover-bg']; ?>; 
-		}
-
-		.theme-<?php echo $theme; ?> .button.depressed,
-		.theme-<?php echo $theme; ?> .button:active,
-		.theme-<?php echo $theme; ?> .button:focus {
-			background-color: rgba(0,0,0,0.2);
 		}
 	
 	/*ADD NOTE BUTTON*/
@@ -262,6 +260,50 @@ a:hover {
 			-webkit-border-radius: 3px;
 			-moz-border-radius: 3px;
 			border-radius: 3px;
+		}
+	
+	/*BUTTONS IN VERSION TOOLBAR*/
+	.theme-<?php echo $theme; ?> .versions-toolbar .button {
+		text-align: center;
+		color: <?php echo $options['button-color']; ?>;
+		background: <?php echo $options['button-bg']; ?>; 
+	}
+		.theme-<?php echo $theme; ?> .versions-toolbar .button-first {
+			-webkit-border-top-right-radius: 0px;
+			-webkit-border-bottom-right-radius: 0px;
+			-moz-border-radius-topright: 0px;
+			-moz-border-radius-bottomright: 0px;
+			border-top-right-radius: 0px;
+			border-bottom-right-radius: 0px;
+		}
+		.theme-<?php echo $theme; ?> .versions-toolbar .button-last {
+			-webkit-border-top-left-radius: 0px;
+			-webkit-border-bottom-left-radius: 0px;
+			-moz-border-radius-topleft: 0px;
+			-moz-border-radius-bottomleft: 0px;
+			border-top-left-radius: 0px;
+			border-bottom-left-radius: 0px;
+		}
+		.theme-<?php echo $theme; ?> .versions-toolbar .button.depressed,
+		.theme-<?php echo $theme; ?> .versions-toolbar .button:active,
+		.theme-<?php echo $theme; ?> .versions-toolbar .button:focus {
+			background-color: <?php echo $options['button-hover-bg']; ?>;
+			box-shadow: inset 0px 0px 3px rgba(0,0,0,0.1);
+		}
+	
+	/*TAG / LABEL OVERLAY*/
+	.theme-<?php echo $theme; ?> .labels .items {
+		background: <?php echo $options['sidebar-bg']; ?>;
+	}
+		.theme-<?php echo $theme; ?> .labels .item {
+			border-bottom: <?php echo $options['sidebar-borders']; ?>;
+			color: <?php echo $options['listnote-text-color']; ?>
+		}
+		.theme-<?php echo $theme; ?> .labels .item:hover {
+			background: <?php echo $options['listnote-hover-bg']; ?>;
+		}
+		.theme-<?php echo $theme; ?> .labels .item.item-select {
+			background: <?php echo $options['highlight-bg']; ?>;
 		}
 
 /*FRAME AROUND UNSELECTED NOTES (PARTIALLY OFFSCREEN)*/ 
