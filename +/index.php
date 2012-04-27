@@ -77,7 +77,7 @@
 				</div>
 			</div>
 			<div class="notes-placeholder"></div>
-			<!-- notes will be inserted here -->
+			<div class='note current'></div> <!-- will be replaced by actual note -->
 		</div><!-- notes window -->
 		<div class="settings">
 			<div class="inner">
@@ -239,7 +239,6 @@
 				</div>
 			</div>
 			<div class='message'></div>
-			
 		</div>
 		<div id="listnote-template">
 			<div class="title"></div>
