@@ -80,7 +80,7 @@ a:hover {
 			'tag-border' 			=> 'none',
 			'overlay-bg'			=> 'rgba(255,255,255,0.95)',
 			'show-non-current'		=> 'false',
-			'theme-card-inner-bg' 	=> 'url(../images/moleskine.jpg)',
+			'theme-card-inner-bg' 	=> 'white',
 			'theme-card-outer-bg'	=> 'rgba(30,30,30,1)',
 			'theme-card-border' 	=> '1px solid rgba(244,241,232,0.3)'
 		),
@@ -284,6 +284,9 @@ a:hover {
 			border-top-left-radius: 0px;
 			border-bottom-left-radius: 0px;
 		}
+		.theme-<?php echo $theme; ?> .versions-toolbar .button:hover {
+			background-color: <?php echo $options['listnote-hover-bg']; ?>;
+		}
 		.theme-<?php echo $theme; ?> .versions-toolbar .button.depressed,
 		.theme-<?php echo $theme; ?> .versions-toolbar .button:active,
 		.theme-<?php echo $theme; ?> .versions-toolbar .button:focus {
@@ -361,6 +364,10 @@ a:hover {
 			-webkit-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 			-moz-box-shadow: <?php echo $options['textarea-box-shadow']; ?>;
 			border-top: <?php echo $options['textarea-border-top']; ?>;
+		}
+		.theme-<?php echo $theme; ?> .window .note .textarea .ta-inner,
+		.theme-<?php echo $theme; ?> .window .note .markdown {
+			border-bottom: 2px solid #262626;
 		}
 
     .theme-<?php echo $theme; ?> .window .note .textarea textarea::selection,
@@ -452,7 +459,7 @@ a:hover {
 
 	/*TAG AREA*/
 	.theme-<?php echo $theme; ?> .window .note .tag-area {
-		border-top: 2px solid #262626;
+		border-top: none;
 	}
 	
 	/*TAG AREA BACKGROUND*/
@@ -697,7 +704,7 @@ a:hover {
 	
 /*SETTINGS*/
 .settings {
-	background: rgba(0,0,0,0.93);
+	background: #262626;
 }
 	
 	.settings .tabs {
@@ -734,7 +741,7 @@ a:hover {
 		.appearance .fontsize,
 		.appearance .sortby,
 		.appearance .tag-pref {
-			font-size: 1.5em;
+			font-size: 14px;
 			background: white;
 			color: black;
 			border-radius: 5px;

@@ -99,9 +99,11 @@
 						<div class="pane_section">
 							<h3>Tags</h3>
 							<div id="tags-pref" class="tag-pref">
-								<div class="name">Enable tags</div>
+								<div class="name">enable tags</div>
 							</div>
-							<div class="clear"></div>
+						</div>
+						<div class="clear"></div>
+						<div class="pane_section">
 							<h3>Theme</h3>
 							<?php 
 								$themes = array(
@@ -138,16 +140,17 @@
 								};
 							?>
 						</div>
+						<div class="clear"></div>
 						<div class="pane_section">
 							<h3>Font Size</h3>
 							<div id="fontsize-13" class="fontsize">
-								<div class="name fontsize-13">small</div>
+								<div class="name">small</div>
 							</div>
 							<div id="fontsize-16" class="fontsize">
-								<div class="name fontsize-16">normal</div>
+								<div class="name">normal</div>
 							</div>
 							<div id="fontsize-18" class="fontsize">
-								<div class="name fontsize-18">big</div>
+								<div class="name">big</div>
 							</div>
 						</div>
 					</div>
@@ -256,8 +259,8 @@
 			<div class="inner">
 				<span>filtered by tag: </span>
 				<span class="tag-filter-label"></span>
+				<span class="clear-tag-filter" title="view all (a)">clear</span>
 			</div>
-			<div class="clear-tag-filter" title="clear filter (a)">x</div>
 		</div>
 	</div>
 	<!-- SCRIPTS -->

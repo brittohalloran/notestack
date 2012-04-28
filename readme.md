@@ -3,6 +3,9 @@
 
 Issues? Bugs? Feature ideas? Click on over to the [issue tracker](http://github.com/brittohalloran/notestack/issues) and log an issue.
 
+### Bleeding Edge
+If you'd like to try out the very latest version of Notestack, head on over to the [dev branch](http://dev.notestack.me). This version is of course incomplete and possibly broken.
+
 ### Contributors
 - [Britt O'Halloran](https://github.com/brittohalloran) - main codebase
 - [Eliezer Kanal](https://github.com/eykanal) - markdown formatting support

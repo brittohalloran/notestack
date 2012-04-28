@@ -90,15 +90,8 @@
 			}
 		
 		.active-tag-filter .clear-tag-filter {
-			position: absolute;
-			top: 2px;
-			bottom: 2px;
-			right: 2px;
-			width: 10px;
-			font-size: 0.8em;
-			cursor: pointer;
-			background: rgba(0,0,0,0.1);
-			text-align: center;
+			text-decoration: underline;
+			padding-left: 15px;
 		}
 		
 	.list {
@@ -290,11 +283,6 @@
 				background: transparent;
 				resize: none;
 			}
-			
-				.no-tags .textarea .ta-inner,
-				.no-tags .markdown {
-					bottom: 5px;
-				}
 				
 				.ta-inner textarea {
 					height: 100%;
@@ -381,7 +369,7 @@
 			.note .tag-area {
 				position: absolute;
 				left: 5px;
-				right: 5px;
+				right: 50px;
 				bottom: 5px;
 				height: 32px;
 			}
@@ -419,6 +407,7 @@
 			bottom: 28px;
 			right: -2px;
 			width: 120px;
+			padding: 5px;
 			cursor: pointer;
 		}
 		.note .actionoverflow:hover .buttons {
@@ -569,23 +558,17 @@
 		}
 	
 .settings {
+	display: none;
 	position: absolute;
-	left: 350px;
-	height: 60%;
-	right: 0px;
-	top: 100%;
-	-webkit-transition: top 0.25s ease-in-out;
-	-moz-transition: top 0.25s ease-in-out;
-	-o-transition: top 0.25s ease-in-out;
-	transition: top 0.25s ease-in-out;
-	z-index: 50;
+	right: 60px;
+	top: 60px;
+	bottom: 100px;
+	width: 450px;
+	z-index: 101;
+	border-radius: 10px;
 }
 	.settings.show {
-		top: 40%;
-	}
-	.sidebar-hide .settings,
-	.sidebar-hover .settings {
-		left: 0px;
+		display: block;
 	}
 	
 	.settings .inner {
@@ -593,7 +576,7 @@
 		left: 10px;
 		top: 10px;
 		right: 10px;
-		bottom: 0px;
+		bottom: 10px;
 		overflow: auto;
 	}
 	
@@ -609,7 +592,7 @@
 		.settings .content {
 			position: absolute;
 			bottom: 0px;
-			top: 25px;
+			top: 30px;
 			width: 100%;
 			overflow: auto;
 		}
@@ -620,6 +603,9 @@
 		
 			.settings_pane .pane_section {
 				float: left;
+			}
+			.settings_pane .pane_section div {
+				
 			}
 		
 		
@@ -664,11 +650,12 @@
 				top: 40px;
 			}
 			
+			.appearance .sortby,
 			.appearance .font,
 			.appearance .fontsize,
 			.appearance .tag-pref {
 				float: left;
-				height: 30px;
+				height: 14px;
 				padding: 10px;
 				margin: 5px;
 			}
@@ -685,15 +672,15 @@
 		}
 		
 		.settings .data table {
-			margin: 0px auto;
+			margin: 15px auto;
 		}
 		
 	.settings .close {
 		position: absolute;
 		height: 30px;
 		width: 30px;
-		right: 5px;
-		top: 2px;
+		right: -11px;
+		top: -8px;
 		background: url('../images/close.png') no-repeat bottom left;
 		cursor: pointer;
 		z-index: 55;

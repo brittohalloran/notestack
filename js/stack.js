@@ -885,16 +885,26 @@ var notestack = (function () {
 		});
 	};
 	
+	// TOGGLE SHOWING OF SETTINGS WINDOW
+	var toggleSettings = function () {
+		clearOverlays();
+		if (!$('.settings').hasClass('show')) {
+			$('.settings').addClass('show');
+			$('.overlay').addClass('show');
+		}
+		return false;
+	};
+	
 	// TOGGLE SHOWING OF VERSIONS WINDOW
 	var toggleVersions = function (notekey) {
-		if ($('.versions').hasClass('show')) {
-			clearOverlays();
-		} else {
+		clearOverlays();
+		if (!$('.versions').hasClass('show')) {
 			$('.versions').addClass('show');
 			$('.overlay').addClass('show');
 			$('.versions-right .right-inner').html("");
 			populateVersions(notekey);
 		}
+		return false;
 	};
 
 	// POPULATE LABELS INTO LABEL OVERLAY
@@ -928,9 +938,8 @@ var notestack = (function () {
 	
 	// SHOW LABELS OVERLAY
 	var showLabels = function () {
-		if ($('.labels').hasClass('show')) {
-			clearOverlays();
-		} else {
+		clearOverlays();
+		if (!$('.labels').hasClass('show')) {
 			toggleFullscreen('show');
 			populateLabels();
 			$('.labels').addClass('show');
@@ -1297,10 +1306,10 @@ var notestack = (function () {
 		});
 		// CLICK SETTINGS
 		$('.settings_icon').click(function () {
-			$('.settings').toggleClass('show');
+			toggleSettings();
 		});
 		$('.userdata').click(function () {
-			$('.settings').toggleClass('show');
+			toggleSettings();
 			$('.settings_pane').removeClass('show');
 			$('.settings_pane.data').addClass('show');
 		});
@@ -1404,7 +1413,11 @@ var notestack = (function () {
 			return false;
 		});
 		$(document).bind('keydown', 'tab', function () {$('.note.current .textarea textarea').focus(); return false; });
-		$(document).bind('keydown', 'shift+/', function () {$('.settings').toggleClass('show'); });
+		// '?' - show settings
+		$(document).bind('keydown', 'shift+/', function () {
+			toggleSettings(); 
+		});
+		// '/' - search
 		$(document).bind('keydown', '/', function () {
 			$('.search input').select(); 
 			toggleFullscreen('show');
