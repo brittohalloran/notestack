@@ -171,6 +171,7 @@
 						<table>
 							<tr><td class="l">j or &darr; or &rarr;</td><td>next</td></tr>
 							<tr><td class="l">k or &uarr; or &larr;</td><td>previous</td></tr>
+							<tr><td class="l">/</td><td>search notes</td></tr>
 							<tr><td class="l">tab, enter</td><td>edit note</td></tr>
 							<tr><td class="l">esc</td><td>exit and save note</td></tr>
 							<tr><td class="l">l or t</td><td>open tag (label) selection</td></tr>
